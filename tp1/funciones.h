@@ -32,4 +32,7 @@ void ondaDigital(char *str);
 //punto 9
 int divisiblePor7(int n);
 
+//punto 10
+void bomba(int A, int B)
+
 #endif

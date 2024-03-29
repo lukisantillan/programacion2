@@ -92,6 +92,17 @@ void testPt9()
   assert(divisiblePor7(-32291) == true);
   printf("Punto 9 OK\n");
 }
+/*
+void testPt10()
+{
+  assert(bomba() == true);
+  assert( == true);
+  assert( == false);
+  assert( == true);
+  assert( == true);
+  printf("Punto 10 OK\n");
+}
+*/
 
 int main()
 {
