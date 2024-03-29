@@ -3,7 +3,12 @@
 #ifndef TP1
 #define TP1
 
-// punto 1
+/**
+ * @brief Verifica si una cadena de caracteres es un palíndromo.
+ * 
+ * @param str La cadena de caracteres a verificar.
+ * @return true si la cadena es un palíndromo, false en caso contrario.
+ */
 bool palindromo(char str[]);
 
 //punto 2
