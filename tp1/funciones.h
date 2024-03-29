@@ -27,12 +27,12 @@ char *agregarSeparadorMiles(char *num);
 char* formacionChina(int grado);
 
 //punto 7
-void ondaDigital(char *str);
+char* ondaDigital(char *str);
 
 //punto 9
 int divisiblePor7(int n);
 
 //punto 10
-void bomba(int A, int B)
+void bomba(int A, int B);
 
 #endif
