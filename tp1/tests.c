@@ -19,7 +19,6 @@ void testPt2()
   assert(producto(3, 2) == 6);
   assert(producto(5, 3) == 15);
   assert(producto(10, 4) == 40);
-  //arreglar numeros negativos
   assert(producto(2, -1) == -2);
   assert(producto(2, -4) == -8);
   assert(producto(-2, 4) == -8);
@@ -42,11 +41,23 @@ void testPt3()
 
 void testPt4()
 {
-  // hacer que retorne los 5 decimales
-  assert(division(10, 2) == 5);
-  assert(division(9, 3) == 3);
-  // printf("%f\n", division(22, 3));
-  // assert(division(22, 3) == 7.333333);
+  char str[20];
+
+  sprintf(str, "%.5f", division(22, 3));
+  assert(strcmp(str, "7.33333") == 0);
+
+  sprintf(str, "%.5f", division(10, 2));
+  assert(strcmp(str, "5.00000") == 0);
+
+  sprintf(str, "%.5f", division(9, 3));
+  assert(strcmp(str, "3.00000") == 0);
+
+  sprintf(str, "%.5f", division(-9, -3));
+  assert(strcmp(str, "3.00000") == 0);
+
+  sprintf(str, "%.5f", division(9, -3));
+  assert(strcmp(str, "-3.00000") == 0);
+
   printf("Punto 4 OK\n");
 }
 
@@ -78,6 +89,7 @@ void testPt9()
   assert(divisiblePor7(7) == true);
   assert(divisiblePor7(110) == false);
   assert(divisiblePor7(32291) == true);
+  assert(divisiblePor7(-32291) == true);
   printf("Punto 9 OK\n");
 }
 
