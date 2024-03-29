@@ -33,6 +33,6 @@ char* ondaDigital(char *str);
 int divisiblePor7(int n);
 
 //punto 10
-void bomba(int A, int B);
+int* bomba(int A, int B);
 
 #endif

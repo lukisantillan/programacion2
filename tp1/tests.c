@@ -80,7 +80,6 @@ void testPt6()
 
 void testPt7()
 {
-  // si hay mas de un test, falla porque usa una variable estatica para el resultado
   assert(strcmp("_|--|_", ondaDigital("LHHL")) == 0);
   assert(strcmp("-|__|-", ondaDigital("HLLH")) == 0);
   assert(strcmp("-|_|-|_", ondaDigital("HLHL")) == 0);
@@ -99,7 +98,22 @@ void testPt9()
 
 void testPt10()
 {
-  // hacer
+  // se definen los parametros y el resultado esperado
+  int A = 10;
+  int B = 3;
+  int* esperado = (int[]){3, 2, 1, 1, 3};
+
+  // logica del test
+  int max = A / B + 1;
+  int* resultado = malloc((max + 1) * sizeof(int));
+  resultado = bomba(A, B);
+  for (int i = 0; i <= max ; i++)
+  {
+    assert(resultado[i] == esperado[i]);
+  }
+  free(resultado);
+
+  printf("Punto 10 OK\n");
 }
 
 int main()
@@ -112,5 +126,6 @@ int main()
   testPt6();
   testPt7();
   testPt9();
+  testPt10();
   return 0;
 }
