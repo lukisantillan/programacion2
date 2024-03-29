@@ -20,10 +20,12 @@ bool palindromo(char str[])
     char newStr[len - 2];
     
     //copio el string original en el nuevo string sin el primer caracter
-    for (int i = 1; i < len - 1; i++)
-    {
-      newStr[i - 1] = str[i];
-    }
+    // for (int i = 1; i < len - 1; i++)
+    // {
+    //   newStr[i - 1] = str[i];
+    // }
+    strncpy(newStr, str + 1, len - 2);
+
     //borro el ultimo caracter
     newStr[len - 2] = '\0';
     

@@ -3,6 +3,28 @@
 #ifndef TP1
 #define TP1
 
+// punto 1
 bool palindromo(char str[]);
+
+//punto 2
+int producto(int n1, int n2);
+
+//punto 3
+int terminoFibo(int n);
+
+//punto 4
+float division(float n1, float n2);
+
+//punto 5
+char *agregarSeparadorMiles(char *num);
+
+//punto 6
+char* formacionChina(int grado);
+
+//punto 7
+void ondaDigital(char *str);
+
+//punto 9
+int divisiblePor7(int n);
 
 #endif
