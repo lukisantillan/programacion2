@@ -1,19 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int producto(int n1, int n2)
+int producto(int m, int n)
 {
-  if (n1 == 0 || n2 == 0)
+
+  // checkeo si alguno de los dos numeros es 0
+  if (n == 0)
   {
+    // si n es 0, el producto es 0
     return 0;
   }
 
-  if ((n1 > 0 && n2 > 0) || (n1 < 0 && n2 < 0))
+  // si n es negativo, llamo a la funcion con n positivo y cambio el signo del resultado
+  if (n < 0)
   {
-    return abs(n1) + producto(abs(n1), abs(n2) - 1);
+    return -producto(m, -n);
   }
-  else
-  {
-    return producto(abs(n1), abs(n2) + 1) - abs(n1);
-  }
+
+  // si n es positivo, sumo m n veces
+  return m + producto(m, n - 1);
 }

@@ -12,7 +12,7 @@
 bool palindromo(char str[]);
 
 //punto 2
-int producto(int n1, int n2);
+int producto(int m, int n);
 
 //punto 3
 int terminoFibo(int n);
