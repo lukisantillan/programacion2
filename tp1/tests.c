@@ -80,7 +80,11 @@ void testPt6()
 
 void testPt7()
 {
-  //hacer
+  // si hay mas de un test, falla porque usa una variable estatica para el resultado
+  assert(strcmp("_|--|_", ondaDigital("LHHL")) == 0);
+  assert(strcmp("-|__|-", ondaDigital("HLLH")) == 0);
+  assert(strcmp("-|_|-|_", ondaDigital("HLHL")) == 0);
+  printf("Punto 7 OK\n");
 }
 
 void testPt9()
@@ -92,17 +96,11 @@ void testPt9()
   assert(divisiblePor7(-32291) == true);
   printf("Punto 9 OK\n");
 }
-/*
+
 void testPt10()
 {
-  assert(bomba() == true);
-  assert( == true);
-  assert( == false);
-  assert( == true);
-  assert( == true);
-  printf("Punto 10 OK\n");
+  // hacer
 }
-*/
 
 int main()
 {
@@ -112,7 +110,7 @@ int main()
   testPt4();
   testPt5();
   testPt6();
-  // testPt7();
+  testPt7();
   testPt9();
   return 0;
 }
