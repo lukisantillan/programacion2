@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-//falta hacer que se guarde en un vector
-void bomba(int A, int B){
+
+
+void bombita(int A, int B,int* vec,int *indice){
     int resultado;
     if (A <= B)
     {
-        printf(" %i", B);
+        vec[(*indice)++]=B;
     
         return;
     }
@@ -18,15 +19,29 @@ void bomba(int A, int B){
     {
         resultado = n1;
     } else {
-        printf(" %i", n1);
+        vec[(*indice)++]=n1;
     
     }
     if (n2 >= B)
     {
         resultado = n2;
     } else {
-        printf(" %i", n2);
+        vec[(*indice)++]=n2;
         }
-    return bomba(resultado, B);
+    return bombita(resultado, B,vec,indice);
+
+}
+int* bomba(int A,int B)
+{
+int* vec;
+int puntero=0;//indice del vector
+int max;
+
+
+max=A/B+1;// calculo la cantidad maxima de elementos
+vec=malloc(sizeof(int)*max);//asigno memoria dinamica a un puntero(vector)
+bombita(A,B,vec,&puntero);
+
+return vec;
 
 }
