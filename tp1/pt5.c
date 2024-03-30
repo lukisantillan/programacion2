@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *agregarSeparadorMiles(char *num)
+char *agregarSeparadorMiles(char num[])
 {
   // caso base: si la longitud del número es menor o igual a 3, no se agregan puntos
   int len = strlen(num);

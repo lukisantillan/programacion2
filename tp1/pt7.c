@@ -30,14 +30,14 @@ void ondaDigitalHelper(char *str, char *result, char prev)
   ondaDigitalHelper(str + 1, result, *str);
 }
 
-char *ondaDigital(char *str)
+char *ondaDigital(char seniales[])
 {
   // se define el resultado como un string vacio
-  char *result = malloc(strlen(str) * 2 + 1);
+  char *result = malloc(strlen(seniales) * 2 + 1);
   result[0] = '\0';
 
   // se llama a la funcion auxiliar con el string original, el puntero al resultado y un caracter nulo como previo
-  ondaDigitalHelper(str, result, '\0');
+  ondaDigitalHelper(seniales, result, '\0');
 
   // se retorna el resultado
   return result;

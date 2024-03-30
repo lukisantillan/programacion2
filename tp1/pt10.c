@@ -34,17 +34,17 @@ void bombita(int A, int B, int *vec, int *indice)
   return bombita(resultado, B, vec, indice);
 }
 
-int* bomba(int A, int B)
+int* explosion(int n, int b)
 {
   int *vec;
   int puntero = 0; // indice del vector
   int max;
 
   // calculo la cantidad maxima de elementos
-  max = A / B + 1;
+  max = n / b + 1;
   // asigno memoria dinamica a un puntero(vector)
   vec = malloc(sizeof(int) * max);
-  bombita(A, B, vec, &puntero);
+  bombita(n, b, vec, &puntero);
 
   return vec;
 }

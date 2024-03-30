@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *formacionChina(int grado)
+char *reunionMafia(int nivel)
 {
-  char *resultado = (char *)malloc((grado * 4 + 1) * sizeof(char));
+  char *resultado = (char *)malloc((nivel * 4 + 1) * sizeof(char));
 
-  // caso base: cuando se llega al grado 1
-  if (grado == 1)
+  // caso base: cuando se llega al nivel 1
+  if (nivel == 1)
   {
     strcpy(resultado, "(-.-)");
     return resultado;
@@ -16,8 +16,8 @@ char *formacionChina(int grado)
   // se copian los chinos de la izquierda al resultado
   strcpy(resultado, "(-.");
 
-  // se llama recursivamente a la funcion para el grado anterior y se concatena al resultado
-  char *aux = formacionChina(grado - 1);
+  // se llama recursivamente a la funcion para el nivel anterior y se concatena al resultado
+  char *aux = reunionMafia(nivel - 1);
   strcat(resultado, aux);
   free(aux);
 

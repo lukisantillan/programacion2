@@ -3,7 +3,8 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <string.h>
-#include "funciones.h"
+// #include "funciones.h"
+#include "TP1_Recursividad.h"
 
 void testPt1()
 {
@@ -29,13 +30,13 @@ void testPt2()
 
 void testPt3()
 {
-  // sucesion de fibonacci (empezando desde el termino 0): 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
-  assert(terminoFibo(0) == 0);
-  assert(terminoFibo(1) == 1);
-  assert(terminoFibo(2) == 1);
-  assert(terminoFibo(5) == 5);
-  assert(terminoFibo(17) == 1597);
-  assert(terminoFibo(20) == 6765);
+  // este punto se hizo considerando al primer termino de la serie como indice 0 (0, 1, 1, 2, 3, 5, 8, 13, 21, ...)
+  assert(terminoSeridFibonacci(0) == 0);
+  assert(terminoSeridFibonacci(1) == 1);
+  assert(terminoSeridFibonacci(2) == 1);
+  assert(terminoSeridFibonacci(5) == 5);
+  assert(terminoSeridFibonacci(17) == 1597);
+  assert(terminoSeridFibonacci(20) == 6765);
   printf("Punto 3 OK\n");
 }
 
@@ -71,10 +72,10 @@ void testPt5()
 
 void testPt6()
 {
-  assert(strcmp(formacionChina(1), "(-.-)") == 0);
-  assert(strcmp(formacionChina(2), "(-.(-.-).-)") == 0);
-  assert(strcmp(formacionChina(3), "(-.(-.(-.-).-).-)") == 0);
-  assert(strcmp(formacionChina(4), "(-.(-.(-.(-.-).-).-).-)") == 0);
+  assert(strcmp(reunionMafia(1), "(-.-)") == 0);
+  assert(strcmp(reunionMafia(2), "(-.(-.-).-)") == 0);
+  assert(strcmp(reunionMafia(3), "(-.(-.(-.-).-).-)") == 0);
+  assert(strcmp(reunionMafia(4), "(-.(-.(-.(-.-).-).-).-)") == 0);
   printf("Punto 6 OK\n");
 }
 
@@ -99,14 +100,14 @@ void testPt9()
 void testPt10()
 {
   // se definen los parametros y el resultado esperado
-  int A = 10;
-  int B = 3;
+  int n = 10;
+  int b = 3;
   int* esperado = (int[]){3, 2, 1, 1, 3};
 
   // logica del test
-  int max = A / B + 1;
+  int max = n / b + 1;
   int* resultado = malloc((max + 1) * sizeof(int));
-  resultado = bomba(A, B);
+  resultado = explosion(n, b);
   for (int i = 0; i <= max ; i++)
   {
     assert(resultado[i] == esperado[i]);

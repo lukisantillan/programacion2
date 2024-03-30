@@ -3,9 +3,9 @@
 #include <string.h>
 #include <stdbool.h>
 
-bool palindromo(char str[])
+bool palindromo(char *cadena)
 {
-  int len = strlen(str);
+  int len = strlen(cadena);
 
   //caso base, si la longitud es 0 o 1, es palindromo
   if (len <= 1)
@@ -14,7 +14,7 @@ bool palindromo(char str[])
   }
 
   //si el primer y ultimo caracter son iguales, se llama a la funcion con el string sin esos caracteres
-  if (str[0] == str[len - 1])
+  if (cadena[0] == cadena[len - 1])
   {
     //creo un nuevo string que va a contener el tamaño original - 2 caracteres
     char newStr[len - 2];
@@ -24,7 +24,7 @@ bool palindromo(char str[])
     // {
     //   newStr[i - 1] = str[i];
     // }
-    strncpy(newStr, str + 1, len - 2);
+    strncpy(newStr, cadena + 1, len - 2);
 
     //borro el ultimo caracter
     newStr[len - 2] = '\0';
