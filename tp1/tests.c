@@ -3,7 +3,6 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <string.h>
-// #include "funciones.h"
 #include "TP1_Recursividad.h"
 
 void testPt1()

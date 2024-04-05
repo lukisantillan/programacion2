@@ -19,7 +19,6 @@ char *reunionMafia(int nivel)
   // se llama recursivamente a la funcion para el nivel anterior y se concatena al resultado
   char *aux = reunionMafia(nivel - 1);
   strcat(resultado, aux);
-  free(aux);
 
   // se copian los chinos de la derecha al resultado
   strcat(resultado, ".-)");
