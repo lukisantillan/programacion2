@@ -65,7 +65,12 @@ void testPt5()
 {
   assert(strcmp(agregarSeparadorMiles("100"), "100") == 0);
   assert(strcmp(agregarSeparadorMiles("1000"), "1.000") == 0);
+  assert(strcmp(agregarSeparadorMiles("100000"), "100.000") == 0);
   assert(strcmp(agregarSeparadorMiles("1000000"), "1.000.000") == 0);
+  assert(strcmp(agregarSeparadorMiles("-100"), "-100") == 0);
+  assert(strcmp(agregarSeparadorMiles("-1000"), "-1.000") == 0);
+  assert(strcmp(agregarSeparadorMiles("-100000"), "-100.000") == 0);
+  assert(strcmp(agregarSeparadorMiles("-1000000"), "-1.000.000") == 0);
   printf("Punto 5 OK\n");
 }
 

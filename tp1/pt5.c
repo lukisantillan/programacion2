@@ -11,6 +11,20 @@ char *agregarSeparadorMiles(char num[])
     return num;
   }
 
+  // si el numero es negativo, se agrega un "-" al principio y se llama recursivamente con el resto del número
+  if (num[0] == '-')
+  {
+    char *resto = malloc((len - 1) * sizeof(char));
+    strcpy(resto, num + 1);
+    resto[len - 1] = '\0';
+
+    char *resultado = malloc((len + 1) * sizeof(char));
+    strcpy(resultado, "-");
+    strcat(resultado, agregarSeparadorMiles(resto));
+
+    return resultado;
+  }
+
   // calcular la cantidad de puntos que se van a agregar
   int puntos = (len - 1) / 3;
   int lenFinal = len + puntos;
