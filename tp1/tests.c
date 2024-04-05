@@ -87,6 +87,14 @@ void testPt7()
   printf("Punto 7 OK\n");
 }
 
+void testPt8()
+{
+  int conjunto[] = {10,3,7,1,4,2};
+  int objetivo = 7;
+  printf("resultado: %s\n", subconjuntosQueSumanN(conjunto, objetivo, 6));
+  printf("Punto 8 OK\n");
+}
+
 void testPt9()
 {
   assert(divisiblePor7(0) == true);
@@ -126,6 +134,7 @@ int main()
   testPt5();
   testPt6();
   testPt7();
+  testPt8();
   testPt9();
   testPt10();
   return 0;
