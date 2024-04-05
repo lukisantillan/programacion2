@@ -1,0 +1,32 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build tp1",
+      "type": "shell",
+      "command": "gcc -o output *.c",
+      "options": {
+        "cwd": "${workspaceFolder}/tp1"
+      },
+      "group": {
+        "kind": "build",
+      },
+      "dependsOrder": "sequence",
+    },
+    {
+      "label": "run tp1",
+      "type": "shell",
+      "command": "./output",
+      "options": {
+        "cwd": "${workspaceFolder}/tp1"
+      },
+      "group": {
+        "kind": "test",
+      },
+      "dependsOrder": "sequence",
+      "dependsOn": "build tp1",
+    }
+  ]
+}
