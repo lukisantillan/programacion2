@@ -95,7 +95,16 @@ void testPt8()
 {
   int conjunto[] = {10,3,7,1,4,2};
   int objetivo = 7;
-  printf("resultado: %s\n", subconjuntosQueSumanN(conjunto, objetivo, 6));
+  int tamano = sizeof(conjunto) / sizeof(conjunto[0]);
+
+  char* output = malloc(100 * sizeof(char));
+  output[0] = '\0';
+
+  subconjuntosQueSumanN(conjunto, tamano, objetivo, &output);
+
+  assert(strcmp(output, "{3, 4}, {7}, {1, 4, 2}") == 0);
+  free(output);
+
   printf("Punto 8 OK\n");
 }
 

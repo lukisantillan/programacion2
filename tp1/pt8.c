@@ -1,60 +1,37 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 
-// esto solamente busca subconjuntos sin repetir numeros, al final queda un subconjunto incompleto
-void encontrarSubconjuntosQueSumenN(char *resultado, int conjunto[], int n, int conjuntoOriginal[], int nOriginal)
-{
-  if (n == 0)
-  {
-    strcat(resultado, "| ");
-    encontrarSubconjuntosQueSumenN(resultado, conjunto , nOriginal, conjuntoOriginal, nOriginal);
-    return;
+void imprimirSubconjunto(int subconjunto[], int n, char **output) {
+  char buffer[100];
+  if (**output) {
+    strcat(*output, ", ");
   }
-
-  if (conjunto[0] == '\0')
-  {
-    return;
-  }
-
-  if (conjunto[0] > n)
-  {
-    encontrarSubconjuntosQueSumenN(resultado, conjunto + 1, n, conjuntoOriginal, nOriginal);
-    return;
-  }
-
-  char *primerElemento = malloc(1000);
-  sprintf(primerElemento, "%d ", conjunto[0]);
-  strcat(resultado, primerElemento);
-  encontrarSubconjuntosQueSumenN(resultado, conjunto + 1, n - conjunto[0], conjuntoOriginal, nOriginal);
-}
-
-// buscar la forma de que el tamaño no se tenga que pasar como parametro
-char *subconjuntosQueSumanN(int conjunto[], int n, int tamano)
-{
-  char *resultado = malloc(1000);
-  resultado[0] = '\0';
-
-  int conjuntoOrdenado[tamano];
-  for (int i = 0; i < tamano; i++)
-  {
-    conjuntoOrdenado[i] = conjunto[i];
-  }
-
-  for (int i = 0; i < tamano; i++)
-  {
-    for (int j = i + 1; j < tamano; j++)
-    {
-      if (conjuntoOrdenado[i] < conjuntoOrdenado[j])
-      {
-        int aux = conjuntoOrdenado[i];
-        conjuntoOrdenado[i] = conjuntoOrdenado[j];
-        conjuntoOrdenado[j] = aux;
-      }
+  strcat(*output, "{");
+  for (int i = 0; i < n; i++) {
+    sprintf(buffer, "%d", subconjunto[i]);
+    strcat(*output, buffer);
+    if (i < n - 1) {
+      strcat(*output, ", ");
     }
   }
+  strcat(*output, "}");
+}
 
-  encontrarSubconjuntosQueSumenN(resultado, conjuntoOrdenado, n, conjunto, n);
+void sumaSubconjunto(int conjunto[], int subconjunto[], int n, int tamSubconjunto, int total, int nodo, int suma, char **output) {
+  if (total == suma) {
+    imprimirSubconjunto(subconjunto, tamSubconjunto, output); 
+    return;
+  }
+  else {
+    for (int i = nodo; i < n; i++) { 
+      subconjunto[tamSubconjunto] = conjunto[i];
+      sumaSubconjunto(conjunto, subconjunto, n, tamSubconjunto + 1, total + conjunto[i], i + 1, suma, output);
+    }
+  }
+}
 
-  return resultado;
+void subconjuntosQueSumanN(int conjunto[], int tamano, int n, char **output) {
+  int subconjunto[tamano];
+  sumaSubconjunto(conjunto, subconjunto, tamano, 0, 0, 0, n, output);
 }
