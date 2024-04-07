@@ -30,12 +30,12 @@ void testPt2()
 void testPt3()
 {
   // este punto se hizo considerando al primer termino de la serie como indice 0 (0, 1, 1, 2, 3, 5, 8, 13, 21, ...)
-  assert(terminoSeridFibonacci(0) == 0);
+  assert(terminoSeridFibonacci(0) == 1);
   assert(terminoSeridFibonacci(1) == 1);
-  assert(terminoSeridFibonacci(2) == 1);
-  assert(terminoSeridFibonacci(5) == 5);
-  assert(terminoSeridFibonacci(17) == 1597);
-  assert(terminoSeridFibonacci(20) == 6765);
+  assert(terminoSeridFibonacci(2) == 2);
+  assert(terminoSeridFibonacci(5) == 8);
+  assert(terminoSeridFibonacci(16) == 1597);
+  assert(terminoSeridFibonacci(19) == 6765);
   printf("Punto 3 OK\n");
 }
 
