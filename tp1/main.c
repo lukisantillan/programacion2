@@ -104,7 +104,7 @@ void test5()
 		char *numero = (char *)malloc(100 * sizeof(char));
 		printf("\nIngrese el numero a testear:   ");
 		fflush(stdin);
-		fgets(numero, sizeof(numero), stdin);
+		fgets(numero, 100, stdin);
 		numero[strcspn(numero, "\n")] = '\0';
 		char *resultado = agregarSeparadorMiles(numero);
 		printf("%s", resultado);
@@ -256,6 +256,7 @@ void testear(int punto)
 	case 7:
 		printf("\nTesteo Funcion punto 7: OndaDigital");
 		test7();
+		break;
 	case 8:
 		printf("\nTesteo Funcion punto 8: SubconjuntosQueSumanN");
 		test8();
@@ -275,7 +276,8 @@ void testear(int punto)
 
 int main()
 {
-	while (1)
+	bool flag = true;
+	while (flag)
 	{
 		int punto;
 		printf("\n");
@@ -297,7 +299,7 @@ int main()
 		scanf("%i", &punto);
 		if (punto == 0)
 		{
-			break;
+			flag = false;
 		}
 		testear(punto);
 	}
