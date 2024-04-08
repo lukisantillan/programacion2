@@ -135,6 +135,7 @@ void test7()
 		printf("\nIngrese la secuencia de la senal (H o L): ");
 		fflush(stdin);
 		fgets(secuencia, sizeof(secuencia), stdin);
+		secuencia[strcspn(secuencia, "\n")] = '\0';
 		char *resultado = ondaDigital(secuencia);
 		printf("%s", resultado);
 		continuar(&flag);
