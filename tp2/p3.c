@@ -50,25 +50,3 @@ ResultadosMul multiplo(Lista l1, Lista l2)
     }
     return resultado;
 }
-
-int main()
-{
-    Lista l1 = rellenarLista(3);
-    printf("\nLista2");
-    Lista l2 = rellenarLista(3);
-    ResultadosMul resultado = multiplo(l1, l2);
-    if (!resultado.esMultiplo)
-    {
-        printf("\n L2 NO ES MULTIPLO DE L1");
-    }
-    else
-    {
-        printf("\n L2 ES MULTIPLO DE L1");
-        if (resultado.escalar)
-        {
-            printf("\n Es escalar en el numero %i", resultado.numEscalar);
-        }
-    }
-
-    return 0;
-}

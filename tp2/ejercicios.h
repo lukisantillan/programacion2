@@ -28,3 +28,6 @@ typedef struct
     int numEscalar;
 } ResultadosMul;
 ResultadosMul multiplo(Lista l1, Lista l2);
+
+//P4
+void CompararListas(Lista l1, Lista L2);
