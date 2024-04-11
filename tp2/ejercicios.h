@@ -19,6 +19,8 @@ float promedio(Lista l1);
 
 Resultados promedioAmbasListas(Lista l1, Lista l2);
 
+int valormaximo(Lista l, int *posicion);
+
 //P3
 
 typedef struct

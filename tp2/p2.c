@@ -61,6 +61,21 @@ Resultados promedioAmbasListas(Lista l1, Lista l2){
     return resu;
 }
 
+int valormaximo(Lista l, int *posicion){
+    int valormax=0;//guardo para comparar
+    int longitudlista= l_longitud(l);//guardo longitud para el for
+    TipoElemento elementoactual;//elemento va a tener clave y valor
+    for (int i=1;i<=longitudlista;i++){
+        elementoactual=l_recuperar(l,i);//elementoactual va a tener un puntero al elem.lista[i]
+        if(elementoactual->clave >valormax){
+            valormax=elementoactual->clave;
+            *posicion=i;
+        }
+    }
+    
+    return valormax;
+}
+
 Lista rellenarLista(int elementos)
 {
     Lista l = l_crear();
@@ -81,3 +96,4 @@ Lista rellenarLista(int elementos)
     }
     return l;
 }
+
