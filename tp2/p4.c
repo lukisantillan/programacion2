@@ -8,6 +8,8 @@ void CompararListas(Lista l1, Lista l2)
     int lon1 = l_longitud(l1);
     int lon2 = l_longitud(l2);
     int cantidad = 0;
+    Iterador itl1 = iterador(l1);
+    Iterador itl2 = iterador(l2);
     TipoElemento eleLis2, elelis1;
     if (lon1 != lon2)
     {
@@ -15,10 +17,10 @@ void CompararListas(Lista l1, Lista l2)
     }
     else
     {
-        for (int i = 1; i <= lon1; i++)
+        while(hay_siguiente(itl1))
         {
-            elelis1 = l_recuperar(l1, i);
-            eleLis2 = l_recuperar(l2, i);
+            elelis1 = siguiente(itl1);
+            eleLis2 = siguiente(itl2);
             printf("\n\t\t\t ELE 1: %i / ELE 2: %i", elelis1->clave, eleLis2->clave);
             if (elelis1->clave > eleLis2->clave)
             {
@@ -43,3 +45,16 @@ void CompararListas(Lista l1, Lista l2)
         }
     }
 }
+/*
+int main()
+{
+    Lista l1 = rellenarLista(3);
+    printf("\nLista2");
+    Lista l2 = rellenarLista(3);
+    CompararListas(l1,l2);
+    return 0;
+}
+*/
+// gcc -o output tipo_elemento.c listas_arreglos.c p4.c
+// gcc -o output tipo_elemento.c listas_cursores.c p4.c
+// gcc -o output tipo_elemento.c listas_punteros.c p4.c

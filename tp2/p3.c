@@ -10,7 +10,8 @@ ResultadosMul multiplo(Lista l1, Lista l2)
     int lon1 = l_longitud(l1);
     int lon2 = l_longitud(l2);
     TipoElemento eleLis2, Elelis1;
-    int i = 1;
+    Iterador itl1 = iterador(l1);
+    Iterador itl2 = iterador(l2);
     if (lon1 != lon2)
     {
         resultado.esMultiplo = false;
@@ -20,15 +21,14 @@ ResultadosMul multiplo(Lista l1, Lista l2)
 
     int flagPrimero = 0;
     int escalar;
-    while (i != lon1 && resultado.esMultiplo)
+    while (hay_siguiente(itl1) && resultado.esMultiplo)
     {
-        eleLis2 = l_recuperar(l2, i);
-        Elelis1 = l_recuperar(l1, i);
+        eleLis2 = siguiente(itl2);
+        Elelis1 = siguiente(itl1);
         if (eleLis2->clave % Elelis1->clave == 0 &&flagPrimero == 0)
         {
             escalar = eleLis2->clave / Elelis1->clave;
             resultado.escalar = true;
-            i++;
         }
         else if (eleLis2->clave % Elelis1->clave != 0)
         {
@@ -41,7 +41,6 @@ ResultadosMul multiplo(Lista l1, Lista l2)
             {
                 resultado.escalar = false;
             }
-            i++;
         }
     }
     if (resultado.escalar)
@@ -50,3 +49,31 @@ ResultadosMul multiplo(Lista l1, Lista l2)
     }
     return resultado;
 }
+
+/*
+int main()
+{
+    Lista l1 = rellenarLista(3);
+    printf("\nLista2");
+    Lista l2 = rellenarLista(4);
+    ResultadosMul resultado = multiplo(l1, l2);
+    if (!resultado.esMultiplo)
+    {
+        printf("\n L2 NO ES MULTIPLO DE L1");
+    }
+    else
+    {
+        printf("\n L2 ES MULTIPLO DE L1");
+        if (resultado.escalar)
+        {
+            printf("\n Es escalar en el numero %i", resultado.numEscalar);
+        }
+    }
+
+    return 0;
+}
+*/
+
+// gcc -o output tipo_elemento.c listas_arreglos.c p3.c
+// gcc -o output tipo_elemento.c listas_cursores.c p3.c
+// gcc -o output tipo_elemento.c listas_punteros.c p3.c
