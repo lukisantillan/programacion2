@@ -39,10 +39,10 @@ bool esSublista(Lista l1, Lista l2)
       {
         printf("Borrando %d\n", actualAux->clave);
         l_borrar(aux, actualAux->clave);
-        reiniciarIterador(itaux, aux);
         break;
       }
     }
+    reiniciarIterador(itaux, aux);
   }
 
   l_mostrar(aux);
@@ -55,13 +55,13 @@ bool esSublista(Lista l1, Lista l2)
 //   Lista l1 = l_crear();
 //   Lista l2 = l_crear();
 //   l_agregar(l1, te_crear(1));
-//   l_agregar(l1, te_crear(2));
 //   l_agregar(l1, te_crear(3));
+//   l_agregar(l1, te_crear(2));
 //   l_agregar(l1, te_crear(4));
 //   l_agregar(l2, te_crear(2));
-//   l_agregar(l2, te_crear(1));
-//   l_agregar(l2, te_crear(4));
 //   l_agregar(l2, te_crear(3));
+//   l_agregar(l2, te_crear(4));
+//   l_agregar(l2, te_crear(1));
 
 //   if (esSublista(l1, l2))
 //   {
@@ -74,3 +74,5 @@ bool esSublista(Lista l1, Lista l2)
 
 //   return 0;
 // }
+
+// gcc -o output ./tp2/p6.c ./tp2/listas_punteros.c ./tp2/tipo_elemento.c && ./output
