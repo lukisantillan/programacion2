@@ -9,8 +9,6 @@ typedef struct {
     float resultado2;
 } Resultados;
 
-Lista rellenarLista(int elementos);
-
 Lista verElementosRepetidos(Lista l1, Lista l2);
 
 Lista verElementosQueNoSeRepiten(Lista l1, Lista l2);
@@ -33,3 +31,7 @@ ResultadosMul multiplo(Lista l1, Lista l2);
 
 //P4
 void CompararListas(Lista l1, Lista L2);
+
+//P6
+
+bool esSublista(Lista l1, Lista l2);

@@ -1,7 +1,6 @@
 #include "ejercicios.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
 
 
 Lista verElementosRepetidos(Lista l1, Lista l2)
@@ -75,25 +74,3 @@ int valormaximo(Lista l, int *posicion){
     
     return valormax;
 }
-
-Lista rellenarLista(int elementos)
-{
-    Lista l = l_crear();
-    TipoElemento x;
-    srand(time(NULL));
-    bool blAg = true;
-    for (int i = 0; i < elementos; i++)
-    {
-        int numero_aleatorio;
-        printf("\n Ingrese el numero a agregar en la lista: ");
-        scanf("%i", &numero_aleatorio);
-        x = te_crear(numero_aleatorio);
-        blAg = blAg && l_agregar(l, x);
-    }
-    if (!blAg)
-    {
-        l = l_crear();
-    }
-    return l;
-}
-
