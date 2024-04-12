@@ -39,8 +39,6 @@ bool hay_siguiente(Iterador iterador);
 
 TipoElemento siguiente(Iterador iterador);
 
-void reiniciarIterador(Iterador iterador, Lista lista);
-
 // rellenar listas
 Lista rellenarLista(int elementos);
 

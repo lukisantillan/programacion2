@@ -166,12 +166,6 @@ TipoElemento siguiente(Iterador iterador) {
     return iterador->lista->valores[iterador->posicionActual++];
 }
 
-// funcion para que el iterador vuelva al principio
-void reiniciarIterador(Iterador iterador, Lista lista)
-{
-    iterador->posicionActual = 0;
-}
-
 // Rellenar lista
 Lista rellenarLista(int elementos)
 {
