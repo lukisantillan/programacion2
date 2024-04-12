@@ -54,6 +54,7 @@ bool esSublista(Lista l1, Lista l2)
 // {
 //   Lista l1 = l_crear();
 //   Lista l2 = l_crear();
+//   l_agregar(l1, te_crear(10));
 //   l_agregar(l1, te_crear(1));
 //   l_agregar(l1, te_crear(3));
 //   l_agregar(l1, te_crear(2));
@@ -76,3 +77,5 @@ bool esSublista(Lista l1, Lista l2)
 // }
 
 // gcc -o output ./tp2/p6.c ./tp2/listas_punteros.c ./tp2/tipo_elemento.c && ./output
+// gcc -o output ./tp2/p6.c ./tp2/listas_cursores.c ./tp2/tipo_elemento.c && ./output
+// gcc -o output ./tp2/p6.c ./tp2/listas_arreglos.c ./tp2/tipo_elemento.c && ./output
