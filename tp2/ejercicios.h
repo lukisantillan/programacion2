@@ -3,11 +3,19 @@
 #include <stdio.h>
 #include <time.h>
 
-//P2
-typedef struct {
+// P2
+typedef struct
+{
     float resultado1;
     float resultado2;
 } Resultados;
+
+typedef struct resultadoStruct
+{
+    int pos;
+    int lista;
+    int valor;
+} ResultadoValorMaximo;
 
 Lista verElementosRepetidos(Lista l1, Lista l2);
 
@@ -17,9 +25,8 @@ float promedio(Lista l1);
 
 Resultados promedioAmbasListas(Lista l1, Lista l2);
 
-int valormaximo(Lista l, int *posicion);
-
-//P3
+ResultadoValorMaximo valorMaximo(Lista l1, Lista l2);
+// P3
 
 typedef struct
 {
@@ -29,9 +36,9 @@ typedef struct
 } ResultadosMul;
 ResultadosMul multiplo(Lista l1, Lista l2);
 
-//P4
+// P4
 void CompararListas(Lista l1, Lista L2);
 
-//P6
+// P6
 
 bool esSublista(Lista l1, Lista l2);
