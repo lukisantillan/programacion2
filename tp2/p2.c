@@ -3,6 +3,11 @@
 #include "listas.h"
 #include "ejercicios.h"
 
+// Complejidad:
+// Algoritmo: O(n)
+// Listas cursores: O(n^3)
+// Listas punteros: O(n^3)
+// Listas arreglos: O(n^2)
 Lista verElementosRepetidos(Lista l1, Lista l2)
 {
     Lista listaRepetidos = l_crear();
@@ -22,6 +27,11 @@ Lista verElementosRepetidos(Lista l1, Lista l2)
     return listaRepetidos;
 }
 
+// Complejidad:
+// Algoritmo: O(n)
+// Listas cursores: O(n^3)
+// Listas punteros: O(n^3)
+// Listas arreglos: O(n^2)
 Lista verElementosQueNoSeRepiten(Lista l1, Lista l2)
 {
     Lista listaNoRepetidos = l_crear();
@@ -57,6 +67,11 @@ float promedio(Lista l1)
     return promedio;
 }
 
+// Complejidad: 
+// Algoritmo: O(n+m)
+// Listas cursores: O(n+m)
+// Listas punteros: O(n+m)
+// Listas arreglos: O(n+m)
 Resultados promedioAmbasListas(Lista l1, Lista l2)
 {
     Resultados resu;
@@ -65,6 +80,12 @@ Resultados promedioAmbasListas(Lista l1, Lista l2)
     return resu;
 }
 
+
+// Complejidad: 
+// Algoritmo: O(n+m)
+// Listas cursores: O(n^2 + m^2)
+// Listas punteros: O(n^2 + m^2)
+// Listas arreglos: O(n+m)
 ResultadoValorMaximo valorMaximo(Lista l1, Lista l2)
 {
     ResultadoValorMaximo resultado;

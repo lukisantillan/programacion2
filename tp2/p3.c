@@ -3,6 +3,11 @@
 #include <stdio.h>
 #include <time.h>
 
+// Complejidad:
+// Algoritmo: O(n)
+// Listas cursores: O(n)
+// Listas punteros: O(n)
+// Listas arreglos: O(n)
 ResultadosMul multiplo(Lista l1, Lista l2)
 {
     ResultadosMul resultado;

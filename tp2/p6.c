@@ -4,6 +4,12 @@
 #include "listas.h"
 #include "ejercicios.h"
 
+
+// Complejidad:
+// Algoritmo: O(n)
+// Listas cursores: O(n^2)
+// Listas punteros: O(n^2)
+// Listas arreglos: O(n^2)
 bool esSublista(Lista l1, Lista l2)
 {
   int len1 = l_longitud(l1);
