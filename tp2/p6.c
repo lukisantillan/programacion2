@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "listas.h"
+#include "ejercicios.h"
 
 bool esSublista(Lista l1, Lista l2)
 {
@@ -10,7 +11,7 @@ bool esSublista(Lista l1, Lista l2)
 
   Iterador itl2 = iterador(l2);
 
-  if (len2 > len1 || len1 == 0 || len2 == 0)
+  if (len2 > len1 || (len1 == 0 && len2 != 0) || (len2 == 0 && len1 != 0))
   {
     return false;
   }
