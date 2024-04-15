@@ -70,8 +70,6 @@ ResultadoValorMaximo valorMaximo(Lista l1, Lista l2)
     ResultadoValorMaximo resultado;
     resultado.valor = -99999;
     TipoElemento elementoActual;
-    Iterador itl1 = iterador(l1);
-    Iterador itl2 = iterador(l2);
 
     // lista 1
     for (int i = 1; i <= l_longitud(l1); i++)
