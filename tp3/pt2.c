@@ -3,7 +3,6 @@
 #include <string.h>
 #include <stdbool.h>
 #include "tp_pilas.h"
-
 void rellenarPila(Pila pila, int cantidadDeElementos)
 {
     TipoElemento elemento;
@@ -94,15 +93,16 @@ Pila p_ej2_eliminarclave(Pila p, int clave)
         }
 
         // Reapilo, para en el resultado poder quitar el elemento
+        bool flag = true; //flag para que sea solo en la primer ocurrencia;
         while (!p_es_vacia(aux))
         {
             ele = p_desapilar(aux);
             p_apilar(p, ele); // Linea para conservar pila original
             // Siempre que el elemento sea distinto a la clave, lo apilamos en el resultado;
-            if (ele->clave != clave)
+            if (ele->clave == clave && flag)
             {
-                p_apilar(resultado, ele);
-            }
+               flag = false;
+            } else {p_apilar(resultado, ele);}
         }
         return resultado;
     }
@@ -237,10 +237,7 @@ int main()
     printf("------------------------------\n");
     printf("EJERCICIO CANTIDAD ELEMENTOS\n");
     int resultado6 = p_ej2_cantidadelementos(pila);
-    printf("La pila tiene %d elementos\n", resultado6);
-
-
- 
+    printf("La pila tiene %d elementos\n", resultado6); 
     return 0;
 }
 */
