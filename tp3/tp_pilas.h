@@ -2,7 +2,7 @@
 #define TP_PILAS_H
 
 #include <stdbool.h>
-#include ".\pilas.h"
+#include "pilas.h"
 
 /**
     2.	Dada una pila cargada con valores al azar realizar los siguientes ejercicios:
