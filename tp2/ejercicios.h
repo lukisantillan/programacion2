@@ -1,7 +1,11 @@
-#include "listas.h"
-#include <stdlib.h>
+#ifndef EJERCICIOS_H
+#define EJERCICIOS_H
+
+#include <stdbool.h>
 #include <stdio.h>
-#include <time.h>
+#include <stdlib.h>
+#include <string.h>
+#include "listas.h"
 
 // P2
 typedef struct
@@ -42,3 +46,5 @@ void CompararListas(Lista l1, Lista L2);
 // P6
 
 bool esSublista(Lista l1, Lista l2);
+
+#endif // EJERCICIOS_H
