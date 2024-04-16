@@ -2,81 +2,120 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "ejercicios.h"
 #include "listas.h"
+#include "ejercicios.h"
 
-void testPt2()
+void waitForKey()
 {
-    Lista lista1 = l_crear();
-    Lista lista2 = l_crear();
+    // wait until user press enter
+    printf("\nPresione Enter para continuar...");
+    while (getchar() != '\n')
+        ;
+    getchar();
 
-    char elemento[100];
+    //clear screen
+    system("clear");
+}
 
+void testPt2(Lista lista1, Lista lista2)
+{
     while (1)
     {
-        printf("\n1. Rellenar lista 1: input de elementos hasta que se ingrese 'fin'");
-        printf("\n2. Rellenar lista 2: input de elementos hasta que se ingrese 'fin'");
-        printf("\n3. Ver elementos repetidos");
-        printf("\n4. Ver elementos que no se repiten");
-        printf("\n5. Ver promedio de la lista 1");
-        printf("\n6. Ver promedio de la lista 2");
-        printf("\n7. Ver resultado maximo de ambas listas");
-        printf("\n8. Salir");
+        printf("\n\n+------------------------------------------------------------------------------------------+\n");
+        printf("| Test de Ejercicio 2.:\n");
+        printf("| 1. Ver elementos repetidos\n");
+        printf("| 2. Ver elementos que no se repiten\n");
+        printf("| 3. Promedio de la lista 1\n");
+        printf("| 4. Promedio de la lista 2\n");
+        printf("| 5. Promedio de ambas listas\n");
+        printf("| 6. Valor maximo de ambas listas\n");
+        printf("| 7. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
         printf("\nIngrese una opcion: ");
         int opcion;
         scanf("%d", &opcion);
         switch (opcion)
         {
         case 1:
-            while (1)
-            {
-                printf("\nIngrese elementos de la lista 1: ");
-                scanf("%s", elemento);
-                if (strcmp(elemento, "fin") == 0)
-                {
-                    break;
-                }
-                l_agregar(lista1, (TipoElemento)strdup(elemento));
-            }
+            printf("+------------------------------------------------------------------------------------------+\n");
+            printf("| Ver elementos repetidos:\n");
+            printf("| Lista 1: \n");
+            l_mostrar(lista1);
+            printf("| Lista 2: \n");
+            l_mostrar(lista2);
+            printf("| Elementos repetidos: \n");
+            l_mostrar(verElementosRepetidos(lista1, lista2));
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
             break;
         case 2:
-            while (1)
-            {
-                printf("\nIngrese elementos de la lista 2: ");
-                scanf("%s", elemento);
-                if (strcmp(elemento, "fin") == 0)
-                {
-                    break;
-                }
-                l_agregar(lista2, (TipoElemento)strdup(elemento));
-            }
+            printf("+------------------------------------------------------------------------------------------+\n");
+            printf("| Ver elementos que no se repiten:\n");
+            printf("| Lista 1: \n");
+            l_mostrar(lista1);
+            printf("| Lista 2: \n");
+            l_mostrar(lista2);
+            printf("| Elementos que no se repiten: \n");
+            l_mostrar(verElementosQueNoSeRepiten(lista1, lista2));
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
             break;
         case 3:
-            //verElementosRepetidos(lista1, lista2);
-            //printf("\nElementos repetidos: ");
-            //l_mostrar(listaRepetidos);
+            printf("+------------------------------------------------------------------------------------------+\n");
+            printf("| Promedio de la lista 1:\n");
+            printf("| Lista 1: \n");
+            l_mostrar(lista1);
+            printf("| Promedio: %f\n", promedio(lista1));
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
             break;
         case 4:
-            //l_mostrar(verElementosQueNoSeRepiten(lista1, lista2));
+            printf("+------------------------------------------------------------------------------------------+\n");
+            printf("| Promedio de la lista 2:\n");
+            printf("| Lista 2: \n");
+            l_mostrar(lista2);
+            printf("| Promedio: %f\n", promedio(lista2));
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
             break;
         case 5:
-            //promedio1 = promedio(lista1);
-            //printf("\nPromedio de la lista 1: %.2f", promedio1);
+            printf("+------------------------------------------------------------------------------------------+\n");
+            printf("| Promedio de ambas listas:\n");
+            printf("| Lista 1: \n");
+            l_mostrar(lista1);
+            printf("| Lista 2: \n");
+            l_mostrar(lista2);
+            Resultados res = promedioAmbasListas(lista1, lista2);
+            printf("| Promedio de la lista 1: %f\n", res.resultado1);
+            printf("| Promedio de la lista 2: %f\n", res.resultado2);
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+
             break;
         case 6:
-            //promedio2 = promedio(lista2);
-            //printf("\nPromedio de la lista 2: %.2f", promedio2);
+            printf("+------------------------------------------------------------------------------------------+\n");
+            printf("| Valor maximo de ambas listas:\n");
+            printf("| Lista 1: \n");
+            l_mostrar(lista1);
+            printf("| Lista 2: \n");
+            l_mostrar(lista2);
+            ResultadoValorMaximo resMax = valorMaximo(lista1, lista2);
+            printf("| Posicion: %d\n", resMax.pos);
+            printf("| Lista: %d\n", resMax.lista);
+            printf("| Valor: %d\n", resMax.valor);
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
             break;
         case 7:
-            //Resultados resu;
-            //resu.resultado1 = promedio(lista1);
-            //resu.resultado2 = promedio(lista2);
-            //return resu;
-            break;
-        case 8:
             return;
         default:
-            printf("\nOpcion invalida");
+            printf("\nOpcion no valida");
             break;
         }
     }
@@ -84,10 +123,66 @@ void testPt2()
 
 int main()
 {
-    // Falta agregar menu principal
-    testPt2();
+    printf("+------------------------------------------------------------------------------------------+\n");
+    printf("| Para poder realizar los test de los ejericicos, primero tendrás que rellenar dos listas. |\n");
+    printf("| Ya que la mayoría de los ejercicios requieren de dos listas.                             |\n");
+    printf("+------------------------------------------------------------------------------------------+\n");
+
+    Lista lista1;
+    Lista lista2;
+
+    printf("\nIngresa cantidad de elementos para la lista 1: ");
+    int cantidad;
+    scanf("%d", &cantidad);
+    lista1 = rellenarLista(cantidad);
+    printf("\nIngresa cantidad de elementos para la lista 2: ");
+    int cantidad2;
+    scanf("%d", &cantidad2);
+    lista2 = rellenarLista(cantidad2);
+
+    printf("\n\n+------------------------------------------------------------------------------------------+\n");
+    printf("| Lista 1: \n");
+    l_mostrar(lista1);
+    printf("| Lista 2: \n");
+    l_mostrar(lista2);
+    printf("+------------------------------------------------------------------------------------------+\n");
+
+    printf("\n+------------------------------------------------------------------------------------------+\n");
+    printf("| Ahora que ya tenes las listas rellenadas, podes realizar los test de los ejercicios.    |\n");
+    printf("+------------------------------------------------------------------------------------------+\n");
+
+    while (1)
+    {
+        printf("\n\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Probar funciones del punto 2\n");
+        printf("| 2. Probar funciones del punto 3\n");
+        printf("| 3. Probar funciones del punto 4\n");
+        printf("| 4. Probar funciones del punto 6\n");
+        printf("| 5. Salir\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+        scanf("%d", &opcion);
+        switch (opcion)
+        {
+        case 1:
+            testPt2(lista1, lista2);
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            return 0;
+        default:
+            printf("\nOpcion no valida");
+            break;
+        }
+    }
 
     return 0;
 }
 
-// compile command: gcc -o output ./tp2/tipo_elemento.c ./tp2/listas_arreglos.c ./tp2/main.c
+// compile command: gcc -o output ./main.c ./listas_arreglos.c ./tipo_elemento.c ./p2.c && ./output.exe
