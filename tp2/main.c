@@ -5,6 +5,11 @@
 #include "listas.h"
 #include "ejercicios.h"
 
+void clearScreen()
+{
+    system("clear");
+}
+
 void waitForKey()
 {
     printf("\nPresione Enter para continuar...");
@@ -24,6 +29,7 @@ void printLista(Lista lista)
 
 void testPt2(Lista lista1, Lista lista2)
 {
+    clearScreen();
     while (1)
     {
         printf("\n\n+------------------------------------------------------------------------------------------+\n");
@@ -128,6 +134,7 @@ void testPt2(Lista lista1, Lista lista2)
 
 void testPt3(Lista lista1, Lista lista2)
 {
+    clearScreen();
     while (1)
     {
         printf("\n\n+------------------------------------------------------------------------------------------+\n");
@@ -173,8 +180,45 @@ void testPt3(Lista lista1, Lista lista2)
     }
 }
 
+void testPt4(Lista lista1, Lista lista2)
+{
+    clearScreen();
+    while (1)
+    {
+        printf("\n\n+------------------------------------------------------------------------------------------+\n");
+        printf("| Test de Ejercicio 4.:\n");
+        printf("| 1. Comparar listas\n");
+        printf("| 2. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+        scanf("%d", &opcion);
+        switch (opcion)
+        {
+        case 1:
+            printf("+------------------------------------------------------------------------------------------+\n");
+            printf("| Comparar listas:\n");
+            printf("| Lista 1: \n");
+            printLista(lista1);
+            printf("| Lista 2: \n");
+            printLista(lista2);
+            CompararListas(lista1, lista2);
+            printf("\n+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+            break;
+        case 2:
+            return;
+        default:
+            printf("\nOpcion no valida");
+            break;
+        }
+    }
+}
+
 int main()
 {
+    clearScreen();
     printf("+------------------------------------------------------------------------------------------+\n");
     printf("| Para poder realizar los test de los ejericicos, primero tendrás que rellenar dos listas. |\n");
     printf("| Ya que la mayoría de los ejercicios requieren de dos listas.                             |\n");
@@ -183,31 +227,73 @@ int main()
     Lista lista1;
     Lista lista2;
 
-    printf("\nIngresa cantidad de elementos para la lista 1: ");
-    int cantidad;
-    scanf("%d", &cantidad);
-    lista1 = rellenarLista(cantidad);
-    printf("\nIngresa cantidad de elementos para la lista 2: ");
-    int cantidad2;
-    scanf("%d", &cantidad2);
-    lista2 = rellenarLista(cantidad2);
+    printf("\n| ¿Desea rellenar las listas automaticamente? (s/n): ");
+    while (1)
+    {
+        char opcion;
+        scanf(" %c", &opcion);
+        if (opcion == 's')
+        {
+            lista1 = l_crear();
+            lista2 = l_crear();
+
+            printf("\nIngresa cantidad de elementos para la lista 1: ");
+            int cantidad_auto;
+            scanf("%d", &cantidad_auto);
+            for (int i = 0; i < cantidad_auto; i++)
+            {
+                int random = rand() % 100 + 1;
+                printf("%d\n", random);
+                l_agregar(lista1, te_crear(random));
+            }
+
+            printf("\nIngresa cantidad de elementos para la lista 2: ");
+            int cantidad_auto2;
+            scanf("%d", &cantidad_auto2);
+            for (int i = 0; i < cantidad_auto2; i++)
+            {
+                int random = rand() % 100 + 1;
+                printf("%d\n", random);
+                l_agregar(lista2, te_crear(random));
+            }
+
+            break;
+        }
+        else if (opcion == 'n')
+        {
+            printf("\nIngresa cantidad de elementos para la lista 1: ");
+            int cantidad;
+            scanf("%d", &cantidad);
+            lista1 = rellenarLista(cantidad);
+            printf("\nIngresa cantidad de elementos para la lista 2: ");
+            int cantidad2;
+            scanf("%d", &cantidad2);
+            lista2 = rellenarLista(cantidad2);
+
+            break;
+        }
+        else
+        {
+            printf("| Opcion no valida, intente nuevamente: ");
+        }
+    }
 
     printf("\n+------------------------------------------------------------------------------------------+\n");
     printf("| Listas rellenadas:                                                                       |\n");
     printf("+------------------------------------------------------------------------------------------+\n");
-    printf("| Lista 1: ");
+    printf("\n| Lista 1: ");
     printLista(lista1);
     printf("| Lista 2: ");
     printLista(lista2);
     printf("+------------------------------------------------------------------------------------------+\n");
 
-    printf("\n+------------------------------------------------------------------------------------------+\n");
+    printf("+------------------------------------------------------------------------------------------+\n");
     printf("| Ahora que ya tenes las listas rellenadas, podes realizar los test de los ejercicios.    |\n");
     printf("+------------------------------------------------------------------------------------------+\n");
 
     while (1)
     {
-        printf("\n\n+------------------------------------------------------------------------------------------+\n");
+        printf("\n+------------------------------------------------------------------------------------------+\n");
         printf("| 1. Probar funciones del punto 2\n");
         printf("| 2. Probar funciones del punto 3\n");
         printf("| 3. Probar funciones del punto 4\n");
@@ -226,6 +312,7 @@ int main()
             testPt3(lista1, lista2);
             break;
         case 3:
+            testPt4(lista1, lista2);
             break;
         case 4:
             break;
