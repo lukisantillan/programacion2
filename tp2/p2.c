@@ -62,7 +62,6 @@ float promedio(Lista l1)
         elementoActual = siguiente(itl1);
         suma += elementoActual->clave;
     }
-    printf("\n\t\t suma: %.5f", suma);
     float promedio = suma / lon1;
     return promedio;
 }
