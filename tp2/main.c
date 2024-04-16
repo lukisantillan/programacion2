@@ -216,6 +216,49 @@ void testPt4(Lista lista1, Lista lista2)
     }
 }
 
+void testPt6(Lista lista1, Lista lista2)
+{
+    clearScreen();
+    while (1)
+    {
+        printf("\n\n+------------------------------------------------------------------------------------------+\n");
+        printf("| Test de Ejercicio 6.:\n");
+        printf("| 1. Es sublista\n");
+        printf("| 2. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+        scanf("%d", &opcion);
+        switch (opcion)
+        {
+        case 1:
+            printf("+------------------------------------------------------------------------------------------+\n");
+            printf("| Es sublista:\n");
+            printf("| Lista 1: \n");
+            printLista(lista1);
+            printf("| Lista 2: \n");
+            printLista(lista2);
+            if (esSublista(lista1, lista2))
+            {
+                printf("| La lista 2 es sublista de la lista 1\n");
+            }
+            else
+            {
+                printf("| La lista 2 no es sublista de la lista 1\n");
+            }
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+            break;
+        case 2:
+            return;
+        default:
+            printf("\nOpcion no valida");
+            break;
+        }
+    }
+}
+
 int main()
 {
     clearScreen();
@@ -297,8 +340,9 @@ int main()
         printf("| 1. Probar funciones del punto 2\n");
         printf("| 2. Probar funciones del punto 3\n");
         printf("| 3. Probar funciones del punto 4\n");
-        printf("| 4. Probar funciones del punto 6\n");
-        printf("| 5. Salir\n");
+        printf("| 4. Probar funciones del punto 5\n");
+        printf("| 5. Probar funciones del punto 6\n");
+        printf("| 6. Salir\n");
         printf("+------------------------------------------------------------------------------------------+\n");
         printf("\nIngrese una opcion: ");
         int opcion;
@@ -315,8 +359,12 @@ int main()
             testPt4(lista1, lista2);
             break;
         case 4:
+            // testPt5(lista1, lista2);
             break;
         case 5:
+            testPt6(lista1, lista2);
+            break;
+        case 6:
             return 0;
         default:
             printf("\nOpcion no valida");
@@ -327,4 +375,4 @@ int main()
     return 0;
 }
 
-// compile command: gcc -o output ./main.c ./listas_arreglos.c ./tipo_elemento.c ./p2.c && ./output.exe
+// compile command: gcc -o output ./main.c ./listas_arreglos.c ./tipo_elemento.c ./p2.c ./p3.c ./p4.c ./p6.c && ./output.exe
