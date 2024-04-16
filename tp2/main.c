@@ -7,14 +7,19 @@
 
 void waitForKey()
 {
-    // wait until user press enter
     printf("\nPresione Enter para continuar...");
     while (getchar() != '\n')
         ;
     getchar();
 
-    //clear screen
     system("clear");
+}
+
+void printLista(Lista lista)
+{
+    printf("| ");
+    l_mostrar(lista);
+    printf("\n");
 }
 
 void testPt2(Lista lista1, Lista lista2)
@@ -40,11 +45,11 @@ void testPt2(Lista lista1, Lista lista2)
             printf("+------------------------------------------------------------------------------------------+\n");
             printf("| Ver elementos repetidos:\n");
             printf("| Lista 1: \n");
-            l_mostrar(lista1);
+            printLista(lista1);
             printf("| Lista 2: \n");
-            l_mostrar(lista2);
+            printLista(lista2);
             printf("| Elementos repetidos: \n");
-            l_mostrar(verElementosRepetidos(lista1, lista2));
+            printLista(verElementosRepetidos(lista1, lista2));
             printf("+------------------------------------------------------------------------------------------+\n");
 
             waitForKey();
@@ -53,11 +58,11 @@ void testPt2(Lista lista1, Lista lista2)
             printf("+------------------------------------------------------------------------------------------+\n");
             printf("| Ver elementos que no se repiten:\n");
             printf("| Lista 1: \n");
-            l_mostrar(lista1);
+            printLista(lista1);
             printf("| Lista 2: \n");
-            l_mostrar(lista2);
+            printLista(lista2);
             printf("| Elementos que no se repiten: \n");
-            l_mostrar(verElementosQueNoSeRepiten(lista1, lista2));
+            printLista(verElementosQueNoSeRepiten(lista1, lista2));
             printf("+------------------------------------------------------------------------------------------+\n");
 
             waitForKey();
@@ -66,7 +71,7 @@ void testPt2(Lista lista1, Lista lista2)
             printf("+------------------------------------------------------------------------------------------+\n");
             printf("| Promedio de la lista 1:\n");
             printf("| Lista 1: \n");
-            l_mostrar(lista1);
+            printLista(lista1);
             printf("| Promedio: %f\n", promedio(lista1));
             printf("+------------------------------------------------------------------------------------------+\n");
 
@@ -76,7 +81,7 @@ void testPt2(Lista lista1, Lista lista2)
             printf("+------------------------------------------------------------------------------------------+\n");
             printf("| Promedio de la lista 2:\n");
             printf("| Lista 2: \n");
-            l_mostrar(lista2);
+            printLista(lista2);
             printf("| Promedio: %f\n", promedio(lista2));
             printf("+------------------------------------------------------------------------------------------+\n");
 
@@ -86,9 +91,9 @@ void testPt2(Lista lista1, Lista lista2)
             printf("+------------------------------------------------------------------------------------------+\n");
             printf("| Promedio de ambas listas:\n");
             printf("| Lista 1: \n");
-            l_mostrar(lista1);
+            printLista(lista1);
             printf("| Lista 2: \n");
-            l_mostrar(lista2);
+            printLista(lista2);
             Resultados res = promedioAmbasListas(lista1, lista2);
             printf("| Promedio de la lista 1: %f\n", res.resultado1);
             printf("| Promedio de la lista 2: %f\n", res.resultado2);
@@ -101,9 +106,9 @@ void testPt2(Lista lista1, Lista lista2)
             printf("+------------------------------------------------------------------------------------------+\n");
             printf("| Valor maximo de ambas listas:\n");
             printf("| Lista 1: \n");
-            l_mostrar(lista1);
+            printLista(lista1);
             printf("| Lista 2: \n");
-            l_mostrar(lista2);
+            printLista(lista2);
             ResultadoValorMaximo resMax = valorMaximo(lista1, lista2);
             printf("| Posicion: %d\n", resMax.pos);
             printf("| Lista: %d\n", resMax.lista);
@@ -113,6 +118,53 @@ void testPt2(Lista lista1, Lista lista2)
             waitForKey();
             break;
         case 7:
+            return;
+        default:
+            printf("\nOpcion no valida");
+            break;
+        }
+    }
+}
+
+void testPt3(Lista lista1, Lista lista2)
+{
+    while (1)
+    {
+        printf("\n\n+------------------------------------------------------------------------------------------+\n");
+        printf("| Test de Ejercicio 3.:\n");
+        printf("| 1. Multiplo\n");
+        printf("| 2. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+        scanf("%d", &opcion);
+        switch (opcion)
+        {
+        case 1:
+            printf("+------------------------------------------------------------------------------------------+\n");
+            printf("| Multiplo:\n");
+            printf("| Lista 1: \n");
+            printLista(lista1);
+            printf("| Lista 2: \n");
+            printLista(lista2);
+            ResultadosMul resultado = multiplo(lista1, lista2);
+            if (!resultado.esMultiplo)
+            {
+                printf("| Las listas no son multiplos\n");
+            }
+            else
+            {
+                printf("| Las listas son multiplos\n");
+                if (resultado.escalar)
+                {
+                    printf("| El escalar es: %d\n", resultado.numEscalar);
+                }
+            }
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+            break;
+        case 2:
             return;
         default:
             printf("\nOpcion no valida");
@@ -140,11 +192,13 @@ int main()
     scanf("%d", &cantidad2);
     lista2 = rellenarLista(cantidad2);
 
-    printf("\n\n+------------------------------------------------------------------------------------------+\n");
-    printf("| Lista 1: \n");
-    l_mostrar(lista1);
-    printf("| Lista 2: \n");
-    l_mostrar(lista2);
+    printf("\n+------------------------------------------------------------------------------------------+\n");
+    printf("| Listas rellenadas:                                                                       |\n");
+    printf("+------------------------------------------------------------------------------------------+\n");
+    printf("| Lista 1: ");
+    printLista(lista1);
+    printf("| Lista 2: ");
+    printLista(lista2);
     printf("+------------------------------------------------------------------------------------------+\n");
 
     printf("\n+------------------------------------------------------------------------------------------+\n");
@@ -169,6 +223,7 @@ int main()
             testPt2(lista1, lista2);
             break;
         case 2:
+            testPt3(lista1, lista2);
             break;
         case 3:
             break;
