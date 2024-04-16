@@ -26,7 +26,7 @@ void CompararListas(Lista l1, Lista l2)
         {
             elelis1 = siguiente(itl1);
             eleLis2 = siguiente(itl2);
-            printf("\n\t\t\t ELE 1: %i / ELE 2: %i", elelis1->clave, eleLis2->clave);
+            printf("\n ELE 1: %i / ELE 2: %i", elelis1->clave, eleLis2->clave);
             if (elelis1->clave > eleLis2->clave)
             {
                 cantidad++;
