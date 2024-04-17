@@ -41,6 +41,10 @@ typedef struct
 } ResultadosMul;
 ResultadosMul multiplo(Lista l1, Lista l2);
 
+// P5
+int polinomio(Lista list);
+Lista rango(Lista list, double x, double y, double sumando);
+
 // P4
 void CompararListas(Lista l1, Lista L2);
 
