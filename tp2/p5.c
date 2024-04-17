@@ -117,7 +117,7 @@ while (x<=y)
 return respuesta;
 }
 
-int main()
+/*int main()
 {
     int i;
     Lista listilla;
@@ -154,4 +154,4 @@ int main()
 
 
     return 0;
-}
+}*/
