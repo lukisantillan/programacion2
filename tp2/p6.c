@@ -4,12 +4,28 @@
 #include "listas.h"
 #include "ejercicios.h"
 
+/*
+    Ejercicio 6.
+    *   Generar un algoritmo que determine si una lista es sublista de otra.  Se considera que es
+        una sublista si todos los valores de la segunda se  encuentran dentro de la primera sin
+        importar el orden o posición de cada elemento. La comparación es solo por la clave. Se
+        pide además determinar la complejidad algorítmica de la solución.
+        Ejemplo: si “L1” contiene los elementos (7, 3, 4, 5, 9, 2) y “L2” contiene los elementos
+        (4, 7, 2) se dice que “L2” es sublista de “L1”.
 
-// Complejidad:
-// Algoritmo: O(n)
-// Listas cursores: O(n^2)
-// Listas punteros: O(n^2)
-// Listas arreglos: O(n^2)
+    Compilación:
+    *   gcc -o p6.output ./p6.c ./listas_punteros.c ./tipo_elemento.c && ./p6.output
+        gcc -o p6.output ./p6.c ./listas_cursores.c ./tipo_elemento.c && ./p6.output
+        gcc -o p6.output ./p6.c ./listas_arreglos.c ./tipo_elemento.c && ./p6.output
+*/
+
+/*
+    * Determina si una lista es sublista de otra.
+    * @param Lista l1: Lista 1.
+    * @param Lista l2: Lista 2.
+    * @return bool: Si la lista 2 es sublista de la lista 1.
+    * Complejidad algoritmica: O(n)
+*/
 bool esSublista(Lista l1, Lista l2)
 {
   int len1 = l_longitud(l1);
@@ -64,7 +80,3 @@ bool esSublista(Lista l1, Lista l2)
 
 //   return 0;
 // }
-
-// gcc -o output ./tp2/p6.c ./tp2/listas_punteros.c ./tp2/tipo_elemento.c && ./output
-// gcc -o output ./tp2/p6.c ./tp2/listas_cursores.c ./tp2/tipo_elemento.c && ./output
-// gcc -o output ./tp2/p6.c ./tp2/listas_arreglos.c ./tp2/tipo_elemento.c && ./output
