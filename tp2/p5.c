@@ -1,4 +1,4 @@
-#include"./TP_2_Listas.h"
+#include"listas.h"
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -99,25 +99,33 @@ Lista rango(Lista list,double x,double y,double sumando)
     Lista respuesta;
     TipoElemento item;
    respuesta= l_crear();
+   double* valores;
+   double cantidad=(abs(y-x)/sumando)+1;
+   int i=0;
+   valores=malloc(sizeof(double)*cantidad);
+
     
 
 while (x<=y)
 {
-    
-    item=te_crear(calcular_valor_x(list,x));
+    valores[i]=calcular_valor_x(list,x);
+    item=te_crear_con_valor(i,valores);
     l_agregar(respuesta,item);
     x+=sumando;
-    
+    i++;
 }
 return respuesta;
 }
 
-/*int main()
+int main()
 {
+    int i;
     Lista listilla;
     Lista respuesta;
+    TipoElemento item;
     l_crear(respuesta);
     double resp;
+    double* array_valores;
     listilla =l_crear();
 
    polinomio(listilla);
@@ -127,10 +135,23 @@ return respuesta;
 
    l_mostrar(respuesta);
 
+  item= l_recuperar(respuesta,1);
+
+  array_valores=item->valor;
+
+  for ( i = 0; i < l_longitud(respuesta); i++)
+  {
+    printf("\n %.2f",array_valores[i]);
+  }
+  
+
+
+  
+
 
    
    
 
 
     return 0;
-}*/
+}
