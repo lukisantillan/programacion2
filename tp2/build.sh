@@ -10,6 +10,7 @@ echo "¿Qué tipo de lista desea utilizar?"
 echo "1. Arreglos"
 echo "2. Punteros"
 echo "3. Cursores"
+echo "4. Salir"
 
 read -p "Ingrese el número de la opción deseada: " option
 
@@ -23,6 +24,9 @@ case $option in
         ;;
     3)
         ./cursores.out
+        ;;
+    4)
+        echo "Saliendo..."
         ;;
     *)
         echo "Opción inválida"
