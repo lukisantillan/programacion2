@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "listas.h"
-#include "ejercicios.h"
+
+#include "./TP_2_Listas.h"
 
 /*
     Ejercicio 2.
@@ -146,17 +146,3 @@ ResultadoValorMaximo valorMaximo(Lista l1, Lista l2)
 
     return resultado;
 }
-
-/*
-int main()
-{
-    Lista l1 = rellenarLista(3);
-    printf("\nLista2");
-    Lista l2 = rellenarLista(3);
-    ResultadoValorMaximo valorMax = valorMaximo(l1, l2);
-    printf("\nValor maximo: %d", valorMax.valor);
-    printf("\nPosicion: %d", valorMax.pos);
-    printf("\nLista: %d", valorMax.lista);
-    return 0;
-}
-*/

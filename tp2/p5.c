@@ -1,9 +1,10 @@
-#include"listas.h"
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
 #include<stdbool.h>
 #include<math.h>
+
+#include "./TP_2_Listas.h"
 
 int calcular_valor_x(Lista list,int x)
 {

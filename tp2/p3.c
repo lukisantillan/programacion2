@@ -1,7 +1,8 @@
-#include "ejercicios.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+
+#include "./TP_2_Listas.h"
 
 /*
     Ejercicio 3.

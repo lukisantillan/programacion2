@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "listas.h"
-#include "ejercicios.h"
+
+#include "./TP_2_Listas.h"
 
 /*
     Ejercicio 6.
