@@ -3,11 +3,30 @@
 #include <stdio.h>
 #include <time.h>
 
-// Complejidad:
-// Algoritmo: O(n)
-// Listas cursores: O(n)
-// Listas punteros: O(n)
-// Listas arreglos: O(n)
+/*
+    Ejercicio 3.
+    *   Dadas 2 listas (L1 y L2) determinar si L2 es múltiplo de L1.  Se considera múltiplo si cada
+        elemento de L2 se divide en forma exacta por el valor L1 de la misma posición.   Usar la
+        clave como campo de datos solamente.
+            Ejemplo: si L1 = (2, 5, 7, 3) y L2 = (8, 20, 28, 12) entonces L2 es múltiplo por L1 porque
+            cada posición de L2 se divide por el valor de L1 de la misma posición en forma exacta
+            (sin decimales). Si el resultado de la división retorna el mismo valor para cada posición
+            se dice que “L2” es múltiplo de “L1” por un “escalar”.  Para este caso “4” es el escalar
+            de L1.  El algoritmo debe contemplar esta situación.
+
+    Compilación:
+    *   gcc -o p3.output ./p3.c ./listas_punteros.c ./tipo_elemento.c && ./p3.output
+        gcc -o p3.output ./p3.c ./listas_cursores.c ./tipo_elemento.c && ./p3.output
+        gcc -o p3.output ./p3.c ./listas_arreglos.c ./tipo_elemento.c && ./p3.output
+*/
+
+/*
+ * Determina si L2 es múltiplo de L1.
+ * @param Lista l1: Lista 1.
+ * @param Lista l2: Lista 2.
+ * @return ResultadosMul: Resultados de la operación.
+ * Complejidad algoritmica: O(n)
+ */
 ResultadosMul multiplo(Lista l1, Lista l2)
 {
     ResultadosMul resultado;
@@ -30,7 +49,7 @@ ResultadosMul multiplo(Lista l1, Lista l2)
     {
         eleLis2 = siguiente(itl2);
         Elelis1 = siguiente(itl1);
-        if (eleLis2->clave % Elelis1->clave == 0 &&flagPrimero == 0)
+        if (eleLis2->clave % Elelis1->clave == 0 && flagPrimero == 0)
         {
             escalar = eleLis2->clave / Elelis1->clave;
             resultado.escalar = true;
@@ -78,7 +97,3 @@ int main()
     return 0;
 }
 */
-
-// gcc -o output tipo_elemento.c listas_arreglos.c p3.c
-// gcc -o output tipo_elemento.c listas_cursores.c p3.c
-// gcc -o output tipo_elemento.c listas_punteros.c p3.c
