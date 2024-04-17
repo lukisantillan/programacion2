@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "listas.h"
-#include "ejercicios.h"
+#include "TP_2_Listas.h"
 
 void clearScreen()
 {
