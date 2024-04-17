@@ -5,7 +5,6 @@ gcc -o arreglos.out main.c elementos/tipo_elemento.c listas/listas_arreglos.c p2
 gcc -o punteros.out main.c elementos/tipo_elemento.c listas/listas_punteros.c p2.c p3.c p4.c p5.c p6.c
 gcc -o cursores.out main.c elementos/tipo_elemento.c listas/lista_cursores.c p2.c p3.c p4.c p5.c p6.c
 
-# ask for what type of list to use
 clear
 echo "¿Qué tipo de lista desea utilizar?"
 echo "1. Arreglos"
