@@ -3,11 +3,26 @@
 #include <stdio.h>
 #include <time.h>
 
-// Complejidad:
-// Algoritmo: O(n)
-// Listas cursores: O(n)
-// Listas punteros: O(n)
-// Listas arreglos: O(n)
+/*
+    Ejercicio 4.
+    *   Dadas dos listas L1 y L2, se pide compararlas siempre en el sentido L1L2. Por lo tanto
+        puede suceder que:  L1 > L2, L1 = L2 o L1 < L2.   La forma de obtener la comparación es por
+        la clave, posición a posición, donde si L1 tiene más cantidad de claves mayores que L2 se
+        considera L1 > L2, por el contrario se considera L1 < L2, o de lo contrario L1 será igual a L2.
+        Determinar la complejidad algorítmica de la solución empleada.
+
+    Compilación:
+    *   gcc -o p4.output ./p4.c ./listas_punteros.c ./tipo_elemento.c && ./p4.output
+        gcc -o p4.output ./p4.c ./listas_cursores.c ./tipo_elemento.c && ./p4.output
+        gcc -o p4.output ./p4.c ./listas_arreglos.c ./tipo_elemento.c && ./p4.output
+*/
+
+/*
+ * Compara dos listas.
+ * @param Lista l1: Lista 1.
+ * @param Lista l2: Lista 2.
+ * Complejidad algoritmica: O(n)
+ */
 void CompararListas(Lista l1, Lista l2)
 {
     int lon1 = l_longitud(l1);
@@ -22,7 +37,7 @@ void CompararListas(Lista l1, Lista l2)
     }
     else
     {
-        while(hay_siguiente(itl1))
+        while (hay_siguiente(itl1))
         {
             elelis1 = siguiente(itl1);
             eleLis2 = siguiente(itl2);
@@ -50,6 +65,7 @@ void CompararListas(Lista l1, Lista l2)
         }
     }
 }
+
 /*
 int main()
 {
@@ -60,6 +76,3 @@ int main()
     return 0;
 }
 */
-// gcc -o output tipo_elemento.c listas_arreglos.c p4.c
-// gcc -o output tipo_elemento.c listas_cursores.c p4.c
-// gcc -o output tipo_elemento.c listas_punteros.c p4.c
