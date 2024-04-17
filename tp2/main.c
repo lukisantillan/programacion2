@@ -285,7 +285,7 @@ int main()
             scanf("%d", &cantidad_auto);
             for (int i = 0; i < cantidad_auto; i++)
             {
-                int random = rand() % 100 + 1;
+                int random = rand() % 1000 + 1;
                 printf("%d\n", random);
                 l_agregar(lista1, te_crear(random));
             }
