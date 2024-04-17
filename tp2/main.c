@@ -34,12 +34,13 @@ void testPt2(Lista lista1, Lista lista2)
         printf("\n\n+------------------------------------------------------------------------------------------+\n");
         printf("| Test de Ejercicio 2.:\n");
         printf("| 1. Ver elementos repetidos\n");
-        printf("| 2. Ver elementos que no se repiten\n");
-        printf("| 3. Promedio de la lista 1\n");
-        printf("| 4. Promedio de la lista 2\n");
-        printf("| 5. Promedio de ambas listas\n");
-        printf("| 6. Valor maximo de ambas listas\n");
-        printf("| 7. Volver al menu principal\n");
+        printf("| 2. Ver elementos de la lista 1 que no se repiten en la lista 2\n");
+        printf("| 3. Ver elementos de la lista 2 que no se repiten en la lista 1\n");
+        printf("| 4. Promedio de la lista 1\n");
+        printf("| 5. Promedio de la lista 2\n");
+        printf("| 6. Promedio de ambas listas\n");
+        printf("| 7. Valor maximo de ambas listas\n");
+        printf("| 8. Volver al menu principal\n");
         printf("+------------------------------------------------------------------------------------------+\n");
         printf("\nIngrese una opcion: ");
         int opcion;
@@ -61,7 +62,7 @@ void testPt2(Lista lista1, Lista lista2)
             break;
         case 2:
             printf("+------------------------------------------------------------------------------------------+\n");
-            printf("| Ver elementos que no se repiten:\n");
+            printf("| Ver elementos de la lista 1 que no se repiten en la lista 2:\n");
             printf("| Lista 1: \n");
             printLista(lista1);
             printf("| Lista 2: \n");
@@ -74,6 +75,19 @@ void testPt2(Lista lista1, Lista lista2)
             break;
         case 3:
             printf("+------------------------------------------------------------------------------------------+\n");
+            printf("| Ver elementos de la lista 2 que no se repiten en la lista 1:\n");
+            printf("| Lista 1: \n");
+            printLista(lista1);
+            printf("| Lista 2: \n");
+            printLista(lista2);
+            printf("| Elementos que no se repiten: \n");
+            printLista(verElementosQueNoSeRepiten(lista2, lista1));
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+            break;
+        case 4:
+            printf("+------------------------------------------------------------------------------------------+\n");
             printf("| Promedio de la lista 1:\n");
             printf("| Lista 1: \n");
             printLista(lista1);
@@ -82,7 +96,7 @@ void testPt2(Lista lista1, Lista lista2)
 
             waitForKey();
             break;
-        case 4:
+        case 5:
             printf("+------------------------------------------------------------------------------------------+\n");
             printf("| Promedio de la lista 2:\n");
             printf("| Lista 2: \n");
@@ -92,7 +106,7 @@ void testPt2(Lista lista1, Lista lista2)
 
             waitForKey();
             break;
-        case 5:
+        case 6:
             printf("+------------------------------------------------------------------------------------------+\n");
             printf("| Promedio de ambas listas:\n");
             printf("| Lista 1: \n");
@@ -107,7 +121,7 @@ void testPt2(Lista lista1, Lista lista2)
             waitForKey();
 
             break;
-        case 6:
+        case 7:
             printf("+------------------------------------------------------------------------------------------+\n");
             printf("| Valor maximo de ambas listas:\n");
             printf("| Lista 1: \n");
@@ -122,7 +136,7 @@ void testPt2(Lista lista1, Lista lista2)
 
             waitForKey();
             break;
-        case 7:
+        case 8:
             return;
         default:
             printf("\nOpcion no valida");
