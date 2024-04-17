@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "tp_pilas.h"
 
+#include "../libs/pilas/pilas.h"
 
-
-Pila p_ej7_eliminarclave(Pila p1, Pila p2){
+Pila p_ej7_eliminarclave(Pila p1, Pila p2)
+{
     Pila aux1 = p_crear();
     Pila aux2 = p_crear();
     Pila resultado = p_crear();
@@ -21,7 +21,7 @@ Pila p_ej7_eliminarclave(Pila p1, Pila p2){
         while (!p_es_vacia(p2) && flag)
         {
             ele2 = p_desapilar(p2);
-            p_apilar(aux2,ele2);
+            p_apilar(aux2, ele2);
             if (ele1->clave == ele2->clave)
             {
                 p_apilar(resultado, ele1);
@@ -50,4 +50,3 @@ int main()
     return 0;
 }
 */
-

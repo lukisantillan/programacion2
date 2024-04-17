@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "tp_pilas.h"
+
+#include "../libs/pilas/pilas.h"
+
 void rellenarPila(Pila pila, int cantidadDeElementos)
 {
     TipoElemento elemento;
@@ -93,7 +95,7 @@ Pila p_ej2_eliminarclave(Pila p, int clave)
         }
 
         // Reapilo, para en el resultado poder quitar el elemento
-        bool flag = true; //flag para que sea solo en la primer ocurrencia;
+        bool flag = true; // flag para que sea solo en la primer ocurrencia;
         while (!p_es_vacia(aux))
         {
             ele = p_desapilar(aux);
@@ -101,8 +103,12 @@ Pila p_ej2_eliminarclave(Pila p, int clave)
             // Siempre que el elemento sea distinto a la clave, lo apilamos en el resultado;
             if (ele->clave == clave && flag)
             {
-               flag = false;
-            } else {p_apilar(resultado, ele);}
+                flag = false;
+            }
+            else
+            {
+                p_apilar(resultado, ele);
+            }
         }
         return resultado;
     }
@@ -184,20 +190,20 @@ Pila p_ej2_intercambiarposiciones(Pila p, int pos1, int pos2)
 int p_ej2_cantidadelementos(Pila p)
 {
     Pila aux = p_crear();
-    int acumulador= 0;
+    int acumulador = 0;
     TipoElemento ele;
-    //DESAPILO PARA SABER CUANTOS ELEMENTOS TIENE LA PILA
+    // DESAPILO PARA SABER CUANTOS ELEMENTOS TIENE LA PILA
     while (!p_es_vacia(p))
     {
         ele = p_desapilar(p);
-        p_apilar(aux,ele);
+        p_apilar(aux, ele);
         acumulador++;
     }
-    //RELLENO PILA NUEVAMENTE PARA NO PERDERLA
+    // RELLENO PILA NUEVAMENTE PARA NO PERDERLA
     while (!p_es_vacia(aux))
     {
         ele = p_desapilar(aux);
-        p_apilar(p,ele);
+        p_apilar(p, ele);
     }
     return acumulador;
 }
@@ -237,7 +243,7 @@ int main()
     printf("------------------------------\n");
     printf("EJERCICIO CANTIDAD ELEMENTOS\n");
     int resultado6 = p_ej2_cantidadelementos(pila);
-    printf("La pila tiene %d elementos\n", resultado6); 
+    printf("La pila tiene %d elementos\n", resultado6);
     return 0;
 }
 */

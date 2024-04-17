@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "tp_pilas.h"
+
+#include "../libs/pilas/pilas.h"
 
 Pila p_ej6_eliminarclave(Pila p, int clave)
 {
