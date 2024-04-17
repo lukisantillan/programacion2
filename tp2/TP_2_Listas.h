@@ -1,9 +1,6 @@
 #include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "./listas/listas.h"
-#include "./elementos/tipo_elemento.h"
+#include "listas/listas.h"
+#include "elementos/tipo_elemento.h"
 
 #ifndef TP_2_Listas
 #define TP_2_Listas
@@ -23,16 +20,12 @@ typedef struct resultadoStruct
 } ResultadoValorMaximo;
 
 Lista verElementosRepetidos(Lista l1, Lista l2);
-
 Lista verElementosQueNoSeRepiten(Lista l1, Lista l2);
-
 float promedio(Lista l1);
-
 Resultados promedioAmbasListas(Lista l1, Lista l2);
-
 ResultadoValorMaximo valorMaximo(Lista l1, Lista l2);
-// P3
 
+// P3
 typedef struct
 {
     bool esMultiplo;
@@ -41,15 +34,17 @@ typedef struct
 } ResultadosMul;
 ResultadosMul multiplo(Lista l1, Lista l2);
 
+// P4
+void CompararListas(Lista l1, Lista L2);
+
 // P5
 void hacerPolinomio(Lista list);
 Lista calcularRango(Lista list, double x, double y, double sumando);
 
-// P4
-void CompararListas(Lista l1, Lista L2);
-
 // P6
-
 bool esSublista(Lista l1, Lista l2);
+
+// Utilidades
+Lista rellenarLista(int elementos);
 
 #endif // TP_2_Listas

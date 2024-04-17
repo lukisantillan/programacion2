@@ -39,7 +39,4 @@ bool hay_siguiente(Iterador iterador);
 
 TipoElemento siguiente(Iterador iterador);
 
-// rellenar listas
-Lista rellenarLista(int elementos);
-
 #endif // LISTAS_H

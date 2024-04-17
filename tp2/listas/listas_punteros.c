@@ -255,24 +255,3 @@ TipoElemento siguiente(Iterador iterador)
     iterador->posicionActual = iterador->posicionActual->siguiente;
     return actual;
 }
-
-// Rellenar lista
-Lista rellenarLista(int elementos)
-{
-    Lista l = l_crear();
-    TipoElemento x;
-    bool blAg = true;
-    for (int i = 0; i < elementos; i++)
-    {
-        int numero_aleatorio;
-        printf("\n Ingrese el numero a agregar en la lista: ");
-        scanf("%i", &numero_aleatorio);
-        x = te_crear(numero_aleatorio);
-        blAg = blAg && l_agregar(l, x);
-    }
-    if (!blAg)
-    {
-        l = l_crear();
-    }
-    return l;
-}
