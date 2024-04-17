@@ -283,27 +283,41 @@ void testPt5()
         {
         case 1:
 
-            polinomio(list);
-            // ask user for input range
-            double x, y, sumando;
-            printf("\nIngrese el valor de x: ");
-            scanf("%lf", &x);
-            printf("\nIngrese el valor de y: ");
-            scanf("%lf", &y);
-            printf("\nIngrese el valor del sumando: ");
-            scanf("%lf", &sumando);
+            hacerPolinomio(list);
+            double desde, hasta, intervalo;
+            printf("\nIngrese el valor desde: ");
+            scanf("%lf", &desde);
+            printf("\nIngrese el valor hasta: ");
+            scanf("%lf", &hasta);
+            printf("\nIngrese el valor del intervalo: ");
+            scanf("%lf", &intervalo);
 
-            respuesta = rango(list, x, y, sumando);
+            respuesta = calcularRango(list, desde, hasta, intervalo);
+            printf("\n");
 
-            l_mostrar(respuesta);
-
-            item = l_recuperar(respuesta, 1);
-
-            array_valores = item->valor;
-
-            for (i = 0; i < l_longitud(respuesta); i++)
+            if (respuesta != NULL)
             {
-                printf("\n %.2f", array_valores[i]);
+                l_mostrar(respuesta);
+
+                item = l_recuperar(respuesta, 1);
+
+                if (item != NULL && item->valor != NULL)
+                {
+                    array_valores = item->valor;
+
+                    for (i = 0; i < l_longitud(respuesta); i++)
+                    {
+                        printf("\nValor de x = %.2f: %.2f", desde + (intervalo * i), array_valores[i]);
+                    }
+                }
+                else
+                {
+                    printf("\nError al recuperar el item");
+                }
+            }
+            else
+            {
+                printf("\nError al crear la lista de respuesta");
             }
 
             waitForKey();
