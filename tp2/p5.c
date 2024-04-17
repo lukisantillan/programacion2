@@ -1,12 +1,11 @@
-#include "listas/listas.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
 
-// Add missing import statement
 #include "elementos/tipo_elemento.h"
+#include "listas/listas.h"
 
 double calcular_valor_x(Lista list, double x)
 {
@@ -21,11 +20,10 @@ double calcular_valor_x(Lista list, double x)
         valor_de_x += pow(x, item->clave) * aux[i - 1];
     }
 
-    printf("\n el valor del polinomio en %.2f es: %.2f", x, valor_de_x);
     return valor_de_x;
 }
 
-int polinomio(Lista list)
+void hacerPolinomio(Lista list)
 {
     int grado, i, grado_multi;
     int coeficiente;
@@ -36,31 +34,25 @@ int polinomio(Lista list)
 
     i = 0;
 
-    printf("\n por favor, ingrese el grado de su polinomio: ");
-
+    printf("\nPor favor, ingrese el grado de su polinomio (0 para terminar): ");
     scanf("%i", &grado);
 
-    printf("\n por favor, ingrese el coeficiente principal de su polinomio: ");
-
+    printf("\nPor favor, ingrese el coeficiente principal de su polinomio: (0 para terminar) ");
     scanf("%i", &coeficiente);
 
     coeficientes = malloc(sizeof(int) * (grado + 1));
-
     item = te_crear_con_valor(grado, coeficientes);
 
     l_agregar(list, item);
-
     coeficientes[i] = coeficiente;
 
     while (grado > 0)
     {
         i++;
-        printf("\n por favor, ingrese el exponente de su polinomio: ");
-
+        printf("\nPor favor, ingrese el grado de su polinomio (0 para terminar): ");
         scanf("%i", &grado);
 
-        printf("\n por favor, ingrese el coeficiente  de su polinomio: ");
-
+        printf("\nPor favor, ingrese el coeficiente principal de su polinomio: (0 para terminar) ");
         scanf("%i", &coeficiente);
 
         item = te_crear_con_valor(grado, coeficientes);
@@ -76,17 +68,15 @@ int polinomio(Lista list)
 
         aux = item->valor;
 
-        printf("%ix**%i", aux[i - 1], item->clave);
+        printf("%ix^%i", aux[i - 1], item->clave);
         if (i != l_longitud(list))
         {
             printf("+");
         }
     }
-
-    return 0;
 }
 
-Lista rango(Lista list, double x, double y, double sumando)
+Lista calcularRango(Lista list, double x, double y, double sumando)
 {
     Lista respuesta;
     TipoElemento item;
@@ -104,6 +94,7 @@ Lista rango(Lista list, double x, double y, double sumando)
         x += sumando;
         i++;
     }
+
     return respuesta;
 }
 
