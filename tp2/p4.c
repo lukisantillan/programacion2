@@ -23,6 +23,9 @@
  * @param Lista l1: Lista 1.
  * @param Lista l2: Lista 2.
  * Complejidad algoritmica: O(n)
+ * Complejidad algoritmica en listas arreglo: O(n)
+ * Complejidad algoritmica en listas cursores: O(n)
+ * Complejidad algoritmica en listas punteros: O(n)
  */
 void CompararListas(Lista l1, Lista l2)
 {

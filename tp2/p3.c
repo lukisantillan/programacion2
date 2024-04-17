@@ -27,6 +27,9 @@
  * @param Lista l2: Lista 2.
  * @return ResultadosMul: Resultados de la operación.
  * Complejidad algoritmica: O(n)
+ * Complejidad algoritmica en listas arreglo: O(n)
+ * Complejidad algoritmica en listas cursores: O(n)
+ * Complejidad algoritmica en listas punteros: O(n)
  */
 ResultadosMul multiplo(Lista l1, Lista l2)
 {

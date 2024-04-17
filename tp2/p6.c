@@ -25,6 +25,9 @@
     * @param Lista l2: Lista 2.
     * @return bool: Si la lista 2 es sublista de la lista 1.
     * Complejidad algoritmica: O(n)
+    * Complejidad algoritmica en listas arreglo: O(n^2)
+    * Complejidad algoritmica en listas cursores: O(n^2)
+    * Complejidad algoritmica en listas punteros: O(n^2)
 */
 bool esSublista(Lista l1, Lista l2)
 {

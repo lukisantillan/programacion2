@@ -25,6 +25,9 @@
  * @param Lista l2: Lista 2.
  * @return Lista: Lista con los valores de L1 que están en L2.
  * Complejidad algoritmica: O(n)
+ * Complejidad algoritmica en listas arreglo: O(n^2)
+ * Complejidad algoritmica en listas cursores: O(n^3)
+ * Complejidad algoritmica en listas punteros: O(n^3)
  */
 Lista verElementosRepetidos(Lista l1, Lista l2)
 {
@@ -51,6 +54,9 @@ Lista verElementosRepetidos(Lista l1, Lista l2)
  * @param Lista l2: Lista 2.
  * @return Lista: Lista con los valores de L2 que no están en L1.
  * Complejidad algoritmica: O(n)
+ * Complejidad algoritmica en listas arreglo: O(n^2)
+ * Complejidad algoritmica en listas cursores: O(n^3)
+ * Complejidad algoritmica en listas punteros: O(n^3)
  */
 Lista verElementosQueNoSeRepiten(Lista l1, Lista l2)
 {
@@ -98,6 +104,9 @@ float promedio(Lista l1)
  * @param Lista l2: Lista 2.
  * @return Resultados: Resultados de los promedios.
  * Complejidad algoritmica: O(n+m)
+ * Complejidad algoritmica en listas arreglo: O(n+m)
+ * Complejidad algoritmica en listas cursores: O(n+m)
+ * Complejidad algoritmica en listas punteros: O(n+m)
  */
 Resultados promedioAmbasListas(Lista l1, Lista l2)
 {
@@ -113,6 +122,9 @@ Resultados promedioAmbasListas(Lista l1, Lista l2)
  * @param Lista l2: Lista 2.
  * @return ResultadoValorMaximo: Resultado del valor máximo.
  * Complejidad algoritmica: O(n+m)
+ * Complejidad algoritmica en listas arreglo: O(n+m)
+ * Complejidad algoritmica en listas cursores: O(n^2 + m^2)
+ * Complejidad algoritmica en listas punteros: O(n^2 + m^2)
  */
 ResultadoValorMaximo valorMaximo(Lista l1, Lista l2)
 {
