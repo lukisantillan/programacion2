@@ -258,6 +258,65 @@ void testPt6(Lista lista1, Lista lista2)
     }
 }
 
+void testPt5()
+{
+    clearScreen();
+
+    int i;
+    TipoElemento item;
+    Lista list = l_crear();
+    Lista respuesta = l_crear();
+    double resp;
+    double *array_valores;
+
+    while (1)
+    {
+        printf("\n\n+------------------------------------------------------------------------------------------+\n");
+        printf("| Test de Ejercicio 5.:\n");
+        printf("| 1. Polinomio\n");
+        printf("| 2. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+        scanf("%d", &opcion);
+        switch (opcion)
+        {
+        case 1:
+
+            polinomio(list);
+            // ask user for input range
+            double x, y, sumando;
+            printf("\nIngrese el valor de x: ");
+            scanf("%lf", &x);
+            printf("\nIngrese el valor de y: ");
+            scanf("%lf", &y);
+            printf("\nIngrese el valor del sumando: ");
+            scanf("%lf", &sumando);
+
+            respuesta = rango(list, x, y, sumando);
+
+            l_mostrar(respuesta);
+
+            item = l_recuperar(respuesta, 1);
+
+            array_valores = item->valor;
+
+            for (i = 0; i < l_longitud(respuesta); i++)
+            {
+                printf("\n %.2f", array_valores[i]);
+            }
+
+            waitForKey();
+            break;
+        case 2:
+            return;
+        default:
+            printf("\nOpcion no valida");
+            break;
+        }
+    }
+}
+
 int main()
 {
     clearScreen();
@@ -358,7 +417,7 @@ int main()
             testPt4(lista1, lista2);
             break;
         case 4:
-            // testPt5(lista1, lista2);
+            testPt5();
             break;
         case 5:
             testPt6(lista1, lista2);
