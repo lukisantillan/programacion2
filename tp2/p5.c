@@ -1,14 +1,15 @@
+#include"./TP_2_Listas.h"
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
 #include<stdbool.h>
 #include<math.h>
 
-#include "./TP_2_Listas.h"
 
-int calcular_valor_x(Lista list,int x)
+
+double calcular_valor_x(Lista list,double x)
 {
-    int valor_de_x=0;
+    double valor_de_x=0;
     int i;
     TipoElemento item;
     int* aux;
@@ -19,15 +20,16 @@ int calcular_valor_x(Lista list,int x)
        valor_de_x+=pow(x,item->clave)*aux[i-1];
        
     }
-    printf("valor de x: %i",valor_de_x);
-    printf("\n el valor del polinomio en %i es: %i",x,valor_de_x);
+    
+    printf("\n el valor del polinomio en %.2f es: %.2f",x,valor_de_x);
+    return valor_de_x;
 
 
 return 0;
 
 }
 
-int polinomio(Lista list,int x)
+int polinomio(Lista list)
 {
     int grado,i,grado_multi;
     int coeficiente;
@@ -88,18 +90,47 @@ int polinomio(Lista list,int x)
         
         
     }
-
-    calcular_valor_x(list,x);
     
 return 0;
 }
-/*
- int main()
+
+Lista rango(Lista list,double x,double y,double sumando)
+{
+    Lista respuesta;
+    TipoElemento item;
+   respuesta= l_crear();
+    
+
+while (x<=y)
+{
+    
+    item=te_crear(calcular_valor_x(list,x));
+    l_agregar(respuesta,item);
+    x+=sumando;
+    
+}
+return respuesta;
+}
+
+/*int main()
 {
     Lista listilla;
+    Lista respuesta;
+    l_crear(respuesta);
+    double resp;
     listilla =l_crear();
 
-   polinomio(listilla,3);
+   polinomio(listilla);
+
+   respuesta=rango(listilla,-1,1,0.5);
+   printf("\n");
+
+   l_mostrar(respuesta);
+
+
+   
+   
+
+
     return 0;
-}
-*/
+}*/
