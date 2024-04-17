@@ -1,7 +1,7 @@
 ##!/bin/bash
 
 echo "Compilando y ejecutando el programa..."
-gcc -o compiled/arreglos_circular.out main.c elementos/tipo_elemento.c colas/colas_arreglos_circular.c
+gcc -o compiled/arreglos_circular.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos_circular.c
 
 clear
 echo "Que tipo de colas desea utilzar?"
