@@ -132,5 +132,5 @@ TipoElemento c_recuperar(Cola cola)
         X = cola->valores[cola->frente];
     }
 
-    return 0;
+    return X;
 }

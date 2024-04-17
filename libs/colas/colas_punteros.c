@@ -133,4 +133,6 @@ TipoElemento c_recuperar(Cola cola)
     {
         X = cola->frente->datos;
     }
+
+    return X;
 }
