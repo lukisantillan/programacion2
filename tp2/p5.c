@@ -37,7 +37,7 @@ void hacerPolinomio(Lista list)
     printf("\nPor favor, ingrese el grado de su polinomio (0 para terminar): ");
     scanf("%i", &grado);
 
-    printf("\nPor favor, ingrese el coeficiente principal de su polinomio: (0 para terminar) ");
+    printf("\nPor favor, ingrese el coeficiente principal de su polinomio: (0 para terminar): ");
     scanf("%i", &coeficiente);
 
     coeficientes = malloc(sizeof(int) * (grado + 1));
@@ -52,7 +52,7 @@ void hacerPolinomio(Lista list)
         printf("\nPor favor, ingrese el grado de su polinomio (0 para terminar): ");
         scanf("%i", &grado);
 
-        printf("\nPor favor, ingrese el coeficiente principal de su polinomio: (0 para terminar) ");
+        printf("\nPor favor, ingrese el coeficiente principal de su polinomio: (0 para terminar): ");
         scanf("%i", &coeficiente);
 
         item = te_crear_con_valor(grado, coeficientes);
