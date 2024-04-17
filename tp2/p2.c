@@ -3,11 +3,29 @@
 #include "listas.h"
 #include "ejercicios.h"
 
-// Complejidad:
-// Algoritmo: O(n)
-// Listas cursores: O(n^3)
-// Listas punteros: O(n^3)
-// Listas arreglos: O(n^2)
+/*
+    Ejercicio 2.
+    *   Dada una 2 listas (L1 y L2) cargadas con valores al azar (en la clave) realizar los siguientes
+        ejercicios:
+            a. Que retorne una lista con los valores de L1 que no están en L2.
+            b. Que retorne una lista con los valores de L2 que no están en L1.
+            c. Que retorne una lista con todos los valores comunes a ambas listas (L1 y L2).
+            d. Que retorne los promedios de ambas listas.
+            e. Que retorne el valor máximo de ambas listas y su posición ordinal.
+
+    Compilación:
+    *   gcc -o p2.output ./p2.c ./listas_punteros.c ./tipo_elemento.c && ./p2.output
+        gcc -o p2.output ./p2.c ./listas_cursores.c ./tipo_elemento.c && ./p2.output
+        gcc -o p2.output ./p2.c ./listas_arreglos.c ./tipo_elemento.c && ./p2.output
+*/
+
+/*
+ * Retorna una lista con los valores de L1 que están en L2.
+ * @param Lista l1: Lista 1.
+ * @param Lista l2: Lista 2.
+ * @return Lista: Lista con los valores de L1 que están en L2.
+ * Complejidad algoritmica: O(n)
+ */
 Lista verElementosRepetidos(Lista l1, Lista l2)
 {
     Lista listaRepetidos = l_crear();
@@ -27,11 +45,13 @@ Lista verElementosRepetidos(Lista l1, Lista l2)
     return listaRepetidos;
 }
 
-// Complejidad:
-// Algoritmo: O(n)
-// Listas cursores: O(n^3)
-// Listas punteros: O(n^3)
-// Listas arreglos: O(n^2)
+/*
+ * Retorna una lista con los valores de L2 que no están en L1.
+ * @param Lista l1: Lista 1.
+ * @param Lista l2: Lista 2.
+ * @return Lista: Lista con los valores de L2 que no están en L1.
+ * Complejidad algoritmica: O(n)
+ */
 Lista verElementosQueNoSeRepiten(Lista l1, Lista l2)
 {
     Lista listaNoRepetidos = l_crear();
@@ -51,6 +71,12 @@ Lista verElementosQueNoSeRepiten(Lista l1, Lista l2)
     return listaNoRepetidos;
 }
 
+/*
+ * Retora el promedio de una lista.
+ * @param Lista l1: Lista.
+ * @return float: Promedio de la lista.
+ * Complejidad algoritmica: O(n)
+ */
 float promedio(Lista l1)
 {
     int lon1 = l_longitud(l1);
@@ -66,11 +92,13 @@ float promedio(Lista l1)
     return promedio;
 }
 
-// Complejidad: 
-// Algoritmo: O(n+m)
-// Listas cursores: O(n+m)
-// Listas punteros: O(n+m)
-// Listas arreglos: O(n+m)
+/*
+ * Retorna el promedio de ambas listas.
+ * @param Lista l1: Lista 1.
+ * @param Lista l2: Lista 2.
+ * @return Resultados: Resultados de los promedios.
+ * Complejidad algoritmica: O(n+m)
+ */
 Resultados promedioAmbasListas(Lista l1, Lista l2)
 {
     Resultados resu;
@@ -79,12 +107,13 @@ Resultados promedioAmbasListas(Lista l1, Lista l2)
     return resu;
 }
 
-
-// Complejidad: 
-// Algoritmo: O(n+m)
-// Listas cursores: O(n^2 + m^2)
-// Listas punteros: O(n^2 + m^2)
-// Listas arreglos: O(n+m)
+/*
+ * Retorna el valor máximo de ambas listas y su posición ordinal.
+ * @param Lista l1: Lista 1.
+ * @param Lista l2: Lista 2.
+ * @return ResultadoValorMaximo: Resultado del valor máximo.
+ * Complejidad algoritmica: O(n+m)
+ */
 ResultadoValorMaximo valorMaximo(Lista l1, Lista l2)
 {
     ResultadoValorMaximo resultado;
@@ -118,18 +147,16 @@ ResultadoValorMaximo valorMaximo(Lista l1, Lista l2)
     return resultado;
 }
 
-// int main()
-// {
-//     Lista l1 = rellenarLista(3);
-//     printf("\nLista2");
-//     Lista l2 = rellenarLista(3);
-//     ResultadoValorMaximo valorMax = valorMaximo(l1, l2);
-//     printf("\nValor maximo: %d", valorMax.valor);
-//     printf("\nPosicion: %d", valorMax.pos);
-//     printf("\nLista: %d", valorMax.lista);
-//     return 0;
-// }
-
-// gcc -o output ./tp2/tipo_elemento.c ./tp2/listas_arreglos.c ./tp2/p2.c
-// gcc -o output ./tp2/tipo_elemento.c ./tp2/listas_cursores.c ./tp2/p2.c
-// gcc -o output ./tp2/tipo_elemento.c ./tp2/listas_punteros.c ./tp2/p2.c
+/*
+int main()
+{
+    Lista l1 = rellenarLista(3);
+    printf("\nLista2");
+    Lista l2 = rellenarLista(3);
+    ResultadoValorMaximo valorMax = valorMaximo(l1, l2);
+    printf("\nValor maximo: %d", valorMax.valor);
+    printf("\nPosicion: %d", valorMax.pos);
+    printf("\nLista: %d", valorMax.lista);
+    return 0;
+}
+*/
