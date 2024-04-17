@@ -76,6 +76,16 @@ void hacerPolinomio(Lista list)
     }
 }
 
+
+/*
+ * Compara dos listas.
+ * @param Lista l1: Lista 1.
+ * @param Lista l2: Lista 2.
+ * Complejidad algoritmica: O(n^3)
+ * Complejidad algoritmica en listas arreglo: O(n^2)
+ * Complejidad algoritmica en listas cursores: O(n^3)
+ * Complejidad algoritmica en listas punteros: O(n^3)
+ */
 Lista calcularRango(Lista list, double x, double y, double sumando)
 {
     Lista respuesta;
