@@ -1,8 +1,8 @@
 ##!/bin/bash
 
 echo "Compilando y ejecutando el programa..."
-gcc -o compiled/arreglos.out main.c ../libs/elementos/tipo_elemento.c ../libs/pilas/pilas_arreglos.c
-gcc -o compiled/punteros.out main.c ../libs/elementos/tipo_elemento.c ../libs/pilas/pilas_punteros.c
+gcc -o compiled/arreglos.out ejercicios.c ../libs/elementos/tipo_elemento.c ../libs/pilas/pilas_arreglos.c
+gcc -o compiled/punteros.out ejercicios.c ../libs/elementos/tipo_elemento.c ../libs/pilas/pilas_punteros.c
 
 clear
 echo "Que tipo de pila desea utilzar?"

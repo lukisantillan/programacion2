@@ -4,7 +4,7 @@
 
 **Año:** 2024
 
-**Número de Grupo:** #
+**Número de Grupo:** 1
 
 **Integrantes del Grupo:**
 
