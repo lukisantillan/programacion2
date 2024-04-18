@@ -321,74 +321,72 @@ Pila p_ej7_elementoscomunes(Pila p1, Pila p2)
     while (p_es_vacia(aux1))
     {
         ele1 = p_desapilar(aux1);
-        p_apilar(p1,ele1);
+        p_apilar(p1, ele1);
     }
 
     return resultado;
 }
 
-/*
 int main()
 {
-    Pila pila = p_crear();
-    Pila pila2 = p_crear();
-    rellenarPila(pila, 4);
-    printf("----------------------\n");
-    rellenarPila(pila2, 4);
-    printf("\t------------------------------\n");
-    printf("\t ----- PILA PRINCIPAL ----\n");
-    p_mostrar(pila);
-    printf("\t------------------------------\n");
-    printf("EJERCICIO INTERCAMBIAR POSICIONES\n");
-    Pila resultado1 = p_ej2_intercambiarposiciones(pila, 2, 4);
-    p_mostrar(resultado1);
-    printf("------------------------------\n");
-    printf("EJERCICIO EXISTE CLAVE\n");
-    bool resultado2 = p_ej2_existeclave(pila, 3);
-    if (resultado2)
-    {
-        printf("Existe la clave en la pila\n");
-    } else {printf("No existe la clave en la pila\n");}
-    printf("------------------------------\n");
-    printf("EJERCICIO COLOCAR CLAVE\n");
-    Pila resultado3 =  p_ej2_colocarelemento(pila, 3);
-    p_mostrar(resultado3);
-    printf("------------------------------\n");
-    printf("EJERCICIO ELIMINAR CLAVE\n");
-    Pila resultado4 = p_ej2_eliminarclave(pila, 3);
-    p_mostrar(resultado4);
-    printf("------------------------------\n");
-    printf("EJERCICIO DUPLICAR PILA\n");
-    Pila resultado5 = p_ej2_duplicar(pila);
-    p_mostrar(resultado5);
-    printf("------------------------------\n");
-    printf("EJERCICIO CANTIDAD ELEMENTOS\n");
-    int resultado6 = p_ej2_cantidadelementos(pila);
-    printf("La pila tiene %d elementos\n", resultado6);
+    // Pila pila = p_crear();
+    // Pila pila2 = p_crear();
+    // rellenarPila(pila, 4);
+    // printf("----------------------\n");
+    // rellenarPila(pila2, 4);
+    // printf("\t------------------------------\n");
+    // printf("\t ----- PILA PRINCIPAL ----\n");
+    // p_mostrar(pila);
+    // printf("\t------------------------------\n");
+    // printf("EJERCICIO INTERCAMBIAR POSICIONES\n");
+    // Pila resultado1 = p_ej2_intercambiarposiciones(pila, 2, 4);
+    // p_mostrar(resultado1);
+    // printf("------------------------------\n");
+    // printf("EJERCICIO EXISTE CLAVE\n");
+    // bool resultado2 = p_ej2_existeclave(pila, 3);
+    // if (resultado2)
+    // {
+    //     printf("Existe la clave en la pila\n");
+    // } else {printf("No existe la clave en la pila\n");}
+    // printf("------------------------------\n");
+    // printf("EJERCICIO COLOCAR CLAVE\n");
+    // Pila resultado3 =  p_ej2_colocarelemento(pila, 3);
+    // p_mostrar(resultado3);
+    // printf("------------------------------\n");
+    // printf("EJERCICIO ELIMINAR CLAVE\n");
+    // Pila resultado4 = p_ej2_eliminarclave(pila, 3);
+    // p_mostrar(resultado4);
+    // printf("------------------------------\n");
+    // printf("EJERCICIO DUPLICAR PILA\n");
+    // Pila resultado5 = p_ej2_duplicar(pila);
+    // p_mostrar(resultado5);
+    // printf("------------------------------\n");
+    // printf("EJERCICIO CANTIDAD ELEMENTOS\n");
+    // int resultado6 = p_ej2_cantidadelementos(pila);
+    // printf("La pila tiene %d elementos\n", resultado6);
 
-    printf("------------------------------\n");
-    printf("EJERCICIO 3 - LISTAS IGUALES\n");
-    bool resultadoPt3 = p_ej3_iguales(pila, pila2);
-    if (resultadoPt3)
-    {
-        printf("LAS LISTAS SON IGUALES\n");
-    } else {printf("LAS LISTAS SON DIFERENTES\n");}
-    printf("\t\t- Como quedan las pilas originales despues del retorno -\n");
-    printf("\t\t\t PILA 1\n");
-    p_mostrar(pila);
-    printf("\t\t\t PILA 2\n");
-    p_mostrar(pila2);
-    printf("------------------------------\n");
-    printf("EJERCICIO 5 - INVERTIR\n");
-    Pila resultadoPt5 = p_ej5_invertir(pila);
-    p_mostrar(resultadoPt5);
-    printf("\t\t- Como queda pila oriignal despues del retorno -\n");
-    p_mostrar(pila);
-    printf("------------------------------\n");
-    printf("EJERCICIO 7 - ELEMENTOS COMUNES\n");
-    Pila resultadoPt7 = p_ej7_elementoscomunes(pila,pila2);
-    p_mostrar(resultadoPt7);
+    // printf("------------------------------\n");
+    // printf("EJERCICIO 3 - LISTAS IGUALES\n");
+    // bool resultadoPt3 = p_ej3_iguales(pila, pila2);
+    // if (resultadoPt3)
+    // {
+    //     printf("LAS LISTAS SON IGUALES\n");
+    // } else {printf("LAS LISTAS SON DIFERENTES\n");}
+    // printf("\t\t- Como quedan las pilas originales despues del retorno -\n");
+    // printf("\t\t\t PILA 1\n");
+    // p_mostrar(pila);
+    // printf("\t\t\t PILA 2\n");
+    // p_mostrar(pila2);
+    // printf("------------------------------\n");
+    // printf("EJERCICIO 5 - INVERTIR\n");
+    // Pila resultadoPt5 = p_ej5_invertir(pila);
+    // p_mostrar(resultadoPt5);
+    // printf("\t\t- Como queda pila oriignal despues del retorno -\n");
+    // p_mostrar(pila);
+    // printf("------------------------------\n");
+    // printf("EJERCICIO 7 - ELEMENTOS COMUNES\n");
+    // Pila resultadoPt7 = p_ej7_elementoscomunes(pila,pila2);
+    // p_mostrar(resultadoPt7);
 
     return 0;
 }
- */
