@@ -44,7 +44,16 @@ void testPt2(Lista lista1, Lista lista2)
         printf("+------------------------------------------------------------------------------------------+\n");
         printf("\nIngrese una opcion: ");
         int opcion;
-        scanf("%d", &opcion);
+        
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
         switch (opcion)
         {
         case 1:
@@ -157,7 +166,16 @@ void testPt3(Lista lista1, Lista lista2)
         printf("+------------------------------------------------------------------------------------------+\n");
         printf("\nIngrese una opcion: ");
         int opcion;
-        scanf("%d", &opcion);
+        
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
         switch (opcion)
         {
         case 1:
@@ -205,7 +223,16 @@ void testPt4(Lista lista1, Lista lista2)
         printf("+------------------------------------------------------------------------------------------+\n");
         printf("\nIngrese una opcion: ");
         int opcion;
-        scanf("%d", &opcion);
+        
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
         switch (opcion)
         {
         case 1:
@@ -241,7 +268,16 @@ void testPt6(Lista lista1, Lista lista2)
         printf("+------------------------------------------------------------------------------------------+\n");
         printf("\nIngrese una opcion: ");
         int opcion;
-        scanf("%d", &opcion);
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
         switch (opcion)
         {
         case 1:
@@ -292,7 +328,16 @@ void testPt5()
         printf("+------------------------------------------------------------------------------------------+\n");
         printf("\nIngrese una opcion: ");
         int opcion;
-        scanf("%d", &opcion);
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
         switch (opcion)
         {
         case 1:
@@ -300,11 +345,37 @@ void testPt5()
             hacerPolinomio(list);
             double desde, hasta, intervalo;
             printf("\nIngrese el valor desde: ");
-            scanf("%lf", &desde);
+            
+            while (scanf("%lf", &desde) != 1)
+            {
+                printf("\nError: Ingresa un número válido para el valor desde: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+
             printf("\nIngrese el valor hasta: ");
-            scanf("%lf", &hasta);
+            
+            while (scanf("%lf", &hasta) != 1)
+            {
+                printf("\nError: Ingresa un número válido para el valor hasta: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+
             printf("\nIngrese el valor del intervalo: ");
-            scanf("%lf", &intervalo);
+            
+            while (scanf("%lf", &intervalo) != 1)
+            {
+                printf("\nError: Ingresa un número válido para el valor del intervalo: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
 
             respuesta = calcularRango(list, desde, hasta, intervalo);
             printf("\n");
@@ -334,6 +405,10 @@ void testPt5()
                 printf("\nError al crear la lista de respuesta");
             }
 
+            // Reinicio las listas asi se puede volver a hacer el test
+            list = l_crear();
+            respuesta = l_crear();
+
             waitForKey();
             break;
         case 2:
@@ -355,7 +430,16 @@ Lista rellenarLista(int elementos)
     {
         int numero_aleatorio;
         printf("\nIngrese el numero a agregar en la lista: ");
-        scanf("%i", &numero_aleatorio);
+        
+        while (scanf("%d", &numero_aleatorio) != 1)
+        {
+            printf("\nError: Ingresa un número válido para el elemento: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
         x = te_crear(numero_aleatorio);
         blAg = blAg && l_agregar(l, x);
     }
@@ -389,7 +473,15 @@ int main()
 
             printf("\nIngresa cantidad de elementos para la lista 1: ");
             int cantidad_auto;
-            scanf("%d", &cantidad_auto);
+            while (scanf("%d", &cantidad_auto) != 1)
+            {
+                printf("\nError: Ingresa un número válido para la cantidad de elementos: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+
             for (int i = 0; i < cantidad_auto; i++)
             {
                 int random = rand() % 1000 + 1;
@@ -399,7 +491,16 @@ int main()
 
             printf("\nIngresa cantidad de elementos para la lista 2: ");
             int cantidad_auto2;
-            scanf("%d", &cantidad_auto2);
+            
+            while (scanf("%d", &cantidad_auto2) != 1)
+            {
+                printf("\nError: Ingresa un número válido para la cantidad de elementos: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+
             for (int i = 0; i < cantidad_auto2; i++)
             {
                 int random = rand() % 100 + 1;
@@ -413,11 +514,29 @@ int main()
         {
             printf("\nIngresa cantidad de elementos para la lista 1: ");
             int cantidad;
-            scanf("%d", &cantidad);
+            
+            while (scanf("%d", &cantidad) != 1)
+            {
+                printf("\nError: Ingresa un número válido para la cantidad de elementos: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+
             lista1 = rellenarLista(cantidad);
             printf("\nIngresa cantidad de elementos para la lista 2: ");
             int cantidad2;
-            scanf("%d", &cantidad2);
+            
+            while (scanf("%d", &cantidad2) != 1)
+            {
+                printf("\nError: Ingresa un número válido para la cantidad de elementos: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+
             lista2 = rellenarLista(cantidad2);
 
             break;
@@ -453,7 +572,16 @@ int main()
         printf("+------------------------------------------------------------------------------------------+\n");
         printf("\nIngrese una opcion: ");
         int opcion;
-        scanf("%d", &opcion);
+        
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
         switch (opcion)
         {
         case 1:

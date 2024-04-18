@@ -6,8 +6,8 @@
   - [Tabla de Contenidos](#tabla-de-contenidos)
   - [Detalles del Curso](#detalles-del-curso)
   - [¿Como compilar y ejecutar algunos de los Trabajos Prácticos?](#como-compilar-y-ejecutar-algunos-de-los-trabajos-prácticos)
-    - [Instrucciones de compilación:](#instrucciones-de-compilación)
-    - [Posibles Errores:](#posibles-errores)
+    - [Instrucciones de compilación](#instrucciones-de-compilación)
+    - [Posibles Errores](#posibles-errores)
 
 ## Detalles del Curso
 
