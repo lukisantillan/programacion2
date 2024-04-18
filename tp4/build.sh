@@ -1,5 +1,10 @@
 ##!/bin/bash
 
+echo "Verificando si existe el directorio compiled..."
+if [ ! -d "compiled" ]; then
+    mkdir compiled
+fi
+
 echo "Compilando y ejecutando el programa..."
 gcc -o compiled/arreglos_circular.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos_circular.c
 gcc -o compiled/arreglos.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos.c
