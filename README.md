@@ -1,5 +1,14 @@
 # Programación 2
 
+## Tabla de Contenidos
+
+- [Programación 2](#programación-2)
+  - [Tabla de Contenidos](#tabla-de-contenidos)
+  - [Detalles del Curso](#detalles-del-curso)
+  - [¿Como compilar y ejecutar algunos de los Trabajos Prácticos?](#como-compilar-y-ejecutar-algunos-de-los-trabajos-prácticos)
+    - [Instrucciones de compilación:](#instrucciones-de-compilación)
+    - [Posibles Errores:](#posibles-errores)
+
 ## Detalles del Curso
 
 **Año:** 2024
@@ -39,3 +48,23 @@
 8. **Valentino Aimale**
     - Legajo: 197961
     - Correo Electrónico: valeaimale@gmail.com
+
+## ¿Como compilar y ejecutar algunos de los Trabajos Prácticos?
+
+### Instrucciones de compilación:
+
+En la carpeta de cada TP se encuentra un archivo `build.sh` que se encarga de compilar el código fuente y generar un ejecutable. Para ejecutarlo, simplemente se debe correr el siguiente comando en la terminal:
+
+```bash
+./build.sh
+```
+
+Si todo sale bien, te preguntará que tipo de ejecutable deseas correr, y luego de seleccionar uno, se ejecutará el programa.
+
+### Posibles Errores:
+
+Si al intentar ejecutar el script `build.sh` te arroja un error de permisos, simplemente debes darle permisos de ejecución al archivo. Para ello, se debe correr el siguiente comando en la terminal:
+
+```bash
+chmod +x build.sh
+```
