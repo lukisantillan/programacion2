@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdbool.h>
 
+// SI A LA HORA DE COMPILAR LE SOLICITA PERMISOS, ESCRIBIR ANTES EN TERMINAL : chmod 777 build.sh
+
 #include "../libs/pilas/pilas.h"
 // FUNCION PARA RELLENAR PILA MANUALMENTE
 void rellenarPila(Pila pila, int cantidadDeElementos)
