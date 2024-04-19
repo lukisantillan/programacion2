@@ -6,8 +6,8 @@ if [ ! -d "build" ]; then
 fi
 
 echo "Compilando y ejecutando el programa..."
-gcc -o build/arreglos.out ejercicios.c ../libs/elementos/tipo_elemento.c ../libs/pilas/pilas_arreglos.c
-gcc -o build/punteros.out ejercicios.c ../libs/elementos/tipo_elemento.c ../libs/pilas/pilas_punteros.c
+gcc -o build/arreglos.out main.c ../libs/elementos/tipo_elemento.c ../libs/pilas/pilas_arreglos.c
+gcc -o build/punteros.out main.c ../libs/elementos/tipo_elemento.c ../libs/pilas/pilas_punteros.c
 
 clear
 echo "Que tipo de pila desea utilzar?"
