@@ -1,13 +1,13 @@
 ##!/bin/bash
 
-echo "Verificando si existe el directorio compiled..."
-if [ ! -d "compiled" ]; then
-    mkdir compiled
+echo "Verificando si existe el directorio build..."
+if [ ! -d "build" ]; then
+    mkdir build
 fi
 
 echo "Compilando y ejecutando el programa..."
-gcc -o compiled/arreglos.out ejercicios.c ../libs/elementos/tipo_elemento.c ../libs/pilas/pilas_arreglos.c
-gcc -o compiled/punteros.out ejercicios.c ../libs/elementos/tipo_elemento.c ../libs/pilas/pilas_punteros.c
+gcc -o build/arreglos.out ejercicios.c ../libs/elementos/tipo_elemento.c ../libs/pilas/pilas_arreglos.c
+gcc -o build/punteros.out ejercicios.c ../libs/elementos/tipo_elemento.c ../libs/pilas/pilas_punteros.c
 
 clear
 echo "Que tipo de pila desea utilzar?"
@@ -20,10 +20,10 @@ read -p "Ingrese el número de la opción deseada: " option
 clear
 case $option in
     1)
-        ./compiled/arreglos.out
+        ./build/arreglos.out
         ;;
     2)
-        ./compiled/punteros.out
+        ./build/punteros.out
         ;;
     3)
         echo "Saliendo..."
