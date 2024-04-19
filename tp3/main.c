@@ -230,6 +230,59 @@ bool p_ej3_iguales(Pila p1, Pila p2)
     }
     return resultado;
 }
+//ejercicio 4
+char* p_ej4_cambiarbase(int numero,int base)
+{
+    //validacion de base
+    if (base < 2 || base > 16) {
+        printf("La base debe estar entre 2 y 16.\n");
+        exit(EXIT_FAILURE);
+    } 
+       // Variable para almacenar el signo
+    char signo = (numero < 0) ? '-' : ' ';
+
+    // Trabajar con el valor absoluto del número
+    numero = abs(numero);
+   
+    
+    
+    
+int resto;
+TipoElemento item;
+Pila pililla;
+pililla=p_crear();
+
+
+while (numero>0)
+{resto=numero%base;
+item=te_crear(resto);
+p_apilar(pililla,item);
+numero/=base;
+
+}
+
+printf("\n");
+p_mostrar(pililla);
+
+char* numero_cambiado=malloc(sizeof(char)*p_ej2_cantidadelementos(pililla)+1);
+
+int i=0;
+  if (signo == '-') {
+        numero_cambiado[i++] = signo;
+    }
+while (!p_es_vacia(pililla))
+{
+    item=p_desapilar(pililla);
+    if (item->clave < 10) {
+            numero_cambiado[i++] = item->clave + '0'; // Convertir el dígito a su representación ASCII
+        } else {
+            numero_cambiado[i++] = item->clave - 10 + 'A'; // Convertir el dígito a su representación ASCII en hexadecimal
+        }
+}
+
+return numero_cambiado;
+
+}
 
 // Ejercicio 5
 Pila p_ej5_invertir(Pila p)
