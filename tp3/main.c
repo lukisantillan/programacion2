@@ -328,6 +328,9 @@ Pila p_ej7_elementoscomunes(Pila p1, Pila p2)
 
 int main()
 {
+    printf("Archivo compilado exitosamente\n");
+    printf("Para ejecutar los ejercicios, descomentar las lineas de codigo en el main\n");
+    printf("Esto es unicamente para comprobar que la compilacion fue exitosa\n");
     // Pila pila = p_crear();
     // Pila pila2 = p_crear();
     // rellenarPila(pila, 4);
