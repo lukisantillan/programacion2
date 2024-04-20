@@ -20,6 +20,7 @@ void rellenarPila(Pila pila, int cantidadDeElementos)
 }
 
 // Ejercicio2
+// complejidad O(2n)
 bool p_ej2_existeclave(Pila p, int clave)
 {
     bool resultado = false;
@@ -46,6 +47,7 @@ bool p_ej2_existeclave(Pila p, int clave)
     return resultado;
 }
 
+// complejidad O(2n)
 Pila p_ej2_colocarelemento(Pila p, int posicionordinal)
 {
     Pila aux = p_crear();
@@ -78,6 +80,7 @@ Pila p_ej2_colocarelemento(Pila p, int posicionordinal)
     return resultado;
 }
 
+// complejidad O(2n)
 Pila p_ej2_eliminarclave(Pila p, int clave)
 {
     bool resulBusqueda = p_ej2_existeclave(p, clave);
@@ -116,6 +119,7 @@ Pila p_ej2_eliminarclave(Pila p, int clave)
     }
 }
 
+// complejidad O(2n)
 Pila p_ej2_duplicar(Pila p)
 {
     Pila resultado = p_crear();
@@ -139,6 +143,7 @@ Pila p_ej2_duplicar(Pila p)
     return resultado;
 }
 
+// complejidad O(2n)
 Pila p_ej2_intercambiarposiciones(Pila p, int pos1, int pos2)
 {
     Pila aux = p_crear();
@@ -283,7 +288,7 @@ char *p_ej4_cambiarbase(int numero, int base)
 }
 
 // Ejercicio 5
-// complejidad: O(n)
+// complejidad: O(2n)
 Pila p_ej5_invertir(Pila p)
 {
     Pila aux = p_crear();
@@ -359,7 +364,7 @@ Pila p_ej6_eliminarclave_recursiva(Pila p, int clave)
 }
 
 // Ejercicio7
-// complejidad: O(n * m)
+// complejidad: O(2n^2 + n)
 Pila p_ej7_elementoscomunes(Pila p1, Pila p2)
 {
     Pila aux1 = p_crear();
@@ -368,12 +373,12 @@ Pila p_ej7_elementoscomunes(Pila p1, Pila p2)
     TipoElemento ele1;
     TipoElemento ele2;
 
-    while (!p_es_vacia(p1)) // O(n)
+    while (!p_es_vacia(p1))
     {
         ele1 = p_desapilar(p1);
         p_apilar(aux1, ele1);
         bool flag = true;
-        while (!p_es_vacia(p2) && flag) // O(m)
+        while (!p_es_vacia(p2) && flag)
         {
             ele2 = p_desapilar(p2);
             p_apilar(aux2, ele2);
@@ -383,7 +388,7 @@ Pila p_ej7_elementoscomunes(Pila p1, Pila p2)
             }
         }
         // APILO LO QUE DESAPILE, PARA QUE EL SIGUIENTE ELEMENTO PUEDA COMPARARSE
-        while (!p_es_vacia(aux2)) // O(n)
+        while (!p_es_vacia(aux2))
         {
             ele2 = p_desapilar(aux2);
             p_apilar(p2, ele2);
@@ -400,6 +405,7 @@ Pila p_ej7_elementoscomunes(Pila p1, Pila p2)
 }
 
 //ejercicio 8
+// complejidad: O(2n + 2n^2)
 Pila p_ej8_sacarrepetidos(Pila p)
 {
     Pila resultado = p_crear();
@@ -515,16 +521,16 @@ int main()
     // p_mostrar(resultadoPt7);
 
     // probar ejercicio 8
-    Pila pila = p_crear();
-    rellenarPila(pila, 4);
-    Pila resultado = p_ej8_sacarrepetidos(pila);
-    p_mostrar(pila);
-    p_mostrar(resultado);
-    while (!p_es_vacia(resultado))
-    {
-        TipoElemento ele = p_desapilar(resultado);
-        printf("Clave: %d, Cantidad: %d\n", ele->clave, ele->valor);
-    }
+    // Pila pila = p_crear();
+    // rellenarPila(pila, 4);
+    // Pila resultado = p_ej8_sacarrepetidos(pila);
+    // p_mostrar(pila);
+    // p_mostrar(resultado);
+    // while (!p_es_vacia(resultado))
+    // {
+    //     TipoElemento ele = p_desapilar(resultado);
+    //     printf("Clave: %d, Cantidad: %d\n", ele->clave, ele->valor);
+    // }
 
-    return 0;
+    // return 0;
 }
