@@ -399,6 +399,57 @@ Pila p_ej7_elementoscomunes(Pila p1, Pila p2)
     return resultado;
 }
 
+//ejercicio 8
+Pila p_ej8_sacarrepetidos(Pila p)
+{
+    Pila resultado = p_crear();
+    Pila aux = p_crear();
+    Pila p_original = p_crear(); // Pila original
+    while (!p_es_vacia(p))
+    {
+        TipoElemento ele = p_desapilar(p);
+        p_apilar(aux, ele); // guardar elemento en pila auxiliar
+        p_apilar(p_original, ele); // guardar elemento en una copia dee la pila original
+    }
+    while (!p_es_vacia(aux))
+    {
+        // desapilo un elemento de la pila auxiliar
+        TipoElemento ele = p_desapilar(aux);
+        int cantidad = 1;
+        // creo una segunda pila auxiliar con los valores de la pila auxiliar
+        Pila aux2 = p_crear();
+        while (!p_es_vacia(aux))
+        {
+            TipoElemento auxEle = p_desapilar(aux);
+            p_apilar(aux2, auxEle);
+        }
+        // recorro la pila auxiliar 2 para contar la cantidad de veces que se repite el elemento, y elimino los elementos repetidos de la pila auxiliar
+        while (!p_es_vacia(aux2))
+        {
+            TipoElemento auxEle = p_desapilar(aux2);
+            if (auxEle->clave == ele->clave)
+            {
+                cantidad++;
+            } else {
+                p_apilar(aux, auxEle);
+            }
+        }
+        // creo un nuevo elemento con la cantidad de veces que se repite el elemento
+        TipoElemento cuenta = te_crear_con_valor(ele->clave, cantidad);
+        // apilo el elemento en la pila resultado
+        p_apilar(resultado, cuenta);
+    }
+
+    // Restaurar pila original
+    while (!p_es_vacia(p_original))
+    {
+        TipoElemento ele = p_desapilar(p_original);
+        p_apilar(p, ele);
+    }
+
+    return resultado;
+}
+
 int main()
 {
     printf("Archivo compilado exitosamente\n");
@@ -462,6 +513,18 @@ int main()
     // printf("EJERCICIO 7 - ELEMENTOS COMUNES\n");
     // Pila resultadoPt7 = p_ej7_elementoscomunes(pila,pila2);
     // p_mostrar(resultadoPt7);
+
+    // probar ejercicio 8
+    Pila pila = p_crear();
+    rellenarPila(pila, 4);
+    Pila resultado = p_ej8_sacarrepetidos(pila);
+    p_mostrar(pila);
+    p_mostrar(resultado);
+    while (!p_es_vacia(resultado))
+    {
+        TipoElemento ele = p_desapilar(resultado);
+        printf("Clave: %d, Cantidad: %d\n", ele->clave, ele->valor);
+    }
 
     return 0;
 }
