@@ -204,6 +204,7 @@ int p_ej2_cantidadelementos(Pila p)
 }
 
 // Ejercicio 3
+//complejidad: O(n+m)
 bool p_ej3_iguales(Pila p1, Pila p2)
 {
     Pila aux = p_crear();
@@ -232,6 +233,7 @@ bool p_ej3_iguales(Pila p1, Pila p2)
 }
 
 // ejercicio 4
+// complejidad: O(n)
 char *p_ej4_cambiarbase(int numero, int base)
 {
     // validacion de base
@@ -286,6 +288,7 @@ char *p_ej4_cambiarbase(int numero, int base)
 }
 
 // Ejercicio 5
+//complejidad: O(n)
 Pila p_ej5_invertir(Pila p)
 {
     Pila aux = p_crear();
@@ -307,31 +310,32 @@ Pila p_ej5_invertir(Pila p)
 }
 
 // Ejercicio 6
+//complejidad solucion recursiva: O(n)
 Pila p_ej6_eliminarclave(Pila p, int clave)
 {
     bool resulBusqueda = p_ej2_existeclave(p, clave);
     Pila resultado = p_crear();
     Pila aux = p_crear();
     TipoElemento ele;
-    if (!resulBusqueda)
+    if (!resulBusqueda) //O(1)
     {
         return p;
     }
     else
     {
-        while (!p_es_vacia(p))
+        while (!p_es_vacia(p)) //O(n)
         {
             ele = p_desapilar(p);
             p_apilar(aux, ele);
         }
 
         // Reapilo, para en el resultado poder quitar el elemento
-        while (!p_es_vacia(aux))
+        while (!p_es_vacia(aux)) //O(n)
         {
             ele = p_desapilar(aux);
             p_apilar(p, ele); // Linea para conservar pila original
             // Siempre que el elemento sea distinto a la clave, lo apilamos en el resultado;
-            if (ele->clave != clave)
+            if (ele->clave != clave) //O(1)
             {
                 p_apilar(resultado, ele);
             }
@@ -341,6 +345,7 @@ Pila p_ej6_eliminarclave(Pila p, int clave)
 }
 
 // Ejercicio7
+//complejidad: O(n * m)
 Pila p_ej7_elementoscomunes(Pila p1, Pila p2)
 {
     Pila aux1 = p_crear();
@@ -349,12 +354,12 @@ Pila p_ej7_elementoscomunes(Pila p1, Pila p2)
     TipoElemento ele1;
     TipoElemento ele2;
 
-    while (!p_es_vacia(p1))
+    while (!p_es_vacia(p1)) //O(n)
     {
         ele1 = p_desapilar(p1);
         p_apilar(aux1, ele1);
         bool flag = true;
-        while (!p_es_vacia(p2) && flag)
+        while (!p_es_vacia(p2) && flag)//O(m)
         {
             ele2 = p_desapilar(p2);
             p_apilar(aux2, ele2);
@@ -364,7 +369,7 @@ Pila p_ej7_elementoscomunes(Pila p1, Pila p2)
             }
         }
         // APILO LO QUE DESAPILE, PARA QUE EL SIGUIENTE ELEMENTO PUEDA COMPARARSE
-        while (!p_es_vacia(aux2))
+        while (!p_es_vacia(aux2)) //O(n)
         {
             ele2 = p_desapilar(aux2);
             p_apilar(p2, ele2);
