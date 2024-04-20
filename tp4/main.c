@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "../libs/colas/colas.h"
+#include "../libs/pilas/pilas.h"
 #include "../libs/elementos/tipo_elemento.h"
 // Funciónes Extras
 
@@ -53,7 +54,7 @@ Cola c_ej2_colarelemento(Cola c, int posicionordinal)
         ele = c_desencolar(c);
         c_encolar(aux, ele);
     }
-    //ENCOLO DE NUEVO
+    // ENCOLO DE NUEVO
     while (!c_es_vacia(aux))
     {
         ele = c_desencolar(aux);
@@ -63,7 +64,7 @@ Cola c_ej2_colarelemento(Cola c, int posicionordinal)
         if (i == posicionordinal)
         {
             ele = te_crear(elemento);
-            c_encolar(resultado, ele); //ENCOLO EL ELEMENTO EN LA POS;
+            c_encolar(resultado, ele); // ENCOLO EL ELEMENTO EN LA POS;
         }
     }
     return resultado;
@@ -91,17 +92,113 @@ Cola c_ej2_sacarelemento(Cola c, int clave)
         while (!c_es_vacia(aux))
         {
             ele = c_desencolar(aux);
-            c_encolar(c, ele); 
+            c_encolar(c, ele);
             // Siempre que el elemento sea distinto a la clave, lo encolamos en el resultado;
-            if (ele->clave != clave}
-            {
-                c_encolar(resultado, ele);
-            }
+            if (ele->clave != clave
         }
-        return resultado;
+        {
+            c_encolar(resultado, ele);
+        }
     }
+    return resultado;
+}
 
+int c_ej2_contarelementos(Cola c)
+{
+    TipoElemento ele;
+    Cola aux = c_crear();
+    int resultado = 0;
+    while (!c_es_vacia(c))
+    {
+        ele = c_desencolar(c);
+        i++;
+        c_encolar(aux, ele);
+    }
+    // ENCOLO NUEVAMENTE
+    while (!c_es_vacia(aux))
+    {
+        ele = c_desencolar(aux);
+        c_encolar(c, ele);
+    }
+    return resultado;
+}
 
+Cola c_ej2_copiar(Cola c)
+{
+    Cola resultado = c_crear();
+    Cola aux - c_crear();
+    TipoElemento ele;
+    while (!c_es_vacia(c))
+    {
+        ele = c_desencolar(c);
+        c_encolar(resultado, ele);
+        c_encolar(aux, ele);
+    }
+    // ENCOLO EN LA ORIGINAL
+    while (!c_es_vacia(aux))
+    {
+        ele = c_desencolar(aux);
+        c_encolar(c, ele);
+    }
+    return resultado;
+}
+
+Cola c_ej2_invertir(Cola c)
+{
+    Cola resultado = c_crear();
+    Pila invertir = p_crear();
+    Cola aux = c_crear();
+    TipoElemento ele;
+    while (!c_es_vacia(c))
+    {
+        ele = c_desencolar(c);
+        p_apilar(invertir, ele);
+        c_encolar(aux, ele);
+    }
+    // Invierto
+    while (!p_es_vacia(invertir))
+    {
+        ele = p_desapilar(invertir);
+        c_encolar(resultado, ele);
+    }
+    // Reencolo en cola original
+    while (!c_es_vacia(aux))
+    {
+        ele = c_desencolar(aux);
+        c_encolar(c, ele);
+    }
+    return resultado;
+}
+
+// Ejercicio3
+bool c_ej3_iguales(Cola c1, Cola c2)
+{
+    Cola aux = c_crear();
+    bool resultado = true;
+    TipoElemento ele1, ele2;
+    while (!c_es_vacia(c1))
+    {
+        ele1 = c_desencolar(c1);
+        ele2 = c_desencolar(c2);
+        if (ele1->clave != ele2->clave)
+        {
+            resultado = false;
+        }
+        c_encolar(aux, ele1);
+        c_encolar(aux, ele2);
+    }
+    // ENCOLO NUEVAMENTE EN LAS COLAS
+    while (!c_es_vacia(aux))
+    {
+        ele1 = c_desencolar(aux);
+        ele2 = c_desencolar(aux);
+        c_encolar(c1, ele1);
+        c_encolar(c2, ele2);
+    }
+    return resultado;
+}
+
+// Ejercicio4
 int main()
 {
     Cola c1 = c_crear();
