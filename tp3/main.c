@@ -233,7 +233,7 @@ bool p_ej3_iguales(Pila p1, Pila p2)
 }
 
 // ejercicio 4
-// complejidad: O(n)
+// complejidad: O(log(n))
 char *p_ej4_cambiarbase(int numero, int base)
 {
     // validacion de base
