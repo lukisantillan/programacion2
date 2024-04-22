@@ -6,6 +6,7 @@
 #include "../libs/pilas/pilas.h"
 #include "./TP_3_Pilas.h"
 
+//FUNCIONES EXTRAS
 void rellenarPila(Pila pila, int cantidadDeElementos)
 {
     TipoElemento elemento;
@@ -19,6 +20,37 @@ void rellenarPila(Pila pila, int cantidadDeElementos)
     }
 }
 
+void verComplejidades()
+{
+    printf("\t\t Complejidad de los ejercicios dados\n");
+    printf("------------------------------------------\n");
+    printf("\tComplejidad ejercicio2: \n");
+    printf("\t\t - Existe clave : Lineal - O(n))\n");
+    printf("\t\t - Colocar elemento : Lineal - O(n))\n");
+    printf("\t\t - Eliminar clave : Lineal - O(n))\n");
+    printf("\t\t - Duplicar pila : Lineal - O(n))\n");
+    printf("\t\t - Intercambiar Posiciones: Lineal - O(n))\n");
+    printf("\t\t - Cantidad elementos : Lineal - O(n))\n");
+    printf("------------------------------------------\n");
+    printf("\tComplejidad ejercicio3: \n");
+    printf("\t\t - Iguales : Lineal - O(n))\n");
+    printf("------------------------------------------\n");
+    printf("\tComplejidad ejercicio4: \n");
+    printf("\t\t - Cambiar base : Logaritmico - O(log(n))\n");
+    printf("------------------------------------------\n");
+    printf("\tComplejidad ejercicio5: \n");
+    printf("\t\t - Invertir : Lineal - O(n))\n");
+    printf("------------------------------------------\n");
+    printf("\tComplejidad ejercicio6: \n");
+    printf("\t\t - Eliminar Clave : Lineal - O(n))\n");
+    printf("\t\t - Eliminar ClaveRecursiva : Lineal - O(n))\n");
+    printf("------------------------------------------\n");
+    printf("\tComplejidad ejercicio7: \n");
+    printf("\t\t - Elementos comunes: Cuadratica - O(n^2)\n");
+    printf("------------------------------------------\n");
+    printf("\tComplejidad ejercicio8: \n");
+    printf("\t\t - Sacar repetidos: Cuadratica - O(n^2)\n");
+}
 // Ejercicio2
 // complejidad O(n)
 bool p_ej2_existeclave(Pila p, int clave)
@@ -458,37 +490,6 @@ Pila p_ej8_sacarrepetidos(Pila p)
     return resultado;
 }
 
-void verComplejidades()
-{
-    printf("\t\t Complejidad de los ejercicios dados\n");
-    printf("------------------------------------------\n");
-    printf("\tComplejidad ejercicio2: \n");
-    printf("\t\t - Existe clave : Lineal - O(n))\n");
-    printf("\t\t - Colocar elemento : Lineal - O(n))\n");
-    printf("\t\t - Eliminar clave : Lineal - O(n))\n");
-    printf("\t\t - Duplicar pila : Lineal - O(n))\n");
-    printf("\t\t - Intercambiar Posiciones: Lineal - O(n))\n");
-    printf("\t\t - Cantidad elementos : Lineal - O(n))\n");
-    printf("------------------------------------------\n");
-    printf("\tComplejidad ejercicio3: \n");
-    printf("\t\t - Iguales : Lineal - O(n))\n");
-    printf("------------------------------------------\n");
-    printf("\tComplejidad ejercicio4: \n");
-    printf("\t\t - Cambiar base : Logaritmico - O(log(n))\n");
-    printf("------------------------------------------\n");
-    printf("\tComplejidad ejercicio5: \n");
-    printf("\t\t - Invertir : Lineal - O(n))\n");
-    printf("------------------------------------------\n");
-    printf("\tComplejidad ejercicio6: \n");
-    printf("\t\t - Eliminar Clave : Lineal - O(n))\n");
-    printf("\t\t - Eliminar ClaveRecursiva : Lineal - O(n))\n");
-    printf("------------------------------------------\n");
-    printf("\tComplejidad ejercicio7: \n");
-    printf("\t\t - Elementos comunes: Cuadratica - O(n^2)\n");
-    printf("------------------------------------------\n");
-    printf("\tComplejidad ejercicio8: \n");
-    printf("\t\t - Sacar repetidos: Cuadratica - O(n^2)\n");
-}
 
 int main()
 {
