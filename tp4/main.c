@@ -199,20 +199,56 @@ bool c_ej3_iguales(Cola c1, Cola c2)
     return resultado;
 }
 
+// Ejercicio 4
+
+// Complejidad: O(n)
+Cola c_ej4_colanorepetidos(Cola c)
+{
+    Cola aux = c_crear();
+    Cola repetidos = c_crear();
+    Cola resultado = c_crear();
+    while (!c_es_vacia(c))
+    {
+        TipoElemento ele = c_desencolar(c);
+        c_encolar(aux, ele);
+    }
+    while (!c_es_vacia(aux))
+    {
+        TipoElemento ele = c_desencolar(aux);
+        c_encolar(c, ele);
+        if (c_ej2_existeclave(aux, ele->clave))
+        {
+            c_encolar(repetidos, ele);
+        }
+        else if (!c_ej2_existeclave(repetidos, ele->clave))
+        {
+            c_encolar(resultado, ele);
+        }
+    }
+
+    return resultado;
+}
 
 int main()
 {
     Cola c1 = c_crear();
-    rellenarCola(c1, 5);
-    printf("EJERCICIO EXISTE CLAVE\n");
-    bool resultado1 = c_ej2_existeclave(c1, 3);
-    if (resultado1)
-    {
-        printf("Existe la clave en la pila\n");
-    }
-    else
-    {
-        printf("No existe la clave en la pila\n");
-    }
+    rellenarCola(c1, 4);
+    // printf("EJERCICIO EXISTE CLAVE\n");
+    // bool resultado1 = c_ej2_existeclave(c1, 3);
+    // if (resultado1)
+    // {
+    //     printf("Existe la clave en la pila\n");
+    // }
+    // else
+    // {
+    //     printf("No existe la clave en la pila\n");
+    // }
+
+    Cola c2 = c_ej4_colanorepetidos(c1);
+    printf("Cola 1\n");
+    c_mostrar(c1);
+    printf("Cola de no repetidos\n");
+    c_mostrar(c2);
+
     return 0;
 }
