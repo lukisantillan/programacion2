@@ -6,9 +6,31 @@ if [ ! -d "compiled" ]; then
 fi
 
 echo "Compilando y ejecutando el programa..."
-gcc -o compiled/arreglos_circular.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos_circular.c
-gcc -o compiled/arreglos.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos.c
-gcc -o compiled/punteros.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_punteros.c
+
+gcc -o compiled/arreglos_circular.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos_circular.c ../libs/pilas/pilas_arreglos.c  ../libs/listas/listas_arreglos.c 
+gcc -o compiled/arreglos.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos.c ../libs/pilas/pilas_arreglos.c ../libs/listas/listas_arreglos.c
+gcc -o compiled/punteros.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_punteros.c ../libs/pilas/pilas_arreglos.c ../libs/listas/listas_arreglos.c
+
+gcc -o compiled/arreglos_circular.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos_circular.c ../libs/pilas/pilas_arreglos.c  ../libs/listas/listas_cursores.c 
+gcc -o compiled/arreglos.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos.c ../libs/pilas/pilas_arreglos.c ../libs/listas/listas_cursores.c
+gcc -o compiled/punteros.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_punteros.c ../libs/pilas/pilas_arreglos.c ../libs/listas/listas_cursores.c
+
+gcc -o compiled/arreglos_circular.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos_circular.c ../libs/pilas/pilas_arreglos.c  ../libs/listas/listas_punteros.c 
+gcc -o compiled/arreglos.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos.c ../libs/pilas/pilas_arreglos.c ../libs/listas/listas_punteros.c
+gcc -o compiled/punteros.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_punteros.c ../libs/pilas/pilas_arreglos.c ../libs/listas/listas_punteros.c
+
+gcc -o compiled/arreglos_circular.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos_circular.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_arreglos.c 
+gcc -o compiled/arreglos.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_arreglos.c 
+gcc -o compiled/punteros.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_punteros.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_arreglos.c 
+
+gcc -o compiled/arreglos_circular.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos_circular.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_punteros.c 
+gcc -o compiled/arreglos.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_punteros.c 
+gcc -o compiled/punteros.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_punteros.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_punteros.c 
+
+gcc -o compiled/arreglos_circular.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos_circular.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_arreglos.c 
+gcc -o compiled/arreglos.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_arreglos.c 
+gcc -o compiled/punteros.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_punteros.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_arreglos.c 
+
 
 
 echo "Que tipo de colas desea utilzar?"

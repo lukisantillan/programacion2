@@ -4,8 +4,7 @@
 #include <stdbool.h>
 #include <math.h>
 
-#include "elementos/tipo_elemento.h"
-#include "listas/listas.h"
+#include "./TP_2_Listas.h"
 
 double calcular_valor_x(Lista list, double x)
 {

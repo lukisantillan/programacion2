@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../libs/colas/colas.h"
-#include "../libs/pilas/pilas.h"
-#include "../libs/elementos/tipo_elemento.h"
+#include "tp_colas.h"
 // Funciónes Extras
 
 void rellenarCola(Cola cola, int cantidadDeElementos)
@@ -76,7 +74,7 @@ Cola c_ej2_sacarelemento(Cola c, int clave)
     Cola resultado = c_crear();
     Cola aux = c_crear();
     TipoElemento ele;
-    if (!resulB)
+    if (!resultB)
     {
         return c;
     }
@@ -94,13 +92,13 @@ Cola c_ej2_sacarelemento(Cola c, int clave)
             ele = c_desencolar(aux);
             c_encolar(c, ele);
             // Siempre que el elemento sea distinto a la clave, lo encolamos en el resultado;
-            if (ele->clave != clave
+            if (ele->clave != clave)
+            {
+                c_encolar(resultado, ele);
+            }
         }
-        {
-            c_encolar(resultado, ele);
-        }
+        return resultado;
     }
-    return resultado;
 }
 
 int c_ej2_contarelementos(Cola c)
@@ -108,25 +106,23 @@ int c_ej2_contarelementos(Cola c)
     TipoElemento ele;
     Cola aux = c_crear();
     int resultado = 0;
-    while (!c_es_vacia(c))
+    if (c_es_vacia(c))
     {
-        ele = c_desencolar(c);
-        i++;
-        c_encolar(aux, ele);
+        return 0;
     }
-    // ENCOLO NUEVAMENTE
-    while (!c_es_vacia(aux))
+    else
     {
-        ele = c_desencolar(aux);
+        TipoElemento ele = c_desencolar(c);
+        int resultado = 1 + c_ej2_contarelementos(c);
         c_encolar(c, ele);
+        return resultado;
     }
-    return resultado;
 }
 
 Cola c_ej2_copiar(Cola c)
 {
     Cola resultado = c_crear();
-    Cola aux - c_crear();
+    Cola aux = c_crear();
     TipoElemento ele;
     while (!c_es_vacia(c))
     {
@@ -198,7 +194,7 @@ bool c_ej3_iguales(Cola c1, Cola c2)
     return resultado;
 }
 
-// Ejercicio4
+
 int main()
 {
     Cola c1 = c_crear();
