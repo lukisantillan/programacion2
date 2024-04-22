@@ -1,8 +1,8 @@
 ##!/bin/bash
 
-echo "Verificando si existe el directorio compiled..."
-if [ ! -d "compiled" ]; then
-    mkdir compiled
+echo "Verificando si existe el directorio build..."
+if [ ! -d "build" ]; then
+    mkdir build
 fi
 
 echo "Compilando y ejecutando el programa..."
