@@ -7,50 +7,51 @@ fi
 
 echo "Compilando y ejecutando el programa..."
 
-gcc -o compiled/arreglos_circular.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos_circular.c ../libs/pilas/pilas_arreglos.c  ../libs/listas/listas_arreglos.c 
-gcc -o compiled/arreglos.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos.c ../libs/pilas/pilas_arreglos.c ../libs/listas/listas_arreglos.c
-gcc -o compiled/punteros.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_punteros.c ../libs/pilas/pilas_arreglos.c ../libs/listas/listas_arreglos.c
+listas=""
+pilas=""
+colas=""
 
-gcc -o compiled/arreglos_circular.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos_circular.c ../libs/pilas/pilas_arreglos.c  ../libs/listas/listas_cursores.c 
-gcc -o compiled/arreglos.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos.c ../libs/pilas/pilas_arreglos.c ../libs/listas/listas_cursores.c
-gcc -o compiled/punteros.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_punteros.c ../libs/pilas/pilas_arreglos.c ../libs/listas/listas_cursores.c
+elementos="tipo_elemento.c"
+main="main.c"
 
-gcc -o compiled/arreglos_circular.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos_circular.c ../libs/pilas/pilas_arreglos.c  ../libs/listas/listas_punteros.c 
-gcc -o compiled/arreglos.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos.c ../libs/pilas/pilas_arreglos.c ../libs/listas/listas_punteros.c
-gcc -o compiled/punteros.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_punteros.c ../libs/pilas/pilas_arreglos.c ../libs/listas/listas_punteros.c
+echo "¿Qué tipo de pilas desea utilizar?"
+echo "1. Arreglos"
+echo "2. Punteros"
+echo "3. Salir"
 
-gcc -o compiled/arreglos_circular.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos_circular.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_arreglos.c 
-gcc -o compiled/arreglos.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_arreglos.c 
-gcc -o compiled/punteros.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_punteros.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_arreglos.c 
+read -p "Ingrese el número de la opción deseada: " option
+case $option in
+    1)
+        pilas="pilas_arreglos.c"
+        ;;
+    2)
+        pilas="pilas_punteros.c"
+        ;;
+    3)
+        echo "Saliendo..."
+        ;;
+    *)
+        echo "Opción inválida"
+        ;;
+esac
+clear
 
-gcc -o compiled/arreglos_circular.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos_circular.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_punteros.c 
-gcc -o compiled/arreglos.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_punteros.c 
-gcc -o compiled/punteros.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_punteros.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_punteros.c 
-
-gcc -o compiled/arreglos_circular.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos_circular.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_arreglos.c 
-gcc -o compiled/arreglos.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_arreglos.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_arreglos.c 
-gcc -o compiled/punteros.out main.c ../libs/elementos/tipo_elemento.c ../libs/colas/colas_punteros.c ../libs/pilas/pilas_punteros.c ../libs/listas/listas_arreglos.c 
-
-
-
-echo "Que tipo de colas desea utilzar?"
-echo "1. Arreglos circular"
-echo "2. Arreglos"
-echo "3. Punteros"
+echo "¿Qué tipo de listas desea utilizar?"
+echo "1. Arreglos"
+echo "2. Punteros"
+echo "3. Cursores"
 echo "4. Salir"
 
 read -p "Ingrese el número de la opción deseada: " option
-
-clear
 case $option in
     1)
-        ./compiled/arreglos_circular.out
+        listas="listas_arreglos.c"
         ;;
     2)
-        ./compiled/arreglos.out
+        listas="listas_punteros.c"
         ;;
     3)
-        ./compiled/punteros.out
+        listas="listas_cursores.c"
         ;;
     4)
         echo "Saliendo..."
@@ -59,3 +60,34 @@ case $option in
         echo "Opción inválida"
         ;;
 esac
+clear
+
+echo "¿Qué tipo de colas desea utilizar?"
+echo "1. Arreglos circular"
+echo "2. Arreglos"
+echo "3. Punteros"
+echo "4. Salir"
+
+read -p "Ingrese el número de la opción deseada: " option
+case $option in
+    1)
+        colas="colas_arreglos_circular.c"
+        ;;
+    2)
+        colas="colas_arreglos.c"
+        ;;
+    3)
+        colas="colas_punteros.c"
+        ;;
+    4)
+        echo "Saliendo..."
+        ;;
+    *)
+        echo "Opción inválida"
+        ;;
+esac
+
+clear
+
+gcc -o build/program.out $main ../libs/elementos/$elementos ../libs/listas/$listas ../libs/pilas/$pilas ../libs/colas/$colas
+./build/program.out
