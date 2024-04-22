@@ -6,7 +6,7 @@
 #include "../libs/pilas/pilas.h"
 #include "./TP_3_Pilas.h"
 
-//FUNCIONES EXTRAS
+// FUNCIONES EXTRAS
 void rellenarPila(Pila pila, int cantidadDeElementos)
 {
     TipoElemento elemento;
@@ -14,7 +14,14 @@ void rellenarPila(Pila pila, int cantidadDeElementos)
     for (int i = 0; i < cantidadDeElementos; i++)
     {
         printf("Ingrese la clave:   \n");
-        scanf("%d", &clave);
+        while (scanf("%d", &clave != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
         elemento = te_crear(clave);
         p_apilar(pila, elemento);
     }
@@ -94,7 +101,15 @@ Pila p_ej2_colocarelemento(Pila p, int posicionordinal)
     }
     // SOLICITO EL ELEMENTO A AGREGAR EN LA PILA
     printf("Ingrese el elemento que desea agregar:  \n");
-    scanf("%d", &elemento);
+    while (scanf("%d", &elemento) != 1)
+    {
+        printf("\nError: Ingresa un número válido para la opción: ");
+        while (getchar() != '\n')
+        {
+            // clear input buffer
+        }
+    }
+
     // Reapilo, para en el resultado poder agregar el elemento
     while (!p_es_vacia(aux))
     {
@@ -489,7 +504,6 @@ Pila p_ej8_sacarrepetidos(Pila p)
 
     return resultado;
 }
-
 
 int main()
 {
