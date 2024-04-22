@@ -14,6 +14,8 @@ colas=""
 elementos="tipo_elemento.c"
 main="main.c"
 
+clear
+
 echo "¿Qué tipo de pilas desea utilizar?"
 echo "1. Arreglos"
 echo "2. Punteros"
