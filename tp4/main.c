@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 #include "tp_colas.h"
 // Funciónes Extras
 
@@ -237,6 +236,49 @@ Cola c_ej4_colanorepetidos(Cola c)
     return resultado;
 }
 
+// Ejercicio 6
+Lista c_ej6_comunesapilaycola(Pila p, Cola c)
+{
+    Lista listaResultado = l_crear();
+    Cola c_aux = c_crear();
+    Pila p_aux = p_crear();
+    int pos_cola = 0, pos_pila = 0;
+    TipoElemento elem_cola, elem_pila;
+    while (!p_es_vacia(p))
+    {
+        elem_pila = p_desapilar(p);
+        pos_pila++;
+        p_apilar(p_aux, elem_pila);
+
+        while (!c_es_vacia(c))
+        {
+            elem_cola = c_desencolar(c);
+            pos_cola++;
+            c_encolar(c_aux, elem_cola);
+            if (elem_pila->clave == elem_cola->clave)
+            {
+                TipoElemento ele_resultado = te_crear(elem_pila->clave);
+                ele_resultado->valor = (char*)malloc(4 * sizeof(char));
+                sprintf(ele_resultado->valor, "%d:%d", pos_cola, pos_pila);
+                l_agregar(listaResultado, ele_resultado);
+            }
+        }
+        //REENCOLA
+        while (!c_es_vacia(c_aux))
+        {
+            elem_cola = c_desencolar(c_aux);
+            c_encolar(c, elem_cola);
+        }
+        pos_cola = 0;
+    }
+    while (!p_es_vacia(p_aux))
+    {
+        elem_pila = p_desapilar(p_aux);
+        p_apilar(p, elem_pila);
+    }
+    return listaResultado;
+}
+
 int main()
 {
     Cola c1 = c_crear();
@@ -257,6 +299,24 @@ int main()
     c_mostrar(c1);
     printf("Cola de no repetidos\n");
     c_mostrar(c2);
+
+    //main ej 6
+    //Pila p1 = p_crear();
+    //rellenarPila(p1,5);
+    //printf("----------------------\n");
+    //Cola c1 = c_crear();
+    //rellenarCola(c1,5);
+    //Lista resultado = c_ej6_comunesapilaycola(p1,c1);
+    //c_mostrar(c1);
+    //p_mostrar(p1);
+    //printf("La lista resultante es: \n");
+    //l_mostrar(resultado);
+    //Iterador iteL1 = iterador(resultado);
+    //while (hay_siguiente(iteL1))
+    //{
+    //    TipoElemento eleLis = siguiente(iteL1);
+    //    printf("El elemento es %d y sus posiciones son: %s  \n", eleLis->clave, (char *)eleLis->valor);
+    //}
 
     return 0;
 }
