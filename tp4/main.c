@@ -172,6 +172,11 @@ bool c_ej3_iguales(Cola c1, Cola c2)
     Cola aux = c_crear();
     bool resultado = true;
     TipoElemento ele1, ele2;
+      if (c_ej2_contarelementos(c1)!= c_ej2_contarelementos(c2))
+    {
+        
+        return false;
+    }
     while (!c_es_vacia(c1))
     {
         ele1 = c_desencolar(c1);
