@@ -20,7 +20,7 @@ void rellenarPila(Pila pila, int cantidadDeElementos)
 }
 
 // Ejercicio2
-// complejidad O(2n)
+// complejidad O(n)
 bool p_ej2_existeclave(Pila p, int clave)
 {
     bool resultado = false;
@@ -47,7 +47,7 @@ bool p_ej2_existeclave(Pila p, int clave)
     return resultado;
 }
 
-// complejidad O(2n)
+// complejidad O(n)
 Pila p_ej2_colocarelemento(Pila p, int posicionordinal)
 {
     Pila aux = p_crear();
@@ -80,7 +80,7 @@ Pila p_ej2_colocarelemento(Pila p, int posicionordinal)
     return resultado;
 }
 
-// complejidad O(2n)
+// complejidad O(n)
 Pila p_ej2_eliminarclave(Pila p, int clave)
 {
     bool resulBusqueda = p_ej2_existeclave(p, clave);
@@ -119,7 +119,7 @@ Pila p_ej2_eliminarclave(Pila p, int clave)
     }
 }
 
-// complejidad O(2n)
+// complejidad O(n)
 Pila p_ej2_duplicar(Pila p)
 {
     Pila resultado = p_crear();
@@ -143,7 +143,7 @@ Pila p_ej2_duplicar(Pila p)
     return resultado;
 }
 
-// complejidad O(2n)
+// complejidad O(n)
 Pila p_ej2_intercambiarposiciones(Pila p, int pos1, int pos2)
 {
     Pila aux = p_crear();
@@ -204,7 +204,7 @@ int p_ej2_cantidadelementos(Pila p)
 }
 
 // Ejercicio 3
-// complejidad: O(n+m)
+// complejidad: O(n)
 bool p_ej3_iguales(Pila p1, Pila p2)
 {
     Pila aux = p_crear();
@@ -288,7 +288,7 @@ char *p_ej4_cambiarbase(int numero, int base)
 }
 
 // Ejercicio 5
-// complejidad: O(2n)
+// complejidad: O(n)
 Pila p_ej5_invertir(Pila p)
 {
     Pila aux = p_crear();
@@ -310,7 +310,7 @@ Pila p_ej5_invertir(Pila p)
 }
 
 // Ejercicio 6
-// complejidad solucion iterativa: O(2n)
+// complejidad solucion iterativa: O(n)
 Pila p_ej6_eliminarclave(Pila p, int clave)
 {
     bool resulBusqueda = p_ej2_existeclave(p, clave);
@@ -364,7 +364,7 @@ Pila p_ej6_eliminarclave_recursiva(Pila p, int clave)
 }
 
 // Ejercicio7
-// complejidad: O(2n^2 + n)
+// complejidad: O(n^2)
 Pila p_ej7_elementoscomunes(Pila p1, Pila p2)
 {
     Pila aux1 = p_crear();
@@ -404,8 +404,8 @@ Pila p_ej7_elementoscomunes(Pila p1, Pila p2)
     return resultado;
 }
 
-//ejercicio 8
-// complejidad: O(2n + 2n^2)
+// ejercicio 8
+//  complejidad: O(n^2)
 Pila p_ej8_sacarrepetidos(Pila p)
 {
     Pila resultado = p_crear();
@@ -414,7 +414,7 @@ Pila p_ej8_sacarrepetidos(Pila p)
     while (!p_es_vacia(p))
     {
         TipoElemento ele = p_desapilar(p);
-        p_apilar(aux, ele); // guardar elemento en pila auxiliar
+        p_apilar(aux, ele);        // guardar elemento en pila auxiliar
         p_apilar(p_original, ele); // guardar elemento en una copia dee la pila original
     }
     while (!p_es_vacia(aux))
@@ -436,7 +436,9 @@ Pila p_ej8_sacarrepetidos(Pila p)
             if (auxEle->clave == ele->clave)
             {
                 cantidad++;
-            } else {
+            }
+            else
+            {
                 p_apilar(aux, auxEle);
             }
         }
@@ -454,6 +456,38 @@ Pila p_ej8_sacarrepetidos(Pila p)
     }
 
     return resultado;
+}
+
+void verComplejidades()
+{
+    printf("\t\t Complejidad de los ejercicios dados\n");
+    printf("------------------------------------------\n");
+    printf("\tComplejidad ejercicio2: \n");
+    printf("\t\t - Existe clave : Lineal - O(n))\n");
+    printf("\t\t - Colocar elemento : Lineal - O(n))\n");
+    printf("\t\t - Eliminar clave : Lineal - O(n))\n");
+    printf("\t\t - Duplicar pila : Lineal - O(n))\n");
+    printf("\t\t - Intercambiar Posiciones: Lineal - O(n))\n");
+    printf("\t\t - Cantidad elementos : Lineal - O(n))\n");
+    printf("------------------------------------------\n");
+    printf("\tComplejidad ejercicio3: \n");
+    printf("\t\t - Iguales : Lineal - O(n))\n");
+    printf("------------------------------------------\n");
+    printf("\tComplejidad ejercicio4: \n");
+    printf("\t\t - Cambiar base : Logaritmico - O(log(n))\n");
+    printf("------------------------------------------\n");
+    printf("\tComplejidad ejercicio5: \n");
+    printf("\t\t - Invertir : Lineal - O(n))\n");
+    printf("------------------------------------------\n");
+    printf("\tComplejidad ejercicio6: \n");
+    printf("\t\t - Eliminar Clave : Lineal - O(n))\n");
+    printf("\t\t - Eliminar ClaveRecursiva : Lineal - O(n))\n");
+    printf("------------------------------------------\n");
+    printf("\tComplejidad ejercicio7: \n");
+    printf("\t\t - Elementos comunes: Cuadratica - O(n^2)\n");
+    printf("------------------------------------------\n");
+    printf("\tComplejidad ejercicio8: \n");
+    printf("\t\t - Sacar repetidos: Cuadratica - O(n^2)\n");
 }
 
 int main()
