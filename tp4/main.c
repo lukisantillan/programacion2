@@ -10,8 +10,16 @@ void rellenarCola(Cola cola, int cantidadDeElementos)
     int clave;
     for (int i = 0; i < cantidadDeElementos; i++)
     {
-        printf("Ingrese la clave:   \n");
-        scanf("%d", &clave);
+
+        printf("Ingrese la clave: ");
+        while (scanf("%d", &clave) != 1)
+        {
+            printf("\nError: Ingresa un número válido: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
         elemento = te_crear(clave);
         c_encolar(cola, elemento);
     }
