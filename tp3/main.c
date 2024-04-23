@@ -337,32 +337,33 @@ int p_ej2_cantidadelementos(Pila p)
 
 // // Ejercicio 3
 // // complejidad: O(n)
-// bool p_ej3_iguales(Pila p1, Pila p2)
-// {
-//     Pila aux = p_crear();
-//     TipoElemento ele1, ele2;
-//     bool resultado = true;
-//     while (!p_es_vacia(p1) && !p_es_vacia(p2) && resultado)
-//     {
-//         ele1 = p_desapilar(p1);
-//         ele2 = p_desapilar(p2);
-//         p_apilar(aux, ele1);
-//         p_apilar(aux, ele2);
-//         if (ele1->clave != ele2->clave)
-//         {
-//             resultado = false;
-//         }
-//     }
-//     // Hago otro ciclo para reapilar lo que saque de las pilas originales.
-//     while (!p_es_vacia(aux))
-//     {
-//         ele1 = p_desapilar(aux);
-//         ele2 = p_desapilar(aux);
-//         p_apilar(p2, ele1);
-//         p_apilar(p1, ele2);
-//     }
-//     return resultado;
-// }
+bool p_ej3_iguales(Pila p1, Pila p2)
+{
+    Pila aux = p_crear();
+    TipoElemento ele1, ele2;
+    bool resultado = true;
+    while (!p_es_vacia(p1) && !p_es_vacia(p2) && resultado)
+    {
+        ele1 = p_desapilar(p1);
+        ele2 = p_desapilar(p2);
+        p_apilar(aux, ele1);
+        p_apilar(aux, ele2);
+        if (ele1->clave != ele2->clave)
+        {
+            resultado = false;
+        }
+    }
+    // Hago otro ciclo para reapilar lo que saque de las pilas originales.
+    while (!p_es_vacia(aux))
+    {
+        ele1 = p_desapilar(aux);
+        ele2 = p_desapilar(aux);
+        p_apilar(p2, ele1);
+        p_apilar(p1, ele2);
+    }
+
+    return resultado;
+}
 
 // // ejercicio 4
 // // complejidad: O(log(n))
@@ -758,6 +759,65 @@ void testPt2()
     }
 }
 
+void testPt3()
+{
+    clearScreen();
+    Pila pila1 = crearPila();
+    Pila pila2 = crearPila();
+
+    bool resultado;
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("\n| Pila 1: ");
+        printPila(pila1);
+        printf("\n| Pila 2: ");
+        printPila(pila2);
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Verificar si las pilas son iguales\n");
+        printf("| 2. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            resultado = p_ej3_iguales(pila1, pila2);
+            if (resultado)
+            {
+                printf("Las pilas son iguales\n");
+            }
+            else
+            {
+                printf("Las pilas son diferentes\n");
+            }
+
+            waitForKey();
+            break;
+        case 2:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+
+            waitForKey();
+            break;
+        }
+    }
+}
+
 int main()
 {
     clearScreen();
@@ -793,6 +853,7 @@ int main()
             testPt2();
             break;
         case 2:
+            testPt3();
             break;
         case 3:
             break;
