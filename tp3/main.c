@@ -1102,7 +1102,7 @@ void testPt8()
         printPila(pila);
         printf("+------------------------------------------------------------------------------------------+\n");
         printf("\n+------------------------------------------------------------------------------------------+\n");
-        printf("| 1. Sacar repetidos\n");
+        printf("| 1. Ver repetidos\n");
         printf("| 2. Volver al menu principal\n");
         printf("+------------------------------------------------------------------------------------------+\n");
         printf("\nIngrese una opcion: ");
@@ -1129,8 +1129,8 @@ void testPt8()
 
             while (!p_es_vacia(resultado))
             {
-                TipoElemento ele = p_desapilar(resultado);
-                printf("| Clave: %d, Cantidad: %d\n", ele->clave, ele->valor);
+                TipoElemento elemento = p_desapilar(resultado);
+                printf("| Clave: %d, Cantidad: %d\n", elemento->clave, elemento->valor);
             }
 
             printf("+------------------------------------------------------------------------------------------+\n");
