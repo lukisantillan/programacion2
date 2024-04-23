@@ -112,37 +112,38 @@ Pila crearPila()
     return pila;
 }
 
-// void verComplejidades()
-// {
-//     printf("\t\t Complejidad de los ejercicios dados\n");
-//     printf("------------------------------------------\n");
-//     printf("\tComplejidad ejercicio2: \n");
-//     printf("\t\t - Existe clave : Lineal - O(n))\n");
-//     printf("\t\t - Colocar elemento : Lineal - O(n))\n");
-//     printf("\t\t - Eliminar clave : Lineal - O(n))\n");
-//     printf("\t\t - Duplicar pila : Lineal - O(n))\n");
-//     printf("\t\t - Intercambiar Posiciones: Lineal - O(n))\n");
-//     printf("\t\t - Cantidad elementos : Lineal - O(n))\n");
-//     printf("------------------------------------------\n");
-//     printf("\tComplejidad ejercicio3: \n");
-//     printf("\t\t - Iguales : Lineal - O(n))\n");
-//     printf("------------------------------------------\n");
-//     printf("\tComplejidad ejercicio4: \n");
-//     printf("\t\t - Cambiar base : Logaritmico - O(log(n))\n");
-//     printf("------------------------------------------\n");
-//     printf("\tComplejidad ejercicio5: \n");
-//     printf("\t\t - Invertir : Lineal - O(n))\n");
-//     printf("------------------------------------------\n");
-//     printf("\tComplejidad ejercicio6: \n");
-//     printf("\t\t - Eliminar Clave : Lineal - O(n))\n");
-//     printf("\t\t - Eliminar ClaveRecursiva : Lineal - O(n))\n");
-//     printf("------------------------------------------\n");
-//     printf("\tComplejidad ejercicio7: \n");
-//     printf("\t\t - Elementos comunes: Cuadratica - O(n^2)\n");
-//     printf("------------------------------------------\n");
-//     printf("\tComplejidad ejercicio8: \n");
-//     printf("\t\t - Sacar repetidos: Cuadratica - O(n^2)\n");
-// }
+void verComplejidades()
+{
+    printf(" Complejidad de los ejercicios dados\n");
+    printf("------------------------------------------\n");
+    printf("Complejidad ejercicio2:\n");
+    printf("- Existe clave: Lineal - O(n)\n");
+    printf("- Colocar elemento: Lineal - O(n)\n");
+    printf("- Eliminar clave: Lineal - O(n)\n");
+    printf("- Duplicar pila: Lineal - O(n)\n");
+    printf("- Intercambiar Posiciones: Lineal - O(n)\n");
+    printf("- Cantidad elementos: Lineal - O(n)\n");
+    printf("------------------------------------------\n");
+    printf("Complejidad ejercicio3:\n");
+    printf("- Iguales: Lineal - O(n)\n");
+    printf("------------------------------------------\n");
+    printf("Complejidad ejercicio4:\n");
+    printf("- Cambiar base: Logaritmico - O(log(n))\n");
+    printf("------------------------------------------\n");
+    printf("Complejidad ejercicio5:\n");
+    printf("- Invertir: Lineal - O(n)\n");
+    printf("------------------------------------------\n");
+    printf("Complejidad ejercicio6:\n");
+    printf("- Eliminar Clave: Lineal - O(n)\n");
+    printf("- Eliminar ClaveRecursiva: Lineal - O(n)\n");
+    printf("------------------------------------------\n");
+    printf("Complejidad ejercicio7:\n");
+    printf("- Elementos comunes: Cuadratica - O(n^2)\n");
+    printf("------------------------------------------\n");
+    printf("Complejidad ejercicio8:\n");
+    printf("- Sacar repetidos: Cuadratica - O(n^2)\n");
+}
+
 // // Ejercicio2
 // // complejidad O(n)
 bool p_ej2_existeclave(Pila p, int clave)
@@ -541,57 +542,57 @@ Pila p_ej7_elementoscomunes(Pila p1, Pila p2)
 
 // // ejercicio 8
 // //  complejidad: O(n^2)
-// Pila p_ej8_sacarrepetidos(Pila p)
-// {
-//     Pila resultado = p_crear();
-//     Pila aux = p_crear();
-//     Pila p_original = p_crear(); // Pila original
-//     while (!p_es_vacia(p))
-//     {
-//         TipoElemento ele = p_desapilar(p);
-//         p_apilar(aux, ele);        // guardar elemento en pila auxiliar
-//         p_apilar(p_original, ele); // guardar elemento en una copia dee la pila original
-//     }
-//     while (!p_es_vacia(aux))
-//     {
-//         // desapilo un elemento de la pila auxiliar
-//         TipoElemento ele = p_desapilar(aux);
-//         int cantidad = 1;
-//         // creo una segunda pila auxiliar con los valores de la pila auxiliar
-//         Pila aux2 = p_crear();
-//         while (!p_es_vacia(aux))
-//         {
-//             TipoElemento auxEle = p_desapilar(aux);
-//             p_apilar(aux2, auxEle);
-//         }
-//         // recorro la pila auxiliar 2 para contar la cantidad de veces que se repite el elemento, y elimino los elementos repetidos de la pila auxiliar
-//         while (!p_es_vacia(aux2))
-//         {
-//             TipoElemento auxEle = p_desapilar(aux2);
-//             if (auxEle->clave == ele->clave)
-//             {
-//                 cantidad++;
-//             }
-//             else
-//             {
-//                 p_apilar(aux, auxEle);
-//             }
-//         }
-//         // creo un nuevo elemento con la cantidad de veces que se repite el elemento
-//         TipoElemento cuenta = te_crear_con_valor(ele->clave, cantidad);
-//         // apilo el elemento en la pila resultado
-//         p_apilar(resultado, cuenta);
-//     }
+Pila p_ej8_sacarrepetidos(Pila p)
+{
+    Pila resultado = p_crear();
+    Pila aux = p_crear();
+    Pila p_original = p_crear(); // Pila original
+    while (!p_es_vacia(p))
+    {
+        TipoElemento ele = p_desapilar(p);
+        p_apilar(aux, ele);        // guardar elemento en pila auxiliar
+        p_apilar(p_original, ele); // guardar elemento en una copia dee la pila original
+    }
+    while (!p_es_vacia(aux))
+    {
+        // desapilo un elemento de la pila auxiliar
+        TipoElemento ele = p_desapilar(aux);
+        int cantidad = 1;
+        // creo una segunda pila auxiliar con los valores de la pila auxiliar
+        Pila aux2 = p_crear();
+        while (!p_es_vacia(aux))
+        {
+            TipoElemento auxEle = p_desapilar(aux);
+            p_apilar(aux2, auxEle);
+        }
+        // recorro la pila auxiliar 2 para contar la cantidad de veces que se repite el elemento, y elimino los elementos repetidos de la pila auxiliar
+        while (!p_es_vacia(aux2))
+        {
+            TipoElemento auxEle = p_desapilar(aux2);
+            if (auxEle->clave == ele->clave)
+            {
+                cantidad++;
+            }
+            else
+            {
+                p_apilar(aux, auxEle);
+            }
+        }
+        // creo un nuevo elemento con la cantidad de veces que se repite el elemento
+        TipoElemento cuenta = te_crear_con_valor(ele->clave, &cantidad);
+        // apilo el elemento en la pila resultado
+        p_apilar(resultado, cuenta);
+    }
 
-//     // Restaurar pila original
-//     while (!p_es_vacia(p_original))
-//     {
-//         TipoElemento ele = p_desapilar(p_original);
-//         p_apilar(p, ele);
-//     }
+    // Restaurar pila original
+    while (!p_es_vacia(p_original))
+    {
+        TipoElemento ele = p_desapilar(p_original);
+        p_apilar(p, ele);
+    }
 
-//     return resultado;
-// }
+    return resultado;
+}
 
 void testPt2()
 {
@@ -1088,6 +1089,62 @@ void testPt7()
     }
 }
 
+void testPt8()
+{
+    clearScreen();
+    Pila pila = crearPila();
+    Pila pila_sin_repetidos;
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("\n| Pila: ");
+        printPila(pila);
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Sacar repetidos\n");
+        printf("| 2. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            pila_sin_repetidos = p_ej8_sacarrepetidos(pila);
+            printf("\n+------------------------------------------------------------------------------------------+\n");
+            printf("| Pila original:\n");
+            printPila(pila);
+            printf("| Pila sin repetidos:\n");
+            printPila(pila_sin_repetidos);
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+
+            free(pila_sin_repetidos);
+
+            break;
+        case 2:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+
+            waitForKey();
+            break;
+        }
+    }
+}
+
 int main()
 {
     clearScreen();
@@ -1124,7 +1181,7 @@ int main()
         {
         case 1:
             clearScreen();
-            // printComplejidad();
+            verComplejidades();
             waitForKey();
             break;
         case 2:
@@ -1146,7 +1203,7 @@ int main()
             testPt7();
             break;
         case 8:
-            // testPt8();
+            testPt8();
             break;
         case 9:
             clearScreen();
@@ -1162,10 +1219,10 @@ int main()
     // rellenarPila(pila, 4);
     // printf("----------------------\n");
     // rellenarPila(pila2, 4);
-    // printf("\t------------------------------\n");
-    // printf("\t ----- PILA PRINCIPAL ----\n");
+    // printf("------------------------------\n");
+    // printf(" ----- PILA PRINCIPAL ----\n");
     // p_mostrar(pila);
-    // printf("\t------------------------------\n");
+    // printf("------------------------------\n");
     // printf("EJERCICIO INTERCAMBIAR POSICIONES\n");
     // Pila resultado1 = p_ej2_intercambiarposiciones(pila, 2, 4);
     // p_mostrar(resultado1);
@@ -1200,16 +1257,16 @@ int main()
     // {
     //     printf("LAS LISTAS SON IGUALES\n");
     // } else {printf("LAS LISTAS SON DIFERENTES\n");}
-    // printf("\t\t- Como quedan las pilas originales despues del retorno -\n");
-    // printf("\t\t\t PILA 1\n");
+    // printf("- Como quedan las pilas originales despues del retorno -\n");
+    // printf(" PILA 1\n");
     // p_mostrar(pila);
-    // printf("\t\t\t PILA 2\n");
+    // printf(" PILA 2\n");
     // p_mostrar(pila2);
     // printf("------------------------------\n");
     // printf("EJERCICIO 5 - INVERTIR\n");
     // Pila resultadoPt5 = p_ej5_invertir(pila);
     // p_mostrar(resultadoPt5);
-    // printf("\t\t- Como queda pila oriignal despues del retorno -\n");
+    // printf("- Como queda pila oriignal despues del retorno -\n");
     // p_mostrar(pila);
     // printf("------------------------------\n");
     // printf("EJERCICIO 7 - ELEMENTOS COMUNES\n");
