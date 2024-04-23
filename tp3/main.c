@@ -184,6 +184,7 @@ Pila p_ej2_colocarelemento(Pila p, int posicionordinal)
     {
         ele = p_desapilar(p);
         p_apilar(aux, ele);
+        i++;
     }
     // SOLICITO EL ELEMENTO A AGREGAR EN LA PILA
     printf("Ingrese el elemento que desea agregar: ");
@@ -202,7 +203,7 @@ Pila p_ej2_colocarelemento(Pila p, int posicionordinal)
         ele = p_desapilar(aux);
         p_apilar(p, ele);
         p_apilar(resultado, ele);
-        i++;
+        i--;
         if (i == posicionordinal)
         {
             ele = te_crear(elemento);
@@ -343,26 +344,36 @@ bool p_ej3_iguales(Pila p1, Pila p2)
     Pila aux = p_crear();
     TipoElemento ele1, ele2;
     bool resultado = true;
-    while (!p_es_vacia(p1) && !p_es_vacia(p2) && resultado)
+    int lonP1 = p_ej2_cantidadelementos(p2);
+    int lonP2 = p_ej2_cantidadelementos(p2);
+    if (lonP1 != lonP2)
     {
-        ele1 = p_desapilar(p1);
-        ele2 = p_desapilar(p2);
-        p_apilar(aux, ele1);
-        p_apilar(aux, ele2);
-        if (ele1->clave != ele2->clave)
+        resultado = false;
+        printf("Las pilas son de diferentes longitudes, por lo tanto \n");
+    }
+    else
+    {
+
+        while (!p_es_vacia(p1) && !p_es_vacia(p2) && resultado)
         {
-            resultado = false;
+            ele1 = p_desapilar(p1);
+            ele2 = p_desapilar(p2);
+            p_apilar(aux, ele1);
+            p_apilar(aux, ele2);
+            if (ele1->clave != ele2->clave)
+            {
+                resultado = false;
+            }
+        }
+        // Hago otro ciclo para reapilar lo que saque de las pilas originales.
+        while (!p_es_vacia(aux))
+        {
+            ele1 = p_desapilar(aux);
+            ele2 = p_desapilar(aux);
+            p_apilar(p2, ele1);
+            p_apilar(p1, ele2);
         }
     }
-    // Hago otro ciclo para reapilar lo que saque de las pilas originales.
-    while (!p_es_vacia(aux))
-    {
-        ele1 = p_desapilar(aux);
-        ele2 = p_desapilar(aux);
-        p_apilar(p2, ele1);
-        p_apilar(p1, ele2);
-    }
-
     return resultado;
 }
 
@@ -518,7 +529,8 @@ Pila p_ej7_elementoscomunes(Pila p1, Pila p2)
         {
             ele2 = p_desapilar(p2);
             p_apilar(aux2, ele2);
-            if (ele1->clave == ele2->clave)
+            bool exis = p_ej2_existeclave(resultado, ele2->clave);
+            if (ele1->clave == ele2->clave && !exis)
             {
                 p_apilar(resultado, ele1);
             }
@@ -579,7 +591,9 @@ Pila p_ej8_sacarrepetidos(Pila p)
             }
         }
         // creo un nuevo elemento con la cantidad de veces que se repite el elemento
-        TipoElemento cuenta = te_crear_con_valor(ele->clave, cantidad);
+        TipoElemento cuenta = te_crear(ele->clave);
+        cuenta->valor = (int*)malloc(4 * sizeof(int));
+        *(int*)(cuenta->valor) = cantidad;
         // apilo el elemento en la pila resultado
         p_apilar(resultado, cuenta);
     }
@@ -1130,7 +1144,7 @@ void testPt8()
             while (!p_es_vacia(resultado))
             {
                 TipoElemento elemento = p_desapilar(resultado);
-                printf("| Clave: %d, Cantidad: %d\n", elemento->clave, elemento->valor);
+                printf("| Clave: %d, Cantidad: %d\n", elemento->clave, *(int *)elemento->valor);
             }
 
             printf("+------------------------------------------------------------------------------------------+\n");
@@ -1154,7 +1168,6 @@ int main()
 {
     clearScreen();
     printf("Archivo compilado exitosamente\n");
-    printf("Para ejecutar los ejercicios, descomentar las lineas de codigo en el main\n");
     printf("Esto es unicamente para comprobar que la compilacion fue exitosa\n");
 
     while (1)
