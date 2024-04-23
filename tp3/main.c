@@ -579,7 +579,7 @@ Pila p_ej8_sacarrepetidos(Pila p)
             }
         }
         // creo un nuevo elemento con la cantidad de veces que se repite el elemento
-        TipoElemento cuenta = te_crear_con_valor(ele->clave, &cantidad);
+        TipoElemento cuenta = te_crear_con_valor(ele->clave, cantidad);
         // apilo el elemento en la pila resultado
         p_apilar(resultado, cuenta);
     }
