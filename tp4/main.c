@@ -311,6 +311,12 @@ int main()
     //p_mostrar(p1);
     //printf("La lista resultante es: \n");
     //l_mostrar(resultado);
+    //if (resultado->inicio==NULL){
+    //    printf("LISTA VACIA (NO hay elementos coincidentes)");
+    //}
+    //else{
+    //    l_mostrar(resultado);
+    //}
     //Iterador iteL1 = iterador(resultado);
     //while (hay_siguiente(iteL1))
     //{
