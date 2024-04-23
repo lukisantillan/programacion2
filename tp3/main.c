@@ -344,7 +344,7 @@ bool p_ej3_iguales(Pila p1, Pila p2)
     Pila aux = p_crear();
     TipoElemento ele1, ele2;
     bool resultado = true;
-    int lonP1 = p_ej2_cantidadelementos(p2);
+    int lonP1 = p_ej2_cantidadelementos(p1);
     int lonP2 = p_ej2_cantidadelementos(p2);
     if (lonP1 != lonP2)
     {
