@@ -367,58 +367,58 @@ bool p_ej3_iguales(Pila p1, Pila p2)
 
 // // ejercicio 4
 // // complejidad: O(log(n))
-// char *p_ej4_cambiarbase(int numero, int base)
-// {
-//     // validacion de base
-//     if (base < 2 || base > 16)
-//     {
-//         printf("La base debe estar entre 2 y 16.\n");
-//         exit(EXIT_FAILURE);
-//     }
-//     // Variable para almacenar el signo
-//     char signo = (numero < 0) ? '-' : ' ';
+char *p_ej4_cambiarbase(int numero, int base)
+{
+    // validacion de base
+    if (base < 2 || base > 16)
+    {
+        printf("La base debe estar entre 2 y 16.\n");
+        exit(EXIT_FAILURE);
+    }
+    // Variable para almacenar el signo
+    char signo = (numero < 0) ? '-' : ' ';
 
-//     // Trabajar con el valor absoluto del número
-//     numero = abs(numero);
+    // Trabajar con el valor absoluto del número
+    numero = abs(numero);
 
-//     int resto;
-//     TipoElemento item;
-//     Pila pililla;
-//     pililla = p_crear();
+    int resto;
+    TipoElemento item;
+    Pila pililla;
+    pililla = p_crear();
 
-//     while (numero > 0)
-//     {
-//         resto = numero % base;
-//         item = te_crear(resto);
-//         p_apilar(pililla, item);
-//         numero /= base;
-//     }
+    while (numero > 0)
+    {
+        resto = numero % base;
+        item = te_crear(resto);
+        p_apilar(pililla, item);
+        numero /= base;
+    }
 
-//     printf("\n");
-//     p_mostrar(pililla);
+    printf("\n");
+    p_mostrar(pililla);
 
-//     char *numero_cambiado = malloc(sizeof(char) * p_ej2_cantidadelementos(pililla) + 1);
+    char *numero_cambiado = malloc(sizeof(char) * p_ej2_cantidadelementos(pililla) + 1);
 
-//     int i = 0;
-//     if (signo == '-')
-//     {
-//         numero_cambiado[i++] = signo;
-//     }
-//     while (!p_es_vacia(pililla))
-//     {
-//         item = p_desapilar(pililla);
-//         if (item->clave < 10)
-//         {
-//             numero_cambiado[i++] = item->clave + '0'; // Convertir el dígito a su representación ASCII
-//         }
-//         else
-//         {
-//             numero_cambiado[i++] = item->clave - 10 + 'A'; // Convertir el dígito a su representación ASCII en hexadecimal
-//         }
-//     }
+    int i = 0;
+    if (signo == '-')
+    {
+        numero_cambiado[i++] = signo;
+    }
+    while (!p_es_vacia(pililla))
+    {
+        item = p_desapilar(pililla);
+        if (item->clave < 10)
+        {
+            numero_cambiado[i++] = item->clave + '0'; // Convertir el dígito a su representación ASCII
+        }
+        else
+        {
+            numero_cambiado[i++] = item->clave - 10 + 'A'; // Convertir el dígito a su representación ASCII en hexadecimal
+        }
+    }
 
-//     return numero_cambiado;
-// }
+    return numero_cambiado;
+}
 
 // // Ejercicio 5
 // // complejidad: O(n)
@@ -818,6 +818,77 @@ void testPt3()
     }
 }
 
+void testPt4()
+{
+    clearScreen();
+    int numero;
+    int base;
+    char *numero_cambiado;
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("\n| 1. Cambiar base de un número\n");
+        printf("| 2. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            printf("\nIngrese el número a cambiar de base: ");
+            while (scanf("%d", &numero) != 1)
+            {
+                printf("\nError: Ingresa un número válido para el número: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+
+            printf("\nIngrese la base a la que desea cambiar el número: ");
+            while (scanf("%d", &base) != 1)
+            {
+                printf("\nError: Ingresa un número válido para la base: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+
+            numero_cambiado = p_ej4_cambiarbase(numero, base);
+            printf("\n+------------------------------------------------------------------------------------------+\n");
+            printf("| Número original: %d\n", numero);
+            printf("| Número cambiado: %s\n", numero_cambiado);
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            free(numero_cambiado);
+
+            waitForKey();
+            break;
+        case 2:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+
+            waitForKey();
+            break;
+        }
+    }
+
+}
+
 int main()
 {
     clearScreen();
@@ -856,6 +927,7 @@ int main()
             testPt3();
             break;
         case 3:
+            testPt4();
             break;
         case 4:
             break;
