@@ -396,7 +396,7 @@ char *p_ej4_cambiarbase(int numero, int base)
     }
 
     printf("\n");
-    //p_mostrar(pililla);
+    // p_mostrar(pililla);
 
     char numero_cambiado[16];
 
@@ -418,126 +418,126 @@ char *p_ej4_cambiarbase(int numero, int base)
         }
     }
 
-    numero_cambiado[i] = '\0'; // Add null terminator to the string
+    numero_cambiado[i] = '\0';      // Add null terminator to the string
     return strdup(numero_cambiado); // Return the modified string
 }
 
-// // Ejercicio 5
-// // complejidad: O(n)
-// Pila p_ej5_invertir(Pila p)
-// {
-//     Pila aux = p_crear();
-//     Pila invertida = p_crear();
-//     TipoElemento ele;
-//     while (!p_es_vacia(p))
-//     {
-//         ele = p_desapilar(p);
-//         p_apilar(aux, ele);
-//         p_apilar(invertida, ele);
-//     }
-//     // REAPILO PARA NO PERDER ORIGINAL
-//     while (!p_es_vacia(aux))
-//     {
-//         ele = p_desapilar(aux);
-//         p_apilar(p, ele);
-//     }
-//     return invertida;
-// }
+// Ejercicio 5
+// complejidad: O(n)
+Pila p_ej5_invertir(Pila p)
+{
+    Pila aux = p_crear();
+    Pila invertida = p_crear();
+    TipoElemento ele;
+    while (!p_es_vacia(p))
+    {
+        ele = p_desapilar(p);
+        p_apilar(aux, ele);
+        p_apilar(invertida, ele);
+    }
+    // REAPILO PARA NO PERDER ORIGINAL
+    while (!p_es_vacia(aux))
+    {
+        ele = p_desapilar(aux);
+        p_apilar(p, ele);
+    }
+    return invertida;
+}
 
 // // Ejercicio 6
 // // complejidad solucion iterativa: O(n)
-// Pila p_ej6_eliminarclave(Pila p, int clave)
-// {
-//     bool resulBusqueda = p_ej2_existeclave(p, clave);
-//     Pila resultado = p_crear();
-//     Pila aux = p_crear();
-//     TipoElemento ele;
-//     if (!resulBusqueda)
-//     {
-//         return p;
-//     }
-//     else
-//     {
-//         while (!p_es_vacia(p))
-//         {
-//             ele = p_desapilar(p);
-//             p_apilar(aux, ele);
-//         }
+Pila p_ej6_eliminarclave(Pila p, int clave)
+{
+    bool resulBusqueda = p_ej2_existeclave(p, clave);
+    Pila resultado = p_crear();
+    Pila aux = p_crear();
+    TipoElemento ele;
+    if (!resulBusqueda)
+    {
+        return p;
+    }
+    else
+    {
+        while (!p_es_vacia(p))
+        {
+            ele = p_desapilar(p);
+            p_apilar(aux, ele);
+        }
 
-//         // Reapilo, para en el resultado poder quitar el elemento
-//         while (!p_es_vacia(aux))
-//         {
-//             ele = p_desapilar(aux);
-//             p_apilar(p, ele); // Linea para conservar pila original
-//             // Siempre que el elemento sea distinto a la clave, lo apilamos en el resultado;
-//             if (ele->clave != clave)
-//             {
-//                 p_apilar(resultado, ele);
-//             }
-//         }
-//         return resultado;
-//     }
-// }
+        // Reapilo, para en el resultado poder quitar el elemento
+        while (!p_es_vacia(aux))
+        {
+            ele = p_desapilar(aux);
+            p_apilar(p, ele); // Linea para conservar pila original
+            // Siempre que el elemento sea distinto a la clave, lo apilamos en el resultado;
+            if (ele->clave != clave)
+            {
+                p_apilar(resultado, ele);
+            }
+        }
+        return resultado;
+    }
+}
 
-// // complejidad solucion recursiva: O(n)
-// Pila p_ej6_eliminarclave_recursiva(Pila p, int clave)
-// {
-//     if (p_es_vacia(p))
-//     {
-//         return p;
-//     }
-//     else
-//     {
-//         TipoElemento ele = p_desapilar(p);
-//         Pila resultado = p_ej6_eliminarclave_recursiva(p, clave);
-//         if (ele->clave != clave)
-//         {
-//             p_apilar(resultado, ele);
-//         }
-//         return resultado;
-//     }
-// }
+// complejidad solucion recursiva: O(n)
+Pila p_ej6_eliminarclave_recursiva(Pila p, int clave)
+{
+    if (p_es_vacia(p))
+    {
+        return p;
+    }
+    else
+    {
+        TipoElemento ele = p_desapilar(p);
+        Pila resultado = p_ej6_eliminarclave_recursiva(p, clave);
+        if (ele->clave != clave)
+        {
+            p_apilar(resultado, ele);
+        }
+        return resultado;
+    }
+}
 
 // // Ejercicio7
 // // complejidad: O(n^2)
-// Pila p_ej7_elementoscomunes(Pila p1, Pila p2)
-// {
-//     Pila aux1 = p_crear();
-//     Pila aux2 = p_crear();
-//     Pila resultado = p_crear();
-//     TipoElemento ele1;
-//     TipoElemento ele2;
+Pila p_ej7_elementoscomunes(Pila p1, Pila p2)
+{
+    Pila aux1 = p_crear();
+    Pila aux2 = p_crear();
+    Pila resultado = p_crear();
+    TipoElemento ele1;
+    TipoElemento ele2;
 
-//     while (!p_es_vacia(p1))
-//     {
-//         ele1 = p_desapilar(p1);
-//         p_apilar(aux1, ele1);
-//         bool flag = true;
-//         while (!p_es_vacia(p2) && flag)
-//         {
-//             ele2 = p_desapilar(p2);
-//             p_apilar(aux2, ele2);
-//             if (ele1->clave == ele2->clave)
-//             {
-//                 p_apilar(resultado, ele1);
-//             }
-//         }
-//         // APILO LO QUE DESAPILE, PARA QUE EL SIGUIENTE ELEMENTO PUEDA COMPARARSE
-//         while (!p_es_vacia(aux2))
-//         {
-//             ele2 = p_desapilar(aux2);
-//             p_apilar(p2, ele2);
-//         }
-//     }
-//     // APILO NUEVAMENTE EN P1 PARA NO PERDERLA.
-//     while (p_es_vacia(aux1))
-//     {
-//         ele1 = p_desapilar(aux1);
-//         p_apilar(p1, ele1);
-//     }
+    while (!p_es_vacia(p1))
+    {
+        ele1 = p_desapilar(p1);
+        p_apilar(aux1, ele1);
+        bool flag = true;
+        while (!p_es_vacia(p2) && flag)
+        {
+            ele2 = p_desapilar(p2);
+            p_apilar(aux2, ele2);
+            if (ele1->clave == ele2->clave)
+            {
+                p_apilar(resultado, ele1);
+            }
+        }
+        // APILO LO QUE DESAPILE, PARA QUE EL SIGUIENTE ELEMENTO PUEDA COMPARARSE
+        while (!p_es_vacia(aux2))
+        {
+            ele2 = p_desapilar(aux2);
+            p_apilar(p2, ele2);
+        }
+    }
+    // APILO NUEVAMENTE EN P1 PARA NO PERDERLA.
+    while (!p_es_vacia(aux1))
+    {
+        ele1 = p_desapilar(aux1);
+        p_apilar(p1, ele1);
+    }
 
-//     return resultado;
-// }
+    return resultado;
+}
 
 // // ejercicio 8
 // //  complejidad: O(n^2)
@@ -867,7 +867,7 @@ void testPt4()
                 }
             }
 
-            char* numero_cambiado;
+            char *numero_cambiado;
             numero_cambiado = p_ej4_cambiarbase(numero, base);
             printf("\n+------------------------------------------------------------------------------------------+\n");
             printf("| Numero original: %d\n", numero);
@@ -875,6 +875,206 @@ void testPt4()
             printf("+------------------------------------------------------------------------------------------+\n");
 
             waitForKey();
+            break;
+        case 2:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+
+            waitForKey();
+            break;
+        }
+    }
+}
+
+void testPt5()
+{
+    clearScreen();
+    Pila pila = crearPila();
+    Pila pila_invertida;
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("\n| Pila: ");
+        printPila(pila);
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Invertir pila\n");
+        printf("| 2. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            pila_invertida = p_ej5_invertir(pila);
+            printf("\n+------------------------------------------------------------------------------------------+\n");
+            printf("| Pila original:\n");
+            printPila(pila);
+            printf("| Pila invertida:\n");
+            printPila(pila_invertida);
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+
+            free(pila_invertida);
+
+            break;
+        case 2:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+
+            waitForKey();
+            break;
+        }
+    }
+}
+
+void testPt6()
+{
+    clearScreen();
+    Pila pila = crearPila();
+    int clave;
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("\n| Pila: ");
+        printPila(pila);
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Eliminar clave\n");
+        printf("| 2. Eliminar clave (recursivo)\n");
+        printf("| 3. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            printf("\nIngrese la clave a eliminar: ");
+            while (scanf("%d", &clave) != 1)
+            {
+                printf("\nError: Ingresa un número válido para la clave: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+            Pila pila_eliminar_clave = p_ej6_eliminarclave(pila, clave);
+            printf("\n+------------------------------------------------------------------------------------------+\n");
+            printf("| Pila original:\n");
+            printPila(pila);
+            printf("| Pila sin clave:\n");
+            printPila(pila_eliminar_clave);
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+            break;
+        case 2:
+            printf("\nIngrese la clave a eliminar: ");
+            while (scanf("%d", &clave) != 1)
+            {
+                printf("\nError: Ingresa un número válido para la clave: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+            Pila pila_eliminar_clave_recursiva = p_ej6_eliminarclave_recursiva(pila, clave);
+            printf("\n+------------------------------------------------------------------------------------------+\n");
+            printf("| Pila original:\n");
+            printPila(pila);
+            printf("| Pila sin clave (recursiva):\n");
+            printPila(pila_eliminar_clave_recursiva);
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+            break;
+        case 3:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+
+            waitForKey();
+            break;
+        }
+    }
+}
+
+void testPt7()
+{
+    clearScreen();
+    Pila pila1 = crearPila();
+    Pila pila2 = crearPila();
+    Pila pila_elementos_comunes;
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("\n| Pila 1: ");
+        printPila(pila1);
+        printf("\n| Pila 2: ");
+        printPila(pila2);
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Elementos comunes\n");
+        printf("| 2. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            pila_elementos_comunes = p_ej7_elementoscomunes(pila1, pila2);
+            printf("\n+------------------------------------------------------------------------------------------+\n");
+            printf("| Pila 1:\n");
+            printPila(pila1);
+            printf("| Pila 2:\n");
+            printPila(pila2);
+            printf("| Elementos comunes:\n");
+            printPila(pila_elementos_comunes);
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+
+            free(pila_elementos_comunes);
+
             break;
         case 2:
             clearScreen();
@@ -898,12 +1098,15 @@ int main()
     while (1)
     {
         printf("\n+------------------------------------------------------------------------------------------+\n");
-        printf("| 1. Probar funciones del punto 2\n");
-        printf("| 2. Probar funciones del punto 3\n");
-        printf("| 3. Probar funciones del punto 4\n");
-        printf("| 4. Probar funciones del punto 5\n");
-        printf("| 5. Probar funciones del punto 6\n");
-        printf("| 6. Salir\n");
+        printf("| 1. Ver complejidad algoritmica de cada punto\n");
+        printf("| 2. Probar funciones del punto 2\n");
+        printf("| 3. Probar funciones del punto 3\n");
+        printf("| 4. Probar funciones del punto 4\n");
+        printf("| 5. Probar funciones del punto 5\n");
+        printf("| 6. Probar funciones del punto 6\n");
+        printf("| 7. Probar funciones del punto 7\n");
+        printf("| 8. Probar funciones del punto 8\n");
+        printf("| 9. Salir\n");
         printf("+------------------------------------------------------------------------------------------+\n");
         printf("\nIngrese una opcion: ");
         int opcion;
@@ -920,19 +1123,33 @@ int main()
         switch (opcion)
         {
         case 1:
-            testPt2();
+            clearScreen();
+            // printComplejidad();
+            waitForKey();
             break;
         case 2:
-            testPt3();
+            testPt2();
             break;
         case 3:
-            testPt4();
+            testPt3();
             break;
         case 4:
+            testPt4();
             break;
         case 5:
+            testPt5();
             break;
         case 6:
+            testPt6();
+            break;
+        case 7:
+            testPt7();
+            break;
+        case 8:
+            // testPt8();
+            break;
+        case 9:
+            clearScreen();
             return 0;
         default:
             printf("\nOpcion no valida");
