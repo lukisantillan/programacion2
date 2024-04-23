@@ -1093,7 +1093,7 @@ void testPt8()
 {
     clearScreen();
     Pila pila = crearPila();
-    Pila pila_sin_repetidos;
+    Pila resultado;
 
     while (1)
     {
@@ -1120,18 +1120,23 @@ void testPt8()
         switch (opcion)
         {
         case 1:
-            pila_sin_repetidos = p_ej8_sacarrepetidos(pila);
+            resultado = p_ej8_sacarrepetidos(pila);
             printf("\n+------------------------------------------------------------------------------------------+\n");
             printf("| Pila original:\n");
             printPila(pila);
             printf("| Pila sin repetidos:\n");
-            printPila(pila_sin_repetidos);
+            printPila(resultado);
+
+            while (!p_es_vacia(resultado))
+            {
+                TipoElemento ele = p_desapilar(resultado);
+                printf("| Clave: %d, Cantidad: %d\n", ele->clave, ele->valor);
+            }
+
             printf("+------------------------------------------------------------------------------------------+\n");
 
             waitForKey();
-
-            free(pila_sin_repetidos);
-
+            free(resultado);
             break;
         case 2:
             clearScreen();
