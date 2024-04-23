@@ -51,7 +51,7 @@ int l_longitud(Lista lista);
 bool l_agregar(Lista lista, TipoElemento elemento);
 
 /**
- * @brief Borra un elemento de la lista dado su clave. En caso de haber más de un elemento con la misma clave, se borra el primero.
+ * @brief Borra todos los elementos con determinada clave de una lista.
  * 
  * @param lista La lista de la cual se quiere borrar el elemento.
  * @param clave La clave del elemento a borrar.
