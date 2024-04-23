@@ -174,17 +174,17 @@ Cola c_ej2_invertir(Cola c)
 }
 
 // Ejercicio3
+//complejidad O(n+m)
 bool c_ej3_iguales(Cola c1, Cola c2)
 {
     Cola aux = c_crear();
     bool resultado = true;
     TipoElemento ele1, ele2;
-      if (c_ej2_contarelementos(c1)!= c_ej2_contarelementos(c2))
+    if (c_ej2_contarelementos(c1)!= c_ej2_contarelementos(c2)) //O(n+m)
     {
-        
         return false;
     }
-    while (!c_es_vacia(c1))
+    while (!c_es_vacia(c1)) //O(n)
     {
         ele1 = c_desencolar(c1);
         ele2 = c_desencolar(c2);
@@ -237,6 +237,7 @@ Cola c_ej4_colanorepetidos(Cola c)
 }
 
 // Ejercicio 6
+//complejidad O(n^2)
 Lista c_ej6_comunesapilaycola(Pila p, Cola c)
 {
     Lista listaResultado = l_crear();
@@ -244,18 +245,18 @@ Lista c_ej6_comunesapilaycola(Pila p, Cola c)
     Pila p_aux = p_crear();
     int pos_cola = 0, pos_pila = 0;
     TipoElemento elem_cola, elem_pila;
-    while (!p_es_vacia(p))
+    while (!p_es_vacia(p))//complejidad O(n^2)
     {
         elem_pila = p_desapilar(p);
         pos_pila++;
         p_apilar(p_aux, elem_pila);
 
-        while (!c_es_vacia(c))
+        while (!c_es_vacia(c)) //O(m)
         {
             elem_cola = c_desencolar(c);
             pos_cola++;
             c_encolar(c_aux, elem_cola);
-            if (elem_pila->clave == elem_cola->clave)
+            if (elem_pila->clave == elem_cola->clave)//O(1)
             {
                 TipoElemento ele_resultado = te_crear(elem_pila->clave);
                 ele_resultado->valor = (char*)malloc(4 * sizeof(char));
@@ -264,14 +265,14 @@ Lista c_ej6_comunesapilaycola(Pila p, Cola c)
             }
         }
         //REENCOLA
-        while (!c_es_vacia(c_aux))
+        while (!c_es_vacia(c_aux)) //O(m)
         {
             elem_cola = c_desencolar(c_aux);
             c_encolar(c, elem_cola);
         }
         pos_cola = 0;
     }
-    while (!p_es_vacia(p_aux))
+    while (!p_es_vacia(p_aux)) //O(n)
     {
         elem_pila = p_desapilar(p_aux);
         p_apilar(p, elem_pila);
