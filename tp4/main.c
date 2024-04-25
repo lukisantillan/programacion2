@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "tp_colas.h"
+#include "TP_4_Colas.h"
 // Funciónes Extras
 
 void rellenarCola(Cola cola, int cantidadDeElementos)
