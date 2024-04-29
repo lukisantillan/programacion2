@@ -289,7 +289,7 @@ int c_ej5_divisortotal(Cola c, bool *fuetotal)
         TipoElemento ele = c_desencolar(aux);
         c_encolar(c, ele);
     }
-    return divisortotalAux(c, minimo/2, fuetotal);
+    return divisortotalAux(c, minimo > 2 ? minimo / 2 : 2, fuetotal);
 }
 
 // Ejercicio 6
