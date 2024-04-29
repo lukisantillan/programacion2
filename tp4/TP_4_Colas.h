@@ -57,7 +57,7 @@ Cola  c_ej4_colanorepetidos(Cola c);
  */
 // retorna el valor del divisor total o parcial en la función.   Si no hay ni divisor total ni parcial retornar "0".
 // En la variable de referencia "&fuetotal" debe venir solo con true cual el divisor es total, caso contrario false.
-int  c_ej5_divisortotal(Cola c, bool *fuetotal);
+int c_ej5_divisortotal(Cola c, bool *fuetotal);
 
 
 /**

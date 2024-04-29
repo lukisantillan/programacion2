@@ -174,17 +174,17 @@ Cola c_ej2_invertir(Cola c)
 }
 
 // Ejercicio3
-//complejidad O(n+m)
+// complejidad O(n+m)
 bool c_ej3_iguales(Cola c1, Cola c2)
 {
     Cola aux = c_crear();
     bool resultado = true;
     TipoElemento ele1, ele2;
-    if (c_ej2_contarelementos(c1)!= c_ej2_contarelementos(c2)) //O(n+m)
+    if (c_ej2_contarelementos(c1) != c_ej2_contarelementos(c2)) // O(n+m)
     {
         return false;
     }
-    while (!c_es_vacia(c1)) //O(n)
+    while (!c_es_vacia(c1)) // O(n)
     {
         ele1 = c_desencolar(c1);
         ele2 = c_desencolar(c2);
@@ -236,8 +236,64 @@ Cola c_ej4_colanorepetidos(Cola c)
     return resultado;
 }
 
+// Ejercicio 5
+// cuando mario conteste lo termino
+int divisortotalAux(Cola c, int divisor, bool *fuetotal)
+{
+    if (divisor == 1)
+    {
+        return divisor;
+    }
+
+    Cola aux = c_crear();
+    int longitudCola = 0;
+    int cantidadDivisores = 0;
+    while (!c_es_vacia(c))
+    {
+        TipoElemento ele = c_desencolar(c);
+        c_encolar(aux, ele);
+        longitudCola++;
+        if (ele->clave % divisor == 0)
+        {
+            cantidadDivisores++;
+        }
+    }
+    if (cantidadDivisores == longitudCola)
+    {
+        *fuetotal = true;
+        return divisor;
+    }
+    while (!c_es_vacia(aux))
+    {
+        TipoElemento ele = c_desencolar(aux);
+        c_encolar(c, ele);
+    }
+    return divisortotalAux(c, divisor - 1, fuetotal);
+}
+
+int c_ej5_divisortotal(Cola c, bool *fuetotal)
+{
+    Cola aux = c_crear();
+    int minimo = 9999;
+    while (!c_es_vacia(c))
+    {
+        TipoElemento ele = c_desencolar(c);
+        if (ele->clave < minimo)
+        {
+            minimo = ele->clave;
+        }
+        c_encolar(aux, ele);
+    }
+    while (!c_es_vacia(aux))
+    {
+        TipoElemento ele = c_desencolar(aux);
+        c_encolar(c, ele);
+    }
+    return divisortotalAux(c, minimo/2, fuetotal);
+}
+
 // Ejercicio 6
-//complejidad O(n^2)
+// complejidad O(n^2)
 Lista c_ej6_comunesapilaycola(Pila p, Cola c)
 {
     Lista listaResultado = l_crear();
@@ -245,34 +301,34 @@ Lista c_ej6_comunesapilaycola(Pila p, Cola c)
     Pila p_aux = p_crear();
     int pos_cola = 0, pos_pila = 0;
     TipoElemento elem_cola, elem_pila;
-    while (!p_es_vacia(p))//complejidad O(n^2)
+    while (!p_es_vacia(p)) // complejidad O(n^2)
     {
         elem_pila = p_desapilar(p);
         pos_pila++;
         p_apilar(p_aux, elem_pila);
 
-        while (!c_es_vacia(c)) //O(m)
+        while (!c_es_vacia(c)) // O(m)
         {
             elem_cola = c_desencolar(c);
             pos_cola++;
             c_encolar(c_aux, elem_cola);
-            if (elem_pila->clave == elem_cola->clave)//O(1)
+            if (elem_pila->clave == elem_cola->clave) // O(1)
             {
                 TipoElemento ele_resultado = te_crear(elem_pila->clave);
-                ele_resultado->valor = (char*)malloc(4 * sizeof(char));
+                ele_resultado->valor = (char *)malloc(4 * sizeof(char));
                 sprintf(ele_resultado->valor, "%d:%d", pos_cola, pos_pila);
                 l_agregar(listaResultado, ele_resultado);
             }
         }
-        //REENCOLA
-        while (!c_es_vacia(c_aux)) //O(m)
+        // REENCOLA
+        while (!c_es_vacia(c_aux)) // O(m)
         {
             elem_cola = c_desencolar(c_aux);
             c_encolar(c, elem_cola);
         }
         pos_cola = 0;
     }
-    while (!p_es_vacia(p_aux)) //O(n)
+    while (!p_es_vacia(p_aux)) // O(n)
     {
         elem_pila = p_desapilar(p_aux);
         p_apilar(p, elem_pila);
@@ -282,8 +338,8 @@ Lista c_ej6_comunesapilaycola(Pila p, Cola c)
 
 int main()
 {
-    Cola c1 = c_crear();
-    rellenarCola(c1, 4);
+    // Cola c1 = c_crear();
+    // rellenarCola(c1, 4);
     // printf("EJERCICIO EXISTE CLAVE\n");
     // bool resultado1 = c_ej2_existeclave(c1, 3);
     // if (resultado1)
@@ -295,35 +351,48 @@ int main()
     //     printf("No existe la clave en la pila\n");
     // }
 
-    Cola c2 = c_ej4_colanorepetidos(c1);
-    printf("Cola 1\n");
-    c_mostrar(c1);
-    printf("Cola de no repetidos\n");
-    c_mostrar(c2);
+    // Cola c2 = c_ej4_colanorepetidos(c1);
+    // printf("Cola 1\n");
+    // c_mostrar(c1);
+    // printf("Cola de no repetidos\n");
+    // c_mostrar(c2);
 
-    //main ej 6
-    //Pila p1 = p_crear();
-    //rellenarPila(p1,5);
-    //printf("----------------------\n");
-    //Cola c1 = c_crear();
-    //rellenarCola(c1,5);
-    //Lista resultado = c_ej6_comunesapilaycola(p1,c1);
-    //c_mostrar(c1);
-    //p_mostrar(p1);
-    //printf("La lista resultante es: \n");
-    //l_mostrar(resultado);
-    //if (resultado->inicio==NULL){
-    //    printf("LISTA VACIA (NO hay elementos coincidentes)");
-    //}
-    //else{
-    //    l_mostrar(resultado);
-    //}
-    //Iterador iteL1 = iterador(resultado);
-    //while (hay_siguiente(iteL1))
+    // main ej 6
+    // Pila p1 = p_crear();
+    // rellenarPila(p1,5);
+    // printf("----------------------\n");
+    // Cola c1 = c_crear();
+    // rellenarCola(c1,5);
+    // Lista resultado = c_ej6_comunesapilaycola(p1,c1);
+    // c_mostrar(c1);
+    // p_mostrar(p1);
+    // printf("La lista resultante es: \n");
+    // l_mostrar(resultado);
+    // if (resultado->inicio==NULL){
+    //     printf("LISTA VACIA (NO hay elementos coincidentes)");
+    // }
+    // else{
+    //     l_mostrar(resultado);
+    // }
+    // Iterador iteL1 = iterador(resultado);
+    // while (hay_siguiente(iteL1))
     //{
-    //    TipoElemento eleLis = siguiente(iteL1);
-    //    printf("El elemento es %d y sus posiciones son: %s  \n", eleLis->clave, (char *)eleLis->valor);
-    //}
+    //     TipoElemento eleLis = siguiente(iteL1);
+    //     printf("El elemento es %d y sus posiciones son: %s  \n", eleLis->clave, (char *)eleLis->valor);
+    // }
 
+    // Ejercicio 5
+    Cola c1 = c_crear();
+    c_encolar(c1, te_crear(10));
+    c_encolar(c1, te_crear(20));
+    c_encolar(c1, te_crear(40));
+    c_encolar(c1, te_crear(100));
+    c_mostrar(c1);
+    bool fuetotal = false;
+    int resultado = c_ej5_divisortotal(c1, &fuetotal);
+    printf("El divisor total es: %d\n", resultado);
+    printf("Fue total? %s\n", fuetotal ? "SI" : "NO");
     return 0;
 }
+
+// gcc -o test_tp4 ./tp4/main.c ./libs/colas/colas_arreglos.c ./libs/listas/listas_arreglos.c ./libs/pilas/pilas_arreglos.c ./libs/elementos/tipo_elemento.c && ./test_tp4
