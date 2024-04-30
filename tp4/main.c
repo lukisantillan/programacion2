@@ -336,6 +336,73 @@ Lista c_ej6_comunesapilaycola(Pila p, Cola c)
     return listaResultado;
 }
 
+//Ejercicio 7
+//Complejidad 0(n)
+TipoElemento c_ej7_atenderclientesAux(TipoElemento ele, int tiempoatencion, int numeroDeCola, int pos)
+{
+    ele->clave -= tiempoatencion;
+    TipoElemento eleCreado = ele;
+    if (ele->clave < tiempoatencion)
+    {
+        eleCreado = te_crear(numeroDeCola);
+        eleCreado->valor = (char *)malloc(20 * sizeof(char));
+        sprintf(eleCreado->valor, "Cliente:%d Cola:%d",pos, numeroDeCola);
+    }
+    return eleCreado;
+}
+
+Cola c_ej7_atenderclientes(Cola c1, Cola c2, Cola c3, int tiempoatencion)
+{
+    Cola resu = c_crear();
+    TipoElemento ele;
+    int pos1 = 1, pos2 = 1, pos3 = 1;
+    bool flag = true;
+    while (flag)
+    {
+        if (!c_es_vacia(c1))
+        {
+            ele = c_ej7_atenderclientesAux(c_recuperar(c1), tiempoatencion, 1, pos1);
+            if (ele->clave < tiempoatencion)
+            {
+                printf("%s\n", (char *)ele->valor);
+                c_encolar(resu, ele);
+                ele = c_desencolar(c1);
+                pos1++;
+            }
+        }
+
+        if (!c_es_vacia(c2))
+        {
+            ele = c_ej7_atenderclientesAux(c_recuperar(c2), tiempoatencion, 2, pos2);
+            if (ele->clave < tiempoatencion)
+            {
+                printf("%s\n", (char *)ele->valor);
+                c_encolar(resu, ele);
+                ele = c_desencolar(c2);
+                pos2++;
+            }
+        }
+        
+        if (!c_es_vacia(c3))
+        {
+            ele = c_ej7_atenderclientesAux(c_recuperar(c3), tiempoatencion, 3, pos3);
+            if (ele->clave < tiempoatencion)
+            {
+                printf("%s\n", (char *)ele->valor);
+                c_encolar(resu, ele);
+                ele = c_desencolar(c3);
+                pos3++;
+            }
+        }
+
+        if (c_es_vacia(c1) && c_es_vacia(c2) && c_es_vacia(c3))
+        {
+            flag = false;
+        }
+    }
+    return resu;
+}
+
 int main()
 {
     // Cola c1 = c_crear();
@@ -357,7 +424,7 @@ int main()
     // printf("Cola de no repetidos\n");
     // c_mostrar(c2);
 
-    // main ej 6
+    // main EJERCICIO 6
     // Pila p1 = p_crear();
     // rellenarPila(p1,5);
     // printf("----------------------\n");
@@ -378,21 +445,37 @@ int main()
     // while (hay_siguiente(iteL1))
     //{
     //     TipoElemento eleLis = siguiente(iteL1);
-    //     printf("El elemento es %d y sus posiciones son: %s  \n", eleLis->clave, (char *)eleLis->valor);
+    //     printf("El elemento es %d y sus posiciones son: %s  \n", eleLis->clave, 1;
     // }
 
     // Ejercicio 5
-    Cola c1 = c_crear();
-    c_encolar(c1, te_crear(10));
-    c_encolar(c1, te_crear(20));
-    c_encolar(c1, te_crear(40));
-    c_encolar(c1, te_crear(100));
-    c_mostrar(c1);
-    bool fuetotal = false;
-    int resultado = c_ej5_divisortotal(c1, &fuetotal);
-    printf("El divisor total es: %d\n", resultado);
-    printf("Fue total? %s\n", fuetotal ? "SI" : "NO");
+    //Cola c1 = c_crear();
+    //c_encolar(c1, te_crear(10));
+    //c_encolar(c1, te_crear(20));
+    //c_encolar(c1, te_crear(40));
+    //c_encolar(c1, te_crear(100));
+    //c_mostrar(c1);
+    //bool fuetotal = false;
+    //int resultado = c_ej5_divisortotal(c1, &fuetotal);
+    //printf("El divisor total es: %d\n", resultado);
+    //printf("Fue total? %s\n", fuetotal ? "SI" : "NO");
     return 0;
+
+    //Ejercicio7
+    //Cola c1 = c_crear();
+    //Cola c2 = c_crear();
+    //Cola c3 = c_crear();
+    //rellenarCola(c1, 2);
+    //printf("-----------\n");
+    //rellenarCola(c2, 2);
+    //printf("-----------\n");
+    //rellenarCola(c3, 2);
+    //printf("-----------\n");
+    //Cola resu = c_ej7_atenderclientes(c1,c2,c3, 7);
+    //printf("-----------\n");
+    //c_mostrar(resu);
+
+
 }
 
 // gcc -o test_tp4 ./tp4/main.c ./libs/colas/colas_arreglos.c ./libs/listas/listas_arreglos.c ./libs/pilas/pilas_arreglos.c ./libs/elementos/tipo_elemento.c && ./test_tp4
