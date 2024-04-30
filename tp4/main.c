@@ -289,7 +289,7 @@ int c_ej5_divisortotal(Cola c, bool *fuetotal)
         TipoElemento ele = c_desencolar(aux);
         c_encolar(c, ele);
     }
-    return divisortotalAux(c, minimo > 2 ? minimo / 2 : 2, fuetotal);
+    return divisortotalAux(c, minimo, fuetotal);
 }
 
 // Ejercicio 6
@@ -449,17 +449,16 @@ int main()
     // }
 
     // Ejercicio 5
-    //Cola c1 = c_crear();
-    //c_encolar(c1, te_crear(10));
-    //c_encolar(c1, te_crear(20));
-    //c_encolar(c1, te_crear(40));
-    //c_encolar(c1, te_crear(100));
-    //c_mostrar(c1);
-    //bool fuetotal = false;
-    //int resultado = c_ej5_divisortotal(c1, &fuetotal);
-    //printf("El divisor total es: %d\n", resultado);
-    //printf("Fue total? %s\n", fuetotal ? "SI" : "NO");
-    return 0;
+    // Cola c1 = c_crear();
+    // c_encolar(c1, te_crear(10));
+    // c_encolar(c1, te_crear(20));
+    // c_encolar(c1, te_crear(40));
+    // c_encolar(c1, te_crear(101));
+    // c_mostrar(c1);
+    // bool fuetotal = false;
+    // int resultado = c_ej5_divisortotal(c1, &fuetotal);
+    // printf("El divisor es: %d\n", resultado);
+    // printf("Fue total? %s\n", fuetotal ? "SI" : "NO");
 
     //Ejercicio7
     //Cola c1 = c_crear();
@@ -475,7 +474,7 @@ int main()
     //printf("-----------\n");
     //c_mostrar(resu);
 
-
+    return 0;
 }
 
 // gcc -o test_tp4 ./tp4/main.c ./libs/colas/colas_arreglos.c ./libs/listas/listas_arreglos.c ./libs/pilas/pilas_arreglos.c ./libs/elementos/tipo_elemento.c && ./test_tp4
