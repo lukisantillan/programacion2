@@ -296,7 +296,7 @@ int c_ej5_divisortotal(Cola c, bool *fuetotal)
                 TipoElemento ele = c_desencolar(aux);
                 c_encolar(c, ele);
             }
-            if (cantidadDivisores == longitud / 2)
+            if (cantidadDivisores > longitud / 2)
             {
                 return divisor->clave;
             }
@@ -463,17 +463,17 @@ int main()
     // }
 
     // Ejercicio 5
-    Cola c1 = c_crear();
-    c_encolar(c1, te_crear(3));
-    c_encolar(c1, te_crear(8));
-    c_encolar(c1, te_crear(2));
-    c_encolar(c1, te_crear(6));
-    c_encolar(c1, te_crear(4));
-    c_mostrar(c1);
-    bool fuetotal = false;
-    int resultado = c_ej5_divisortotal(c1, &fuetotal);
-    printf("El divisor es: %d\n", resultado);
-    printf("Fue total? %s\n", fuetotal ? "SI" : "NO");
+    // Cola c1 = c_crear();
+    // c_encolar(c1, te_crear(30));
+    // c_encolar(c1, te_crear(9));
+    // c_encolar(c1, te_crear(2));
+    // c_encolar(c1, te_crear(3));
+    // c_encolar(c1, te_crear(4));
+    // c_mostrar(c1);
+    // bool fuetotal = false;
+    // int resultado = c_ej5_divisortotal(c1, &fuetotal);
+    // printf("El divisor es: %d\n", resultado);
+    // printf("Fue total? %s\n", fuetotal ? "SI" : "NO");
 
     // Ejercicio7
     // Cola c1 = c_crear();
