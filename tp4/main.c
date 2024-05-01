@@ -237,59 +237,73 @@ Cola c_ej4_colanorepetidos(Cola c)
 }
 
 // Ejercicio 5
-// cuando mario conteste lo termino
-int divisortotalAux(Cola c, int divisor, bool *fuetotal)
+int c_ej5_divisortotal(Cola c, bool *fuetotal)
 {
-    if (divisor == 1)
-    {
-        return divisor;
-    }
-
     Cola aux = c_crear();
-    int longitudCola = 0;
+    Cola aux2 = c_crear();
+    int minimo = 9999;
+    int longitud = 0;
     int cantidadDivisores = 0;
     while (!c_es_vacia(c))
     {
         TipoElemento ele = c_desencolar(c);
-        c_encolar(aux, ele);
-        longitudCola++;
-        if (ele->clave % divisor == 0)
+        if (ele->clave < 2)
         {
-            cantidadDivisores++;
+            printf("La cola no puede tener elementos menores a 2\n");
+            return 0;
         }
-    }
-    if (cantidadDivisores == longitudCola)
-    {
-        *fuetotal = true;
-        return divisor;
-    }
-    while (!c_es_vacia(aux))
-    {
-        TipoElemento ele = c_desencolar(aux);
-        c_encolar(c, ele);
-    }
-    return divisortotalAux(c, divisor - 1, fuetotal);
-}
-
-int c_ej5_divisortotal(Cola c, bool *fuetotal)
-{
-    Cola aux = c_crear();
-    int minimo = 9999;
-    while (!c_es_vacia(c))
-    {
-        TipoElemento ele = c_desencolar(c);
         if (ele->clave < minimo)
         {
             minimo = ele->clave;
         }
+        longitud++;
         c_encolar(aux, ele);
     }
     while (!c_es_vacia(aux))
     {
         TipoElemento ele = c_desencolar(aux);
+        if (ele->clave % minimo == 0)
+        {
+            cantidadDivisores++;
+        }
         c_encolar(c, ele);
+        c_encolar(aux2, ele);
     }
-    return divisortotalAux(c, minimo, fuetotal);
+    if (cantidadDivisores == longitud)
+    {
+        *fuetotal = true;
+        return minimo;
+    }
+    else 
+    {
+        // arreglar esto
+        *fuetotal = false;
+        while (!c_es_vacia(aux2))
+        {
+            cantidadDivisores = 0;
+            TipoElemento divisor = c_desencolar(aux2);
+            while (!c_es_vacia(c))
+            {
+                TipoElemento ele = c_desencolar(c);
+                if (ele->clave % divisor->clave == 0)
+                {
+                    cantidadDivisores++;
+                }
+                c_encolar(aux, ele);
+            }
+            while (!c_es_vacia(aux))
+            {
+                TipoElemento ele = c_desencolar(aux);
+                c_encolar(c, ele);
+            }
+            if (cantidadDivisores == longitud / 2)
+            {
+                return divisor->clave;
+            }
+        }
+    }
+
+    return 0;
 }
 
 // Ejercicio 6
@@ -336,8 +350,8 @@ Lista c_ej6_comunesapilaycola(Pila p, Cola c)
     return listaResultado;
 }
 
-//Ejercicio 7
-//Complejidad 0(n)
+// Ejercicio 7
+// Complejidad 0(n)
 TipoElemento c_ej7_atenderclientesAux(TipoElemento ele, int tiempoatencion, int numeroDeCola, int pos)
 {
     ele->clave -= tiempoatencion;
@@ -346,7 +360,7 @@ TipoElemento c_ej7_atenderclientesAux(TipoElemento ele, int tiempoatencion, int 
     {
         eleCreado = te_crear(numeroDeCola);
         eleCreado->valor = (char *)malloc(20 * sizeof(char));
-        sprintf(eleCreado->valor, "Cliente:%d Cola:%d",pos, numeroDeCola);
+        sprintf(eleCreado->valor, "Cliente:%d Cola:%d", pos, numeroDeCola);
     }
     return eleCreado;
 }
@@ -382,7 +396,7 @@ Cola c_ej7_atenderclientes(Cola c1, Cola c2, Cola c3, int tiempoatencion)
                 pos2++;
             }
         }
-        
+
         if (!c_es_vacia(c3))
         {
             ele = c_ej7_atenderclientesAux(c_recuperar(c3), tiempoatencion, 3, pos3);
@@ -449,30 +463,31 @@ int main()
     // }
 
     // Ejercicio 5
-    // Cola c1 = c_crear();
-    // c_encolar(c1, te_crear(10));
-    // c_encolar(c1, te_crear(20));
-    // c_encolar(c1, te_crear(40));
-    // c_encolar(c1, te_crear(101));
-    // c_mostrar(c1);
-    // bool fuetotal = false;
-    // int resultado = c_ej5_divisortotal(c1, &fuetotal);
-    // printf("El divisor es: %d\n", resultado);
-    // printf("Fue total? %s\n", fuetotal ? "SI" : "NO");
+    Cola c1 = c_crear();
+    c_encolar(c1, te_crear(3));
+    c_encolar(c1, te_crear(8));
+    c_encolar(c1, te_crear(2));
+    c_encolar(c1, te_crear(6));
+    c_encolar(c1, te_crear(4));
+    c_mostrar(c1);
+    bool fuetotal = false;
+    int resultado = c_ej5_divisortotal(c1, &fuetotal);
+    printf("El divisor es: %d\n", resultado);
+    printf("Fue total? %s\n", fuetotal ? "SI" : "NO");
 
-    //Ejercicio7
-    //Cola c1 = c_crear();
-    //Cola c2 = c_crear();
-    //Cola c3 = c_crear();
-    //rellenarCola(c1, 2);
-    //printf("-----------\n");
-    //rellenarCola(c2, 2);
-    //printf("-----------\n");
-    //rellenarCola(c3, 2);
-    //printf("-----------\n");
-    //Cola resu = c_ej7_atenderclientes(c1,c2,c3, 7);
-    //printf("-----------\n");
-    //c_mostrar(resu);
+    // Ejercicio7
+    // Cola c1 = c_crear();
+    // Cola c2 = c_crear();
+    // Cola c3 = c_crear();
+    // rellenarCola(c1, 2);
+    // printf("-----------\n");
+    // rellenarCola(c2, 2);
+    // printf("-----------\n");
+    // rellenarCola(c3, 2);
+    // printf("-----------\n");
+    // Cola resu = c_ej7_atenderclientes(c1,c2,c3, 7);
+    // printf("-----------\n");
+    // c_mostrar(resu);
 
     return 0;
 }
