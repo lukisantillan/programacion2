@@ -237,6 +237,7 @@ Cola c_ej4_colanorepetidos(Cola c)
 }
 
 // Ejercicio 5
+// Complejidad: O(n^2)
 int c_ej5_divisortotal(Cola c, bool *fuetotal)
 {
     Cola aux = c_crear();
@@ -276,7 +277,6 @@ int c_ej5_divisortotal(Cola c, bool *fuetotal)
     }
     else 
     {
-        // arreglar esto
         *fuetotal = false;
         while (!c_es_vacia(aux2))
         {
