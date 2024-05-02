@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "TP_4_Colas.h"
 // Funciónes Extras
-
 void rellenarCola(Cola cola, int cantidadDeElementos)
 {
     TipoElemento elemento;
@@ -23,6 +22,49 @@ void rellenarCola(Cola cola, int cantidadDeElementos)
         c_encolar(cola, elemento);
     }
 }
+
+TipoElemento c_ej7_atenderclientesAux(TipoElemento ele, int tiempoatencion, int numeroDeCola, int pos)
+{
+    ele->clave -= tiempoatencion;
+    TipoElemento eleCreado = ele;
+    if (ele->clave < tiempoatencion)
+    {
+        eleCreado = te_crear(numeroDeCola);
+        eleCreado->valor = (char *)malloc(20 * sizeof(char));
+        sprintf(eleCreado->valor, "Cliente:%d Cola:%d", pos, numeroDeCola);
+    }
+    return eleCreado;
+}
+
+void verComplejidades()
+{
+    printf(" Complejidad de los ejercicios dados\n");
+    printf("------------------------------------------\n");
+    printf("Complejidad ejercicio2:\n");
+    printf("- Existe clave: Lineal - O(n)\n");
+    printf("- Colar elemento: Lineal - O(n)\n");
+    printf("- Sacar Elemento: Lineal - O(n)\n");
+    printf("- Contar Elementos : Constante - O(1)\n");
+    printf("- Copiar: Lineal - O(n)\n");
+    printf("- Invertir: Lineal - O(n)\n");
+    printf("------------------------------------------\n");
+    printf("Complejidad ejercicio3:\n");
+    printf("- Iguales: Lineal - O(n)\n");
+    printf("------------------------------------------\n");
+    printf("Complejidad ejercicio4:\n");
+    printf("- Cola no repetidos: Lineal - O(n)\n");
+    printf("------------------------------------------\n");
+    printf("Complejidad ejercicio5:\n");
+    printf("- Divisor total: Cuadratica - O(n^2)\n");
+    printf("------------------------------------------\n");
+    printf("Complejidad ejercicio6:\n");
+    printf("- Comunes a pila y cola : Cuadratica - O(n^2)\n");
+    printf("------------------------------------------\n");
+    printf("Complejidad ejercicio7:\n");
+    printf("- Atender Clientes: Lineal - O(n)\n");
+    printf("------------------------------------------\n");
+}
+
 // Ejercicio2
 bool c_ej2_existeclave(Cola c, int clave)
 {
@@ -174,7 +216,7 @@ Cola c_ej2_invertir(Cola c)
 }
 
 // Ejercicio3
-// complejidad O(n+m)
+// complejidad O(n)
 bool c_ej3_iguales(Cola c1, Cola c2)
 {
     Cola aux = c_crear();
@@ -207,7 +249,6 @@ bool c_ej3_iguales(Cola c1, Cola c2)
 }
 
 // Ejercicio 4
-
 // Complejidad: O(n)
 Cola c_ej4_colanorepetidos(Cola c)
 {
@@ -352,19 +393,6 @@ Lista c_ej6_comunesapilaycola(Pila p, Cola c)
 
 // Ejercicio 7
 // Complejidad 0(n)
-TipoElemento c_ej7_atenderclientesAux(TipoElemento ele, int tiempoatencion, int numeroDeCola, int pos)
-{
-    ele->clave -= tiempoatencion;
-    TipoElemento eleCreado = ele;
-    if (ele->clave < tiempoatencion)
-    {
-        eleCreado = te_crear(numeroDeCola);
-        eleCreado->valor = (char *)malloc(20 * sizeof(char));
-        sprintf(eleCreado->valor, "Cliente:%d Cola:%d", pos, numeroDeCola);
-    }
-    return eleCreado;
-}
-
 Cola c_ej7_atenderclientes(Cola c1, Cola c2, Cola c3, int tiempoatencion)
 {
     Cola resu = c_crear();
