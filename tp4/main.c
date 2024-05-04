@@ -109,6 +109,88 @@ Cola crearCola()
     return cola;
 }
 
+Pila rellenarPila(int cantidad)
+{
+    Pila pila = p_crear();
+    for (int i = 0; i < cantidad; i++)
+    {
+        int valor;
+        printf("| Ingresa el valor para el elemento %d: ", i + 1);
+        while (scanf("%d", &valor) != 1)
+        {
+            printf("\nError: Ingresa un número válido para el valor: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        p_apilar(pila, te_crear(valor));
+    }
+
+    return pila;
+}
+
+Pila crearPila()
+{
+    Pila pila;
+
+    printf("\n| ¿Desea rellenar la pila automaticamente? (s/n): ");
+    while (1)
+    {
+        char opcion;
+        scanf(" %c", &opcion);
+        if (opcion == 's')
+        {
+            pila = p_crear();
+
+            printf("\nIngresa cantidad de elementos para la Pila: ");
+            int cantidad_auto;
+            while (scanf("%d", &cantidad_auto) != 1 || cantidad_auto > 10)
+            {
+                printf("\nError: Ingresa un número válido para la cantidad de elementos: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+
+            for (int i = 0; i < cantidad_auto; i++)
+            {
+                int random = rand() % 1000 + 1;
+                printf("%d\n", random);
+                p_apilar(pila, te_crear(random));
+            }
+
+            break;
+        }
+        else if (opcion == 'n')
+        {
+            printf("\nIngresa cantidad de elementos para la Pila: ");
+            int cantidad;
+            while (scanf("%d", &cantidad) != 1 || cantidad > 10)
+            {
+                printf("\nError: Ingresa un número válido para la cantidad de elementos: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+
+            pila = p_crear();
+            pila = rellenarPila(cantidad);
+
+            break;
+        }
+        else
+        {
+            printf("| Opcion no valida, intente nuevamente: ");
+        }
+    }
+
+    return pila;
+}
+
 TipoElemento c_ej7_atenderclientesAux(TipoElemento ele, int tiempoatencion, int numeroDeCola, int pos)
 {
     ele->clave -= tiempoatencion;
@@ -863,6 +945,66 @@ void testPt5()
 
 }
 
+void testPt6()
+{
+    clearScreen();
+    Pila pila = crearPila();
+    Cola cola = crearCola();
+    Lista lista_resultado;
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("\n| Pila: ");
+        p_mostrar(pila);
+        printf("\n| Cola: ");
+        printCola(cola);
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Elementos comunes entre Pila y Cola\n");
+        printf("| 2. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            lista_resultado = c_ej6_comunesapilaycola(pila, cola);
+            printf("\n+------------------------------------------------------------------------------------------+\n");
+            printf("| Pila: ");
+            p_mostrar(pila);
+            printf("| Cola: ");
+            printCola(cola);
+            printf("| Elementos comunes entre Pila y Cola: ");
+            l_mostrar(lista_resultado);
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+            break;
+        case 2:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+
+            waitForKey();
+            break;
+        }
+    }
+
+
+}
+
 int main()
 {
     clearScreen();
@@ -913,6 +1055,7 @@ int main()
             testPt5();
             break;
         case 6:
+            testPt6();
             break;
         case 7:
             break;
