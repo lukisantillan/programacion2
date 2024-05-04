@@ -808,6 +808,61 @@ void testPt4()
 
 }
 
+void testPt5()
+{
+    clearScreen();
+    Cola cola = crearCola();
+    bool fuetotal;
+    int divisor;
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("\n| Cola: ");
+        printCola(cola);
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Divisor total\n");
+        printf("| 2. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            divisor = c_ej5_divisortotal(cola, &fuetotal);
+            printf("\n+------------------------------------------------------------------------------------------+\n");
+            printf("| Cola: ");
+            printCola(cola);
+            printf("| Divisor total: %d\n", divisor);
+            printf("| Fue total: %s\n", fuetotal ? "SI" : "NO");
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+            break;
+        case 2:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+
+            waitForKey();
+            break;
+        }
+    }
+
+}
+
 int main()
 {
     clearScreen();
@@ -855,6 +910,7 @@ int main()
             testPt4();
             break;
         case 5:
+            testPt5();
             break;
         case 6:
             break;
