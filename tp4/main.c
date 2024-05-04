@@ -22,7 +22,7 @@ void waitForKey()
 
 void printCola(Cola cola)
 {
-    printf("| ");
+    printf("\n");
     c_mostrar(cola);
     printf("\n");
 }
@@ -695,6 +695,65 @@ void testPt2()
     }
 }
 
+void testPt3()
+{
+    clearScreen();
+    Cola cola1 = crearCola();
+    Cola cola2 = crearCola();
+    bool resultado;
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("\n| Cola 1: ");
+        printCola(cola1);
+        printf("\n| Cola 2: ");
+        printCola(cola2);
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Verificar si las colas son iguales\n");
+        printf("| 2. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            resultado = c_ej3_iguales(cola1, cola2);
+            if (resultado)
+            {
+                printf("Las colas son iguales\n");
+            }
+            else
+            {
+                printf("Las colas no son iguales\n");
+            }
+
+            waitForKey();
+            break;
+        case 2:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+
+            waitForKey();
+            break;
+        }
+    }
+
+}
+
 int main()
 {
     clearScreen();
@@ -736,6 +795,7 @@ int main()
             testPt2();
             break;
         case 3:
+            testPt3();
             break;
         case 4:
             break;
