@@ -1,26 +1,112 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "TP_4_Colas.h"
-// Funciónes Extras
-void rellenarCola(Cola cola, int cantidadDeElementos)
-{
-    TipoElemento elemento;
-    int clave;
-    for (int i = 0; i < cantidadDeElementos; i++)
-    {
 
-        printf("Ingrese la clave: ");
-        while (scanf("%d", &clave) != 1)
+#include "./TP_4_Colas.h"
+
+// Funciones auxiliares
+
+void clearScreen()
+{
+    system("clear");
+}
+
+void waitForKey()
+{
+    printf("\nPresione Enter para continuar...");
+    while (getchar() != '\n')
+        ;
+    getchar();
+
+    system("clear");
+}
+
+void printCola(Cola cola)
+{
+    printf("| ");
+    c_mostrar(cola);
+    printf("\n");
+}
+
+Cola rellenarCola(int cantidad)
+{
+    Cola cola = c_crear();
+    for (int i = 0; i < cantidad; i++)
+    {
+        int valor;
+        printf("| Ingresa el valor para el elemento %d: ", i + 1);
+        while (scanf("%d", &valor) != 1)
         {
-            printf("\nError: Ingresa un número válido: ");
+            printf("\nError: Ingresa un número válido para el valor: ");
             while (getchar() != '\n')
             {
                 // clear input buffer
             }
         }
-        elemento = te_crear(clave);
-        c_encolar(cola, elemento);
+
+        c_encolar(cola, te_crear(valor));
     }
+
+    return cola;
+}
+
+Cola crearCola()
+{
+    Cola cola;
+
+    printf("\n| ¿Desea rellenar la cola automaticamente? (s/n): ");
+    while (1)
+    {
+        char opcion;
+        scanf(" %c", &opcion);
+        if (opcion == 's')
+        {
+            cola = c_crear();
+
+            printf("\nIngresa cantidad de elementos para la Cola: ");
+            int cantidad_auto;
+            while (scanf("%d", &cantidad_auto) != 1 || cantidad_auto > 10)
+            {
+                printf("\nError: Ingresa un número válido para la cantidad de elementos: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+
+            for (int i = 0; i < cantidad_auto; i++)
+            {
+                int random = rand() % 1000 + 1;
+                printf("%d\n", random);
+                c_encolar(cola, te_crear(random));
+            }
+
+            break;
+        }
+        else if (opcion == 'n')
+        {
+            printf("\nIngresa cantidad de elementos para la Cola: ");
+            int cantidad;
+            while (scanf("%d", &cantidad) != 1 || cantidad > 10)
+            {
+                printf("\nError: Ingresa un número válido para la cantidad de elementos: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+
+            cola = c_crear();
+            cola = rellenarCola(cantidad);
+
+            break;
+        }
+        else
+        {
+            printf("| Opcion no valida, intente nuevamente: ");
+        }
+    }
+
+    return cola;
 }
 
 TipoElemento c_ej7_atenderclientesAux(TipoElemento ele, int tiempoatencion, int numeroDeCola, int pos)
@@ -94,13 +180,26 @@ Cola c_ej2_colarelemento(Cola c, int posicionordinal)
     Cola aux = c_crear();
     Cola resultado = c_crear();
     TipoElemento ele;
-    int elemento;
-    int i = 1;
+
+    int i = 1, elemento;
+
     while (!c_es_vacia(c))
     {
         ele = c_desencolar(c);
         c_encolar(aux, ele);
     }
+
+    // Pregunto el elemento a colocar
+    printf("Ingrese el elemento que desea agregar: ");
+    while (scanf("%d", &elemento) != 1)
+    {
+        printf("\nError: Ingresa un número válido para la opción: ");
+        while (getchar() != '\n')
+        {
+            // clear input buffer
+        }
+    }
+
     // ENCOLO DE NUEVO
     while (!c_es_vacia(aux))
     {
@@ -114,6 +213,7 @@ Cola c_ej2_colarelemento(Cola c, int posicionordinal)
             c_encolar(resultado, ele); // ENCOLO EL ELEMENTO EN LA POS;
         }
     }
+
     return resultado;
 }
 
@@ -316,7 +416,7 @@ int c_ej5_divisortotal(Cola c, bool *fuetotal)
         *fuetotal = true;
         return minimo;
     }
-    else 
+    else
     {
         *fuetotal = false;
         while (!c_es_vacia(aux2))
@@ -445,79 +545,289 @@ Cola c_ej7_atenderclientes(Cola c1, Cola c2, Cola c3, int tiempoatencion)
     return resu;
 }
 
+void testPt2()
+{
+    clearScreen();
+    Cola cola = crearCola();
+    Cola cola_duplicada;
+    Cola cola_invertida;
+    int cantidad_elementos;
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("\n| Cola: ");
+        printCola(cola);
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Existe clave\n");
+        printf("| 2. Colar elemento\n");
+        printf("| 3. Eliminar clave\n");
+        printf("| 4. Copiar cola\n");
+        printf("| 5. Invertir cola\n");
+        printf("| 6. Cantidad elementos\n");
+        printf("| 7. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            printf("\nIngrese la clave a buscar: ");
+            int clave;
+            while (scanf("%d", &clave) != 1)
+            {
+                printf("\nError: Ingresa un número válido para la clave: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+            bool resultado1 = c_ej2_existeclave(cola, clave);
+            if (resultado1)
+            {
+                printf("La clave %d existe en la cola\n", clave);
+            }
+            else
+            {
+                printf("La clave %d no existe en la cola\n", clave);
+            }
+
+            waitForKey();
+            break;
+        case 2:
+            printf("\nIngrese la posicion ordinal donde desea colar el elemento: ");
+            int posicion;
+            while (scanf("%d", &posicion) != 1)
+            {
+                printf("\nError: Ingresa un número válido para la posición: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+
+            Cola resultado2 = c_ej2_colarelemento(cola, posicion);
+            printf("\n+------------------------------------------------------------------------------------------+\n");
+            printf("| Cola original:\n");
+            printCola(cola);
+            printf("| Cola con elemento colocado:\n");
+            printCola(resultado2);
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+            break;
+        case 3:
+            printf("\nIngrese la clave a eliminar: ");
+            int claveEliminar;
+            while (scanf("%d", &claveEliminar) != 1)
+            {
+                printf("\nError: Ingresa un número válido para la clave: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+            Cola cola_eliminar_clave = c_ej2_sacarelemento(cola, claveEliminar);
+            printf("\n+------------------------------------------------------------------------------------------+\n");
+            printf("| Cola original:\n");
+            printCola(cola);
+            printf("| Cola sin clave:\n");
+            printCola(cola_eliminar_clave);
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+            break;
+        case 4:
+            cola_duplicada = c_ej2_copiar(cola);
+            printf("\n+------------------------------------------------------------------------------------------+\n");
+            printf("| Cola original:\n");
+            printCola(cola);
+            printf("| Cola duplicada:\n");
+            printCola(cola_duplicada);
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+
+            free(cola_duplicada);
+            break;
+        case 5:
+            cola_invertida = c_ej2_invertir(cola);
+
+            printf("\n+------------------------------------------------------------------------------------------+\n");
+            printf("| Cola original:\n");
+            printCola(cola);
+            printf("| Cola invertida:\n");
+            printCola(cola_invertida);
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+            break;
+        case 6:
+            cantidad_elementos = c_ej2_contarelementos(cola);
+            printf("\n+------------------------------------------------------------------------------------------+\n");
+            printf("| Cola:\n");
+            printCola(cola);
+            printf("| La cola tiene %d elementos\n", cantidad_elementos);
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+            break;
+        case 7:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+
+            waitForKey();
+            break;
+        }
+    }
+}
+
 int main()
 {
-    // Cola c1 = c_crear();
-    // rellenarCola(c1, 4);
-    // printf("EJERCICIO EXISTE CLAVE\n");
-    // bool resultado1 = c_ej2_existeclave(c1, 3);
-    // if (resultado1)
-    // {
-    //     printf("Existe la clave en la pila\n");
-    // }
-    // else
-    // {
-    //     printf("No existe la clave en la pila\n");
-    // }
+    clearScreen();
+    printf("Archivo compilado exitosamente\n");
+    printf("Esto es unicamente para comprobar que la compilacion fue exitosa\n");
 
-    // Cola c2 = c_ej4_colanorepetidos(c1);
-    // printf("Cola 1\n");
-    // c_mostrar(c1);
-    // printf("Cola de no repetidos\n");
-    // c_mostrar(c2);
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Ver complejidad algoritmica de cada punto\n");
+        printf("| 2. Probar funciones del punto 2\n");
+        printf("| 3. Probar funciones del punto 3\n");
+        printf("| 4. Probar funciones del punto 4\n");
+        printf("| 5. Probar funciones del punto 5\n");
+        printf("| 6. Probar funciones del punto 6\n");
+        printf("| 7. Probar funciones del punto 7\n");
+        printf("| 8. Salir\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
 
-    // main EJERCICIO 6
-    // Pila p1 = p_crear();
-    // rellenarPila(p1,5);
-    // printf("----------------------\n");
-    // Cola c1 = c_crear();
-    // rellenarCola(c1,5);
-    // Lista resultado = c_ej6_comunesapilaycola(p1,c1);
-    // c_mostrar(c1);
-    // p_mostrar(p1);
-    // printf("La lista resultante es: \n");
-    // l_mostrar(resultado);
-    // if (resultado->inicio==NULL){
-    //     printf("LISTA VACIA (NO hay elementos coincidentes)");
-    // }
-    // else{
-    //     l_mostrar(resultado);
-    // }
-    // Iterador iteL1 = iterador(resultado);
-    // while (hay_siguiente(iteL1))
-    //{
-    //     TipoElemento eleLis = siguiente(iteL1);
-    //     printf("El elemento es %d y sus posiciones son: %s  \n", eleLis->clave, 1;
-    // }
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
 
-    // Ejercicio 5
-    // Cola c1 = c_crear();
-    // c_encolar(c1, te_crear(30));
-    // c_encolar(c1, te_crear(9));
-    // c_encolar(c1, te_crear(2));
-    // c_encolar(c1, te_crear(3));
-    // c_encolar(c1, te_crear(4));
-    // c_mostrar(c1);
-    // bool fuetotal = false;
-    // int resultado = c_ej5_divisortotal(c1, &fuetotal);
-    // printf("El divisor es: %d\n", resultado);
-    // printf("Fue total? %s\n", fuetotal ? "SI" : "NO");
-
-    // Ejercicio7
-    // Cola c1 = c_crear();
-    // Cola c2 = c_crear();
-    // Cola c3 = c_crear();
-    // rellenarCola(c1, 2);
-    // printf("-----------\n");
-    // rellenarCola(c2, 2);
-    // printf("-----------\n");
-    // rellenarCola(c3, 2);
-    // printf("-----------\n");
-    // Cola resu = c_ej7_atenderclientes(c1,c2,c3, 7);
-    // printf("-----------\n");
-    // c_mostrar(resu);
-
-    return 0;
+        switch (opcion)
+        {
+        case 1:
+            clearScreen();
+            verComplejidades();
+            waitForKey();
+            break;
+        case 2:
+            testPt2();
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+        case 8:
+            clearScreen();
+            return 0;
+        default:
+            printf("\nOpcion no valida");
+            break;
+        }
+    }
 }
+
+// int main()
+// {
+//     // Cola c1 = c_crear();
+//     // rellenarCola(c1, 4);
+//     // printf("EJERCICIO EXISTE CLAVE\n");
+//     // bool resultado1 = c_ej2_existeclave(c1, 3);
+//     // if (resultado1)
+//     // {
+//     //     printf("Existe la clave en la pila\n");
+//     // }
+//     // else
+//     // {
+//     //     printf("No existe la clave en la pila\n");
+//     // }
+
+//     // Cola c2 = c_ej4_colanorepetidos(c1);
+//     // printf("Cola 1\n");
+//     // c_mostrar(c1);
+//     // printf("Cola de no repetidos\n");
+//     // c_mostrar(c2);
+
+//     // main EJERCICIO 6
+//     // Pila p1 = p_crear();
+//     // rellenarPila(p1,5);
+//     // printf("----------------------\n");
+//     // Cola c1 = c_crear();
+//     // rellenarCola(c1,5);
+//     // Lista resultado = c_ej6_comunesapilaycola(p1,c1);
+//     // c_mostrar(c1);
+//     // p_mostrar(p1);
+//     // printf("La lista resultante es: \n");
+//     // l_mostrar(resultado);
+//     // if (resultado->inicio==NULL){
+//     //     printf("LISTA VACIA (NO hay elementos coincidentes)");
+//     // }
+//     // else{
+//     //     l_mostrar(resultado);
+//     // }
+//     // Iterador iteL1 = iterador(resultado);
+//     // while (hay_siguiente(iteL1))
+//     //{
+//     //     TipoElemento eleLis = siguiente(iteL1);
+//     //     printf("El elemento es %d y sus posiciones son: %s  \n", eleLis->clave, 1;
+//     // }
+
+//     // Ejercicio 5
+//     // Cola c1 = c_crear();
+//     // c_encolar(c1, te_crear(30));
+//     // c_encolar(c1, te_crear(9));
+//     // c_encolar(c1, te_crear(2));
+//     // c_encolar(c1, te_crear(3));
+//     // c_encolar(c1, te_crear(4));
+//     // c_mostrar(c1);
+//     // bool fuetotal = false;
+//     // int resultado = c_ej5_divisortotal(c1, &fuetotal);
+//     // printf("El divisor es: %d\n", resultado);
+//     // printf("Fue total? %s\n", fuetotal ? "SI" : "NO");
+
+//     // Ejercicio7
+//     // Cola c1 = c_crear();
+//     // Cola c2 = c_crear();
+//     // Cola c3 = c_crear();
+//     // rellenarCola(c1, 2);
+//     // printf("-----------\n");
+//     // rellenarCola(c2, 2);
+//     // printf("-----------\n");
+//     // rellenarCola(c3, 2);
+//     // printf("-----------\n");
+//     // Cola resu = c_ej7_atenderclientes(c1,c2,c3, 7);
+//     // printf("-----------\n");
+//     // c_mostrar(resu);
+
+//     return 0;
+// }
 
 // gcc -o test_tp4 ./tp4/main.c ./libs/colas/colas_arreglos.c ./libs/listas/listas_arreglos.c ./libs/pilas/pilas_arreglos.c ./libs/elementos/tipo_elemento.c && ./test_tp4
