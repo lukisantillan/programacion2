@@ -754,6 +754,60 @@ void testPt3()
 
 }
 
+void testPt4()
+{
+    clearScreen();
+    Cola cola = crearCola();
+    Cola cola_no_repetidos;
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("\n| Cola: ");
+        printCola(cola);
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Cola sin elementos repetidos\n");
+        printf("| 2. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            cola_no_repetidos = c_ej4_colanorepetidos(cola);
+            printf("\n+------------------------------------------------------------------------------------------+\n");
+            printf("| Cola original:\n");
+            printCola(cola);
+            printf("| Cola sin elementos repetidos:\n");
+            printCola(cola_no_repetidos);
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+            break;
+        case 2:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+
+            waitForKey();
+            break;
+        }
+    }
+
+}
+
 int main()
 {
     clearScreen();
@@ -798,6 +852,7 @@ int main()
             testPt3();
             break;
         case 4:
+            testPt4();
             break;
         case 5:
             break;
