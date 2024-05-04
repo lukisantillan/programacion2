@@ -588,7 +588,7 @@ Cola c_ej7_atenderclientes(Cola c1, Cola c2, Cola c3, int tiempoatencion)
             ele = c_ej7_atenderclientesAux(c_recuperar(c1), tiempoatencion, 1, pos1);
             if (ele->clave < tiempoatencion)
             {
-                printf("%s\n", (char *)ele->valor);
+                printf("Cliente atendido en caja 1: clave=%d, valor=%s\n", ele->clave, (char *)ele->valor);
                 c_encolar(resu, ele);
                 ele = c_desencolar(c1);
                 pos1++;
@@ -600,7 +600,7 @@ Cola c_ej7_atenderclientes(Cola c1, Cola c2, Cola c3, int tiempoatencion)
             ele = c_ej7_atenderclientesAux(c_recuperar(c2), tiempoatencion, 2, pos2);
             if (ele->clave < tiempoatencion)
             {
-                printf("%s\n", (char *)ele->valor);
+                printf("Cliente atendido en caja 2: clave=%d, valor=%s\n", ele->clave, (char *)ele->valor);
                 c_encolar(resu, ele);
                 ele = c_desencolar(c2);
                 pos2++;
@@ -612,7 +612,7 @@ Cola c_ej7_atenderclientes(Cola c1, Cola c2, Cola c3, int tiempoatencion)
             ele = c_ej7_atenderclientesAux(c_recuperar(c3), tiempoatencion, 3, pos3);
             if (ele->clave < tiempoatencion)
             {
-                printf("%s\n", (char *)ele->valor);
+                printf("Cliente atendido en caja 3: clave=%d, valor=%s\n", ele->clave, (char *)ele->valor);
                 c_encolar(resu, ele);
                 ele = c_desencolar(c3);
                 pos3++;
@@ -833,7 +833,6 @@ void testPt3()
             break;
         }
     }
-
 }
 
 void testPt4()
@@ -887,7 +886,6 @@ void testPt4()
             break;
         }
     }
-
 }
 
 void testPt5()
@@ -942,7 +940,6 @@ void testPt5()
             break;
         }
     }
-
 }
 
 void testPt6()
@@ -1001,7 +998,73 @@ void testPt6()
             break;
         }
     }
+}
 
+void testPt7()
+{
+    clearScreen();
+    Cola c1 = crearCola();
+    Cola c2 = crearCola();
+    Cola c3 = crearCola();
+    int tiempoatencion;
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("\n| Cola 1: ");
+        printCola(c1);
+        printf("\n| Cola 2: ");
+        printCola(c2);
+        printf("\n| Cola 3: ");
+        printCola(c3);
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Atender clientes\n");
+        printf("| 2. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            printf("\nIngrese el tiempo de atencion: ");
+            while (scanf("%d", &tiempoatencion) != 1)
+            {
+                printf("\nError: Ingresa un número válido para el tiempo de atencion: ");
+                while (getchar() != '\n')
+                {
+                    // clear input buffer
+                }
+            }
+
+            Cola resultado = c_ej7_atenderclientes(c1, c2, c3, tiempoatencion);
+            printf("\n+------------------------------------------------------------------------------------------+\n");
+            printf("| Cola de clientes atendidos: ");
+            printCola(resultado);
+            printf("+------------------------------------------------------------------------------------------+\n");
+
+            waitForKey();
+            break;
+        case 2:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+
+            waitForKey();
+            break;
+        }
+    }
 
 }
 
@@ -1058,6 +1121,7 @@ int main()
             testPt6();
             break;
         case 7:
+            testPt7();
             break;
         case 8:
             clearScreen();
