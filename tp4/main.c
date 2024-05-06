@@ -27,7 +27,7 @@ void printCola(Cola cola)
     printf("\n");
 }
 
-Cola rellenarCola(int cantidad)
+Cola rellenarCola(int cantidad, bool permitir_repetidos)
 {
     Cola cola = c_crear();
     for (int i = 0; i < cantidad; i++)
@@ -43,13 +43,29 @@ Cola rellenarCola(int cantidad)
             }
         }
 
+        if (!permitir_repetidos)
+        {
+            while (c_ej2_existeclave(cola, valor))
+            {
+                printf("\nError: El valor ya existe en la cola, ingrese otro valor: ");
+                while (scanf("%d", &valor) != 1)
+                {
+                    printf("\nError: Ingresa un número válido para el valor: ");
+                    while (getchar() != '\n')
+                    {
+                        // clear input buffer
+                    }
+                }
+            }
+        }
+
         c_encolar(cola, te_crear(valor));
     }
 
     return cola;
 }
 
-Cola crearCola()
+Cola crearCola(bool permitir_repetidos)
 {
     Cola cola;
 
@@ -96,7 +112,7 @@ Cola crearCola()
             }
 
             cola = c_crear();
-            cola = rellenarCola(cantidad);
+            cola = rellenarCola(cantidad, permitir_repetidos);
 
             break;
         }
@@ -109,7 +125,33 @@ Cola crearCola()
     return cola;
 }
 
-Pila rellenarPila(int cantidad)
+bool pila_existeClave(Pila p, int clave)
+{
+    bool resultado = false;
+    Pila aux = p_crear();
+    TipoElemento ele;
+    while (!p_es_vacia(p))
+    {
+        ele = p_desapilar(p);
+        if (ele->clave == clave)
+        {
+            resultado = true;
+        }
+        p_apilar(aux, ele);
+    }
+
+    // RECOMPONGO LA PILA INGRESADA
+    while (!p_es_vacia(aux))
+    {
+
+        ele = p_desapilar(aux);
+        p_apilar(p, ele);
+    }
+
+    return resultado;
+}
+
+Pila rellenarPila(int cantidad, bool permitir_repetidos) 
 {
     Pila pila = p_crear();
     for (int i = 0; i < cantidad; i++)
@@ -125,13 +167,29 @@ Pila rellenarPila(int cantidad)
             }
         }
 
+        if (!permitir_repetidos)
+        {
+            while (pila_existeClave(pila, valor))
+            {
+                printf("\nError: El valor ya existe en la pila, ingrese otro valor: ");
+                while (scanf("%d", &valor) != 1)
+                {
+                    printf("\nError: Ingresa un número válido para el valor: ");
+                    while (getchar() != '\n')
+                    {
+                        // clear input buffer
+                    }
+                }
+            }
+        }
+
         p_apilar(pila, te_crear(valor));
     }
 
     return pila;
 }
 
-Pila crearPila()
+Pila crearPila(bool permitir_repetidos)
 {
     Pila pila;
 
@@ -178,7 +236,7 @@ Pila crearPila()
             }
 
             pila = p_crear();
-            pila = rellenarPila(cantidad);
+            pila = rellenarPila(cantidad, permitir_repetidos);
 
             break;
         }
@@ -630,7 +688,7 @@ Cola c_ej7_atenderclientes(Cola c1, Cola c2, Cola c3, int tiempoatencion)
 void testPt2()
 {
     clearScreen();
-    Cola cola = crearCola();
+    Cola cola = crearCola(true);
     Cola cola_duplicada;
     Cola cola_invertida;
     int cantidad_elementos;
@@ -780,8 +838,8 @@ void testPt2()
 void testPt3()
 {
     clearScreen();
-    Cola cola1 = crearCola();
-    Cola cola2 = crearCola();
+    Cola cola1 = crearCola(true);
+    Cola cola2 = crearCola(true);
     bool resultado;
 
     while (1)
@@ -838,7 +896,7 @@ void testPt3()
 void testPt4()
 {
     clearScreen();
-    Cola cola = crearCola();
+    Cola cola = crearCola(true);
     Cola cola_no_repetidos;
 
     while (1)
@@ -891,7 +949,7 @@ void testPt4()
 void testPt5()
 {
     clearScreen();
-    Cola cola = crearCola();
+    Cola cola = crearCola(true);
     bool fuetotal;
     int divisor;
 
@@ -945,8 +1003,8 @@ void testPt5()
 void testPt6()
 {
     clearScreen();
-    Pila pila = crearPila();
-    Cola cola = crearCola();
+    Pila pila = crearPila(false);
+    Cola cola = crearCola(false);
     Lista lista_resultado;
 
     while (1)
@@ -1003,9 +1061,9 @@ void testPt6()
 void testPt7()
 {
     clearScreen();
-    Cola c1 = crearCola();
-    Cola c2 = crearCola();
-    Cola c3 = crearCola();
+    Cola c1 = crearCola(true);
+    Cola c2 = crearCola(true);
+    Cola c3 = crearCola(true);
     int tiempoatencion;
 
     while (1)
