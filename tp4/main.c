@@ -1038,10 +1038,15 @@ void testPt6()
             printf("\n+------------------------------------------------------------------------------------------+\n");
             printf("| Pila: ");
             p_mostrar(pila);
-            printf("| Cola: ");
             printCola(cola);
-            printf("| Elementos comunes entre Pila y Cola: ");
-            l_mostrar(lista_resultado);
+            printf("| Elementos comunes entre Pila y Cola: \n");
+            
+            int longitud = l_longitud(lista_resultado);
+            for(int i = 1; i <= longitud; i++) {
+                TipoElemento elemento = l_recuperar(lista_resultado, i);
+                printf("| Clave: %d, Posicion(cola:pila): %s\n", elemento->clave, elemento->valor);
+            }
+
             printf("+------------------------------------------------------------------------------------------+\n");
 
             waitForKey();
