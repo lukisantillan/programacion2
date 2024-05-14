@@ -79,8 +79,7 @@ void es_hoja(NodoArbol n, Lista l)
         NodoArbol hijoIzq = n_hijoderecho(n);
         if (a_es_rama_nula(hijoIzq) && a_es_rama_nula(hijoDer))
         {
-            TipoElemento ele = te_crear(n_recuperar(n)->clave);
-            l_agregar(l, ele);
+            l_agregar(l, te_crear_con_valor(n_recuperar(n)->clave, n));
         }
         es_hoja(hijoIzq, l);
         es_hoja(hijoDer, l);
@@ -174,14 +173,37 @@ int a_ej3_clavepadre(ArbolBinario A, int clavehijo)
     {
         return 999;
     }
-    
+
     encontrar_padre(raiz, clavehijo, clavePadre);
     int resultado = *clavePadre;
     free(clavePadre);
     return resultado;
 }
 
-//b
+// b
+void encontrar_hijos(NodoArbol n, int clavePadre, Lista l)
+{
+    if (!a_es_rama_nula(n))
+    {
+        NodoArbol hijoIzq = n_hijoizquierdo(n);
+        NodoArbol hijoDer = n_hijoderecho(n);
+        if (n_recuperar(n)->clave == clavePadre)
+        {
+            l_agregar(l, te_crear_con_valor(n_recuperar(hijoIzq)->clave, n));
+            l_agregar(l, te_crear_con_valor(n_recuperar(hijoDer)->clave, n));
+            return ;
+        }
+        encontrar_hijos(hijoIzq, clavePadre, l);
+        encontrar_hijos(hijoDer, clavePadre, l);
+    }
+}
+
+Lista a_ej3_hijos(ArbolBinario A, int clavepadre)
+{
+    Lista hijos = l_crear();
+    encontrar_hijos(a_raiz(A), clavepadre, hijos);
+    return hijos;
+}
 
 int main()
 {
@@ -201,19 +223,33 @@ int main()
         TipoElemento ele = siguiente(iteIg);
         printf("\n| Clave: %d, Posicion: %p", ele->clave, (void *)ele->valor);
     }
-    */
+
     int hijo = 2;
     int resultado = a_ej3_clavepadre(arbol, hijo);
     if (resultado == -999)
     {
         printf("El hijo no existe en el arbol, por lo tanto no se pudo buscar el padre\n");
-    } else if (resultado == 999)
+    }
+    else if (resultado == 999)
     {
         printf("La clave enviada es la raiz del arbol, por lo no tiene padre\n");
-    } else
+    }
+    else
     {
         printf("El hijo %d, tiene como padre a %d \n", hijo, resultado);
     }
+    */
+   int clavePadre = 10;
+   Lista resu = a_ej3_hijos(arbol,clavePadre);
+   if (l_es_vacia(resu))
+   {
+    printf("La clave era una hoja, por lo tanto no tenia hijos\n");
+   } else 
+   {
+    printf("El padre %d, tiene el(los) siguiente(s) hijo(s)..\n", clavePadre);
+    l_mostrar(resu);
+   }
+   
 
     return 0;
 }
