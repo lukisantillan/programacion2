@@ -205,6 +205,41 @@ Lista a_ej3_hijos(ArbolBinario A, int clavepadre)
     return hijos;
 }
 
+//c 
+void encontrar_hermano(NodoArbol n, int clave, int *claveHermano)
+{
+    if (!a_es_rama_nula(n))
+    {
+        NodoArbol hijoDer = n_hijoizquierdo(n);
+        NodoArbol hijoIzq = n_hijoderecho(n);
+        if ((hijoDer != NULL && hijoIzq != NULL))
+        {
+            if (n_recuperar(hijoDer)->clave == clave)
+            {
+                *claveHermano = n_recuperar(hijoIzq)->clave;
+                return;
+            } else if (n_recuperar(hijoIzq)->clave == clave)
+            {
+                *claveHermano = n_recuperar(hijoDer)->clave;
+                return;                
+            }
+            
+        }
+        encontrar_hermano(hijoIzq, clave, claveHermano);
+        encontrar_hermano(hijoDer, clave, claveHermano);
+    }
+}
+
+int a_ej3_hermano(ArbolBinario A, int clave){
+    int *claveHermano = malloc(sizeof(int));
+    *claveHermano = -999;
+    NodoArbol raiz = a_raiz(A);
+    encontrar_hermano(raiz, clave, claveHermano);
+    int resultado = *claveHermano;
+    free(claveHermano);
+    return resultado;
+}
+
 int main()
 {
     ArbolBinario arbol = a_crear();
@@ -223,7 +258,7 @@ int main()
         TipoElemento ele = siguiente(iteIg);
         printf("\n| Clave: %d, Posicion: %p", ele->clave, (void *)ele->valor);
     }
-
+  
     int hijo = 2;
     int resultado = a_ej3_clavepadre(arbol, hijo);
     if (resultado == -999)
@@ -238,7 +273,7 @@ int main()
     {
         printf("El hijo %d, tiene como padre a %d \n", hijo, resultado);
     }
-    */
+
    int clavePadre = 10;
    Lista resu = a_ej3_hijos(arbol,clavePadre);
    if (l_es_vacia(resu))
@@ -249,7 +284,18 @@ int main()
     printf("El padre %d, tiene el(los) siguiente(s) hijo(s)..\n", clavePadre);
     l_mostrar(resu);
    }
-   
+    */
 
+    int clave = 2;
+    int resultado = a_ej3_hermano(arbol, clave);
+    if (resultado == -999)
+    {
+        printf("Hay 2 posibles opciones..\n");
+        printf("1 - El hijo con la clave %d, no tiene hermano\n", clave);
+        printf("2 - No existe un hijo con la clave %d, por lo tanto no existe un hermano\n", clave);
+    } else
+    {
+        printf("El hijo %d, tiene como hermano a %d \n", clave, resultado);
+    }
     return 0;
 }
