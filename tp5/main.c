@@ -108,7 +108,6 @@ void es_interno(NodoArbol n, Lista l, NodoArbol raiz)
             {
                 l_agregar(l, te_crear_con_valor(n_recuperar(n)->clave, n));
             }
-        
         }
         es_interno(hijoIzq, l, raiz);
         es_interno(hijoDer, l, raiz);
@@ -147,10 +146,48 @@ Lista a_ej2_buscarclave(ArbolBinario A, int clave)
     return direcciones;
 }
 
+// Punto 3
+// a
+void encontrar_padre(NodoArbol n, int clavehijo, int *clavePadre)
+{
+    if (!a_es_rama_nula(n))
+    {
+        NodoArbol hijoDer = n_hijoizquierdo(n);
+        NodoArbol hijoIzq = n_hijoderecho(n);
+        if ((hijoDer != NULL && n_recuperar(hijoDer)->clave == clavehijo) ||
+            (hijoIzq != NULL && n_recuperar(hijoIzq)->clave == clavehijo))
+        {
+            *clavePadre = n_recuperar(n)->clave;
+            return;
+        }
+        encontrar_padre(hijoIzq, clavehijo, clavePadre);
+        encontrar_padre(hijoDer, clavehijo, clavePadre);
+    }
+}
+
+int a_ej3_clavepadre(ArbolBinario A, int clavehijo)
+{
+    int *clavePadre = malloc(sizeof(int));
+    *clavePadre = -999;
+    NodoArbol raiz = a_raiz(A);
+    if (n_recuperar(raiz)->clave == clavehijo)
+    {
+        return 999;
+    }
+    
+    encontrar_padre(raiz, clavehijo, clavePadre);
+    int resultado = *clavePadre;
+    free(clavePadre);
+    return resultado;
+}
+
+//b
+
 int main()
 {
     ArbolBinario arbol = a_crear();
     arbol = cargarArbol();
+    /*
     Lista hojas = a_ej2_hojas(arbol);
     l_mostrar(hojas);
     printf("\n ----------------------------");
@@ -163,6 +200,19 @@ int main()
     {
         TipoElemento ele = siguiente(iteIg);
         printf("\n| Clave: %d, Posicion: %p", ele->clave, (void *)ele->valor);
+    }
+    */
+    int hijo = 2;
+    int resultado = a_ej3_clavepadre(arbol, hijo);
+    if (resultado == -999)
+    {
+        printf("El hijo no existe en el arbol, por lo tanto no se pudo buscar el padre\n");
+    } else if (resultado == 999)
+    {
+        printf("La clave enviada es la raiz del arbol, por lo no tiene padre\n");
+    } else
+    {
+        printf("El hijo %d, tiene como padre a %d \n", hijo, resultado);
     }
 
     return 0;
