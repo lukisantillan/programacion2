@@ -240,6 +240,25 @@ int a_ej3_hermano(ArbolBinario A, int clave){
     return resultado;
 }
 
+//d
+int calcularNivelNodo(NodoArbol n, int clave, int nivel){
+    if (a_es_rama_nula(n))
+    {
+        return -1;
+    }
+
+    if (n_recuperar(n)->clave == clave) return nivel;
+    int nivel_izquierdo = calcularNivelNodo(n_hijoizquierdo(n), clave, nivel + 1);
+    if (nivel_izquierdo != -1) return nivel_izquierdo;
+    return calcularNivelNodo(n_hijoderecho(n), clave, nivel+ 1);
+}
+
+int a_ej3_nivel(ArbolBinario A, int clave){
+    int nivel = calcularNivelNodo(a_raiz(A), clave, 0);
+    return nivel;
+}
+
+
 int main()
 {
     ArbolBinario arbol = a_crear();
@@ -284,8 +303,6 @@ int main()
     printf("El padre %d, tiene el(los) siguiente(s) hijo(s)..\n", clavePadre);
     l_mostrar(resu);
    }
-    */
-
     int clave = 2;
     int resultado = a_ej3_hermano(arbol, clave);
     if (resultado == -999)
@@ -296,6 +313,17 @@ int main()
     } else
     {
         printf("El hijo %d, tiene como hermano a %d \n", clave, resultado);
-    }
+    }    
+    */
+   int clave = 5;
+   int resultado = a_ej3_nivel(arbol, clave);
+   if (resultado == -1)
+   {
+    printf("El nodo con la clave %d, no se encuentra en el arbol..\n", clave);
+   } else if (resultado == 0)
+   {
+    printf("El nodo con la clave %d, se encuentra en la raiz..\n", clave);
+   } else printf("El nodo con la clave %d se encuentra en el nivel numero : %d..\n", clave,resultado);
+   
     return 0;
 }
