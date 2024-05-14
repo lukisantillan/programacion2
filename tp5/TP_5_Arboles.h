@@ -2,13 +2,13 @@
 #define TP_ARBOLES_H
 
 #include <stdbool.h>
-#include ".\colas.h"
-#include ".\listas.h"
-#include ".\pilas.h"
-#include ".\nodo.h"
-#include ".\arbol-binario.h"
-#include ".\arbol-avl.h"
-#include ".\arbol-binario-busqueda.h"
+#include "../libs/colas/colas.h"
+#include "../libs/pilas/pilas.h"
+#include "../libs/listas/listas.h"
+#include "../libs/nodos/nodo.h"
+#include "../libs/arboles/arbol-binario.h"
+#include "../libs/arboles/arbol-avl.h"
+#include "../libs/arboles/arbol-binario-busqueda.h"
 
 
 /**
