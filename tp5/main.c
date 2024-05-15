@@ -246,7 +246,6 @@ int calcularNivelNodo(NodoArbol n, int clave, int nivel){
     {
         return -1;
     }
-
     if (n_recuperar(n)->clave == clave) return nivel;
     int nivel_izquierdo = calcularNivelNodo(n_hijoizquierdo(n), clave, nivel + 1);
     if (nivel_izquierdo != -1) return nivel_izquierdo;
@@ -256,6 +255,50 @@ int calcularNivelNodo(NodoArbol n, int clave, int nivel){
 int a_ej3_nivel(ArbolBinario A, int clave){
     int nivel = calcularNivelNodo(a_raiz(A), clave, 0);
     return nivel;
+}
+
+//e
+int altura_arbol(NodoArbol n){
+    if (n==NULL){
+        return -1; //no se encontro la clave
+    }
+
+    int ai=altura_arbol(n->hi);
+    int ad=altura_arbol(n->hd);
+    if(ai>ad) 
+    {
+        return ai+1;
+    }
+    else {
+        return ad+1;
+    }
+}
+void busquedadelnodo(NodoArbol n,int clave, NodoArbol *nodo_encontrado){
+    if(n!=NULL){
+        if(n_recuperar(n)->clave == clave){   
+            *nodo_encontrado=n;
+            return;
+        }
+        busquedadelnodo(n->hi,clave,nodo_encontrado);
+        busquedadelnodo(n->hd,clave,nodo_encontrado);
+    }
+}
+
+int a_ej3_alturarama(ArbolBinario A, int clave){
+    NodoArbol raiz=a_raiz(A);
+    NodoArbol nodoencontrado= NULL;
+    int alt=0;
+    if(a_es_vacio(A)){
+        return alt;
+    }
+    else{
+        busquedadelnodo(raiz,clave, &nodoencontrado);
+        if(nodoencontrado!=NULL){
+            int altura= altura_arbol(nodoencontrado);
+            return altura;
+        }
+        else return -1;
+    }
 }
 
 
@@ -293,16 +336,16 @@ int main()
         printf("El hijo %d, tiene como padre a %d \n", hijo, resultado);
     }
 
-   int clavePadre = 10;
-   Lista resu = a_ej3_hijos(arbol,clavePadre);
-   if (l_es_vacia(resu))
-   {
-    printf("La clave era una hoja, por lo tanto no tenia hijos\n");
-   } else 
-   {
-    printf("El padre %d, tiene el(los) siguiente(s) hijo(s)..\n", clavePadre);
-    l_mostrar(resu);
-   }
+    int clavePadre = 10;
+    Lista resu = a_ej3_hijos(arbol,clavePadre);
+    if (l_es_vacia(resu))
+    {
+        printf("La clave era una hoja, por lo tanto no tenia hijos\n");
+    } else 
+    {
+        printf("El padre %d, tiene el(los) siguiente(s) hijo(s)..\n", clavePadre);
+        l_mostrar(resu);
+    }
     int clave = 2;
     int resultado = a_ej3_hermano(arbol, clave);
     if (resultado == -999)
@@ -314,16 +357,27 @@ int main()
     {
         printf("El hijo %d, tiene como hermano a %d \n", clave, resultado);
     }    
-    */
-   int clave = 5;
-   int resultado = a_ej3_nivel(arbol, clave);
-   if (resultado == -1)
-   {
-    printf("El nodo con la clave %d, no se encuentra en el arbol..\n", clave);
-   } else if (resultado == 0)
-   {
-    printf("El nodo con la clave %d, se encuentra en la raiz..\n", clave);
-   } else printf("El nodo con la clave %d se encuentra en el nivel numero : %d..\n", clave,resultado);
-   
+    
+    int clave = 5;
+    int resultado = a_ej3_nivel(arbol, clave);
+    if (resultado == -1)
+    {
+        printf("El nodo con la clave %d, no se encuentra en el arbol..\n", clave);
+    } else if (resultado == 0)
+    {
+        printf("El nodo con la clave %d, se encuentra en la raiz..\n", clave);
+    } else printf("El nodo con la clave %d se encuentra en el nivel numero : %d..\n", clave,resultado);
+   */
+    int clave=150;
+    int altura= a_ej3_alturarama(arbol,clave);
+    if(altura==-1){
+        printf("No se encontro la clave en el arbol\n");
+    }
+    else if(altura==0){
+        printf("el arbol esta vacio o es una hoja(altura 0) \n");
+    }
+    else{
+        printf("El nodo con la clave %d tiene una altura de: %d \n", clave, altura);
+    }
     return 0;
 }
