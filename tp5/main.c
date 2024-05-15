@@ -301,6 +301,28 @@ int a_ej3_alturarama(ArbolBinario A, int clave){
     }
 }
 
+//f
+void nivel_nodos(NodoArbol n, int nivel, int niv_aux, Lista *list){
+     
+    if(n==NULL) {
+        return;
+    }
+    if(nivel ==niv_aux){
+        TipoElemento ele=n_recuperar(n);
+        l_agregar(*list,ele);
+    }
+
+    nivel_nodos(n->hi,nivel,niv_aux+1,list);
+    nivel_nodos(n->hd,nivel,niv_aux+1,list);
+
+}
+Lista a_ej3_clavesmismonivel(ArbolBinario A, int nivel){
+    NodoArbol raiz=a_raiz(A);
+    int niv=0;
+    Lista lista_nodos=l_crear();
+    nivel_nodos(raiz,nivel,niv,&lista_nodos);
+    return lista_nodos;
+}
 
 int main()
 {
@@ -367,7 +389,7 @@ int main()
     {
         printf("El nodo con la clave %d, se encuentra en la raiz..\n", clave);
     } else printf("El nodo con la clave %d se encuentra en el nivel numero : %d..\n", clave,resultado);
-   */
+    
     int clave=150;
     int altura= a_ej3_alturarama(arbol,clave);
     if(altura==-1){
@@ -379,5 +401,11 @@ int main()
     else{
         printf("El nodo con la clave %d tiene una altura de: %d \n", clave, altura);
     }
+    */
+   int nivel=2;
+   Lista lis=a_ej3_clavesmismonivel(arbol,nivel);
+   printf("En el nivel: %d, se encuentran los siguientes Nodos: \n",nivel);
+   l_mostrar(lis);
+   
     return 0;
 }
