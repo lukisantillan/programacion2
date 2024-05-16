@@ -69,7 +69,7 @@ ArbolBinario cargarArbol()
 }
 
 // Punto 2
-//FALTA COMPLEJIDADES
+// FALTA COMPLEJIDADES
 // a
 void es_hoja(NodoArbol n, Lista l)
 {
@@ -191,7 +191,7 @@ void encontrar_hijos(NodoArbol n, int clavePadre, Lista l)
         {
             l_agregar(l, te_crear_con_valor(n_recuperar(hijoIzq)->clave, n));
             l_agregar(l, te_crear_con_valor(n_recuperar(hijoDer)->clave, n));
-            return ;
+            return;
         }
         encontrar_hijos(hijoIzq, clavePadre, l);
         encontrar_hijos(hijoDer, clavePadre, l);
@@ -205,7 +205,7 @@ Lista a_ej3_hijos(ArbolBinario A, int clavepadre)
     return hijos;
 }
 
-//c 
+// c
 void encontrar_hermano(NodoArbol n, int clave, int *claveHermano)
 {
     if (!a_es_rama_nula(n))
@@ -218,19 +218,20 @@ void encontrar_hermano(NodoArbol n, int clave, int *claveHermano)
             {
                 *claveHermano = n_recuperar(hijoIzq)->clave;
                 return;
-            } else if (n_recuperar(hijoIzq)->clave == clave)
+            }
+            else if (n_recuperar(hijoIzq)->clave == clave)
             {
                 *claveHermano = n_recuperar(hijoDer)->clave;
-                return;                
+                return;
             }
-            
         }
         encontrar_hermano(hijoIzq, clave, claveHermano);
         encontrar_hermano(hijoDer, clave, claveHermano);
     }
 }
 
-int a_ej3_hermano(ArbolBinario A, int clave){
+int a_ej3_hermano(ArbolBinario A, int clave)
+{
     int *claveHermano = malloc(sizeof(int));
     *claveHermano = -999;
     NodoArbol raiz = a_raiz(A);
@@ -240,149 +241,167 @@ int a_ej3_hermano(ArbolBinario A, int clave){
     return resultado;
 }
 
-//d
-int calcularNivelNodo(NodoArbol n, int clave, int nivel){
+// d
+int calcularNivelNodo(NodoArbol n, int clave, int nivel)
+{
     if (a_es_rama_nula(n))
     {
         return -1;
     }
-    if (n_recuperar(n)->clave == clave) return nivel;
+    if (n_recuperar(n)->clave == clave)
+        return nivel;
     int nivel_izquierdo = calcularNivelNodo(n_hijoizquierdo(n), clave, nivel + 1);
-    if (nivel_izquierdo != -1) return nivel_izquierdo;
-    return calcularNivelNodo(n_hijoderecho(n), clave, nivel+ 1);
+    if (nivel_izquierdo != -1)
+        return nivel_izquierdo;
+    return calcularNivelNodo(n_hijoderecho(n), clave, nivel + 1);
 }
 
-int a_ej3_nivel(ArbolBinario A, int clave){
+int a_ej3_nivel(ArbolBinario A, int clave)
+{
     int nivel = calcularNivelNodo(a_raiz(A), clave, 0);
     return nivel;
 }
 
-//e
-int altura_arbol(NodoArbol n){
-    if (n==NULL){
-        return -1; //no se encontro la clave
+// e
+int altura_arbol(NodoArbol n)
+{
+    if (n == NULL)
+    {
+        return -1; // no se encontro la clave
     }
 
-    int ai=altura_arbol(n->hi);
-    int ad=altura_arbol(n->hd);
-    if(ai>ad) 
+    int ai = altura_arbol(n->hi);
+    int ad = altura_arbol(n->hd);
+    if (ai > ad)
     {
-        return ai+1;
+        return ai + 1;
     }
-    else {
-        return ad+1;
+    else
+    {
+        return ad + 1;
     }
 }
-void busquedadelnodo(NodoArbol n,int clave, NodoArbol *nodo_encontrado){
-    if(n!=NULL){
-        if(n_recuperar(n)->clave == clave){   
-            *nodo_encontrado=n;
+void busquedadelnodo(NodoArbol n, int clave, NodoArbol *nodo_encontrado)
+{
+    if (n != NULL)
+    {
+        if (n_recuperar(n)->clave == clave)
+        {
+            *nodo_encontrado = n;
             return;
         }
-        busquedadelnodo(n->hi,clave,nodo_encontrado);
-        busquedadelnodo(n->hd,clave,nodo_encontrado);
+        busquedadelnodo(n->hi, clave, nodo_encontrado);
+        busquedadelnodo(n->hd, clave, nodo_encontrado);
     }
 }
 
-int a_ej3_alturarama(ArbolBinario A, int clave){
-    NodoArbol raiz=a_raiz(A);
-    NodoArbol nodoencontrado= NULL;
-    int alt=0;
-    if(a_es_vacio(A)){
+int a_ej3_alturarama(ArbolBinario A, int clave)
+{
+    NodoArbol raiz = a_raiz(A);
+    NodoArbol nodoencontrado = NULL;
+    int alt = 0;
+    if (a_es_vacio(A))
+    {
         return alt;
     }
-    else{
-        busquedadelnodo(raiz,clave, &nodoencontrado);
-        if(nodoencontrado!=NULL){
-            int altura= altura_arbol(nodoencontrado);
+    else
+    {
+        busquedadelnodo(raiz, clave, &nodoencontrado);
+        if (nodoencontrado != NULL)
+        {
+            int altura = altura_arbol(nodoencontrado);
             return altura;
         }
-        else return -1;
+        else
+            return -1;
     }
 }
 
-//f
-void nivel_nodos(NodoArbol n, int nivel, int niv_aux, Lista *list){
-     
-    if(n==NULL) {
+// f
+void nivel_nodos(NodoArbol n, int nivel, int niv_aux, Lista *list)
+{
+
+    if (n == NULL)
+    {
         return;
     }
-    if(nivel ==niv_aux){
-        TipoElemento ele=n_recuperar(n);
-        l_agregar(*list,ele);
+    if (nivel == niv_aux)
+    {
+        TipoElemento ele = n_recuperar(n);
+        l_agregar(*list, ele);
     }
 
-    nivel_nodos(n->hi,nivel,niv_aux+1,list);
-    nivel_nodos(n->hd,nivel,niv_aux+1,list);
-
+    nivel_nodos(n->hi, nivel, niv_aux + 1, list);
+    nivel_nodos(n->hd, nivel, niv_aux + 1, list);
 }
-Lista a_ej3_clavesmismonivel(ArbolBinario A, int nivel){
-    NodoArbol raiz=a_raiz(A);
-    int niv=0;
-    Lista lista_nodos=l_crear();
-    nivel_nodos(raiz,nivel,niv,&lista_nodos);
+Lista a_ej3_clavesmismonivel(ArbolBinario A, int nivel)
+{
+    NodoArbol raiz = a_raiz(A);
+    int niv = 0;
+    Lista lista_nodos = l_crear();
+    nivel_nodos(raiz, nivel, niv, &lista_nodos);
     return lista_nodos;
 }
 
-//Punto 4
+// Punto 4
 
-//a
-void recorrerPorAnchura(NodoArbol n, Lista l, Cola c){
+// a
+void recorrerPorAnchura(NodoArbol n, Lista l, Cola c)
+{
     if (!a_es_rama_nula(n))
     {
         NodoArbol hijoIzq = n_hijoizquierdo(n);
         NodoArbol hijoDer = n_hijoderecho(n);
         if (!a_es_rama_nula(hijoDer))
         {
-            l_agregar(l,te_crear_con_valor(n_recuperar(n)->clave, n));
+            l_agregar(l, te_crear_con_valor(n_recuperar(n)->clave, n));
             if (!a_es_rama_nula(hijoIzq))
             {
                 TipoElemento eleAencolar = te_crear_con_valor(n_recuperar(hijoIzq)->clave, hijoIzq);
-                c_encolar(c,eleAencolar);
+                c_encolar(c, eleAencolar);
             }
             recorrerPorAnchura(hijoDer, l, c);
         }
-        if (a_es_rama_nula(hijoDer))
+        l_agregar(l, te_crear_con_valor(n_recuperar(n)->clave, n));
+        if (!a_es_rama_nula(hijoIzq))
         {
-            l_agregar(l,te_crear_con_valor(n_recuperar(n)->clave, n));
-            if (!a_es_rama_nula(hijoIzq))
-            {
-                TipoElemento eleAencolar = te_crear_con_valor(n_recuperar(hijoIzq)->clave, hijoIzq);
-                c_encolar(c,eleAencolar);
-            }
-            if (!c_es_vacia(c))
-            {
-                TipoElemento eleAdesencolar = c_desencolar(c);
-                recorrerPorAnchura(eleAdesencolar->valor, l, c);
-            }
+            TipoElemento eleAencolar = te_crear_con_valor(n_recuperar(hijoIzq)->clave, hijoIzq);
+            c_encolar(c, eleAencolar);
+        }
+        if (!c_es_vacia(c))
+        {
+            TipoElemento eleAdesencolar = c_desencolar(c);
+            recorrerPorAnchura(eleAdesencolar->valor, l, c);
         }
     }
 }
 
-Lista a_ej4_anchura(ArbolBinario A){
+Lista a_ej4_anchura(ArbolBinario A)
+{
     Lista resultado = l_crear();
-    Cola  ColaAux = c_crear();
-    recorrerPorAnchura(a_raiz(A),resultado,ColaAux);
+    Cola ColaAux = c_crear();
+    recorrerPorAnchura(a_raiz(A), resultado, ColaAux);
     return resultado;
 }
 
-//b 
-void acumuladorHojas(NodoArbol n, int *acumulador){
+// b
+void acumuladorHojas(NodoArbol n, int *acumulador)
+{
     if (!a_es_rama_nula(n))
     {
         NodoArbol hijoIzq = n_hijoizquierdo(n);
         NodoArbol hijoDer = n_hijoderecho(n);
-        if (a_es_rama_nula(hijoIzq ))
+        if (a_es_rama_nula(hijoIzq))
         {
             (*acumulador)++;
         }
         acumuladorHojas(hijoIzq, acumulador);
         acumuladorHojas(hijoDer, acumulador);
     }
-    
 }
 
-int a_ej4_q_hojas(ArbolBinario A){
+int a_ej4_q_hojas(ArbolBinario A)
+{
     int *acumulador = malloc(sizeof(int));
     *acumulador = 0;
     acumuladorHojas(a_raiz(A), acumulador);
@@ -407,7 +426,7 @@ int main()
         TipoElemento ele = siguiente(iteIg);
         printf("\n| Clave: %d, Posicion: %p", ele->clave, (void *)ele->valor);
     }
-  
+
     int hijo = 2;
     int resultado = a_ej3_clavepadre(arbol, hijo);
     if (resultado == -999)
@@ -428,7 +447,7 @@ int main()
     if (l_es_vacia(resu))
     {
         printf("La clave era una hoja, por lo tanto no tenia hijos\n");
-    } else 
+    } else
     {
         printf("El padre %d, tiene el(los) siguiente(s) hijo(s)..\n", clavePadre);
         l_mostrar(resu);
@@ -443,8 +462,8 @@ int main()
     } else
     {
         printf("El hijo %d, tiene como hermano a %d \n", clave, resultado);
-    }    
-    
+    }
+
     int clave = 5;
     int resultado = a_ej3_nivel(arbol, clave);
     if (resultado == -1)
@@ -454,7 +473,7 @@ int main()
     {
         printf("El nodo con la clave %d, se encuentra en la raiz..\n", clave);
     } else printf("El nodo con la clave %d se encuentra en el nivel numero : %d..\n", clave,resultado);
-    
+
     int clave=150;
     int altura= a_ej3_alturarama(arbol,clave);
     if(altura==-1){
@@ -474,8 +493,8 @@ int main()
   int resultado = a_ej4_q_hojas(arbol);
   printf("La cantidad de hojas es %d\n", resultado);
    */
-  Lista resu = a_ej4_anchura(arbol);
-  l_mostrar(resu);
-   
+    Lista resu = a_ej4_anchura(arbol);
+    l_mostrar(resu);
+
     return 0;
 }
