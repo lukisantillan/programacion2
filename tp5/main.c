@@ -69,7 +69,7 @@ ArbolBinario cargarArbol()
 }
 
 // Punto 2
-
+//FALTA COMPLEJIDADES
 // a
 void es_hoja(NodoArbol n, Lista l)
 {
@@ -324,6 +324,32 @@ Lista a_ej3_clavesmismonivel(ArbolBinario A, int nivel){
     return lista_nodos;
 }
 
+//Punto 4
+
+
+//b 
+void acumuladorHojas(NodoArbol n, int *acumulador){
+    if (!a_es_rama_nula(n))
+    {
+        NodoArbol hijoIzq = n_hijoizquierdo(n);
+        NodoArbol hijoDer = n_hijoderecho(n);
+        if (a_es_rama_nula(hijoIzq ))
+        {
+            (*acumulador)++;
+        }
+        acumuladorHojas(hijoIzq, acumulador);
+        acumuladorHojas(hijoDer, acumulador);
+    }
+    
+}
+
+int a_ej4_q_hojas(ArbolBinario A){
+    int *acumulador = malloc(sizeof(int));
+    *acumulador = 0;
+    acumuladorHojas(a_raiz(A), acumulador);
+    return *acumulador;
+}
+
 int main()
 {
     ArbolBinario arbol = a_crear();
@@ -401,11 +427,13 @@ int main()
     else{
         printf("El nodo con la clave %d tiene una altura de: %d \n", clave, altura);
     }
-    */
    int nivel=2;
    Lista lis=a_ej3_clavesmismonivel(arbol,nivel);
    printf("En el nivel: %d, se encuentran los siguientes Nodos: \n",nivel);
    l_mostrar(lis);
+   */
+  int resultado = a_ej4_q_hojas(arbol);
+  printf("La cantidad de hojas es %d\n", resultado);
    
     return 0;
 }
