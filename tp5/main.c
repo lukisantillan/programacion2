@@ -326,6 +326,45 @@ Lista a_ej3_clavesmismonivel(ArbolBinario A, int nivel){
 
 //Punto 4
 
+//a
+void recorrerPorAnchura(NodoArbol n, Lista l, Cola c){
+    if (!a_es_rama_nula(n))
+    {
+        NodoArbol hijoIzq = n_hijoizquierdo(n);
+        NodoArbol hijoDer = n_hijoderecho(n);
+        if (!a_es_rama_nula(hijoDer))
+        {
+            l_agregar(l,te_crear_con_valor(n_recuperar(n)->clave, n));
+            if (!a_es_rama_nula(hijoIzq))
+            {
+                TipoElemento eleAencolar = te_crear_con_valor(n_recuperar(hijoIzq)->clave, hijoIzq);
+                c_encolar(c,eleAencolar);
+            }
+            recorrerPorAnchura(hijoDer, l, c);
+        }
+        if (a_es_rama_nula(hijoDer))
+        {
+            l_agregar(l,te_crear_con_valor(n_recuperar(n)->clave, n));
+            if (!a_es_rama_nula(hijoIzq))
+            {
+                TipoElemento eleAencolar = te_crear_con_valor(n_recuperar(hijoIzq)->clave, hijoIzq);
+                c_encolar(c,eleAencolar);
+            }
+            if (!c_es_vacia(c))
+            {
+                TipoElemento eleAdesencolar = c_desencolar(c);
+                recorrerPorAnchura(eleAdesencolar->valor, l, c);
+            }
+        }
+    }
+}
+
+Lista a_ej4_anchura(ArbolBinario A){
+    Lista resultado = l_crear();
+    Cola  ColaAux = c_crear();
+    recorrerPorAnchura(a_raiz(A),resultado,ColaAux);
+    return resultado;
+}
 
 //b 
 void acumuladorHojas(NodoArbol n, int *acumulador){
@@ -431,9 +470,12 @@ int main()
    Lista lis=a_ej3_clavesmismonivel(arbol,nivel);
    printf("En el nivel: %d, se encuentran los siguientes Nodos: \n",nivel);
    l_mostrar(lis);
-   */
+
   int resultado = a_ej4_q_hojas(arbol);
   printf("La cantidad de hojas es %d\n", resultado);
+   */
+  Lista resu = a_ej4_anchura(arbol);
+  l_mostrar(resu);
    
     return 0;
 }
