@@ -362,16 +362,19 @@ void recorrerPorAnchura(NodoArbol n, Lista l, Cola c)
             }
             recorrerPorAnchura(hijoDer, l, c);
         }
-        l_agregar(l, te_crear_con_valor(n_recuperar(n)->clave, n));
-        if (!a_es_rama_nula(hijoIzq))
+        else
         {
-            TipoElemento eleAencolar = te_crear_con_valor(n_recuperar(hijoIzq)->clave, hijoIzq);
-            c_encolar(c, eleAencolar);
-        }
-        if (!c_es_vacia(c))
-        {
-            TipoElemento eleAdesencolar = c_desencolar(c);
-            recorrerPorAnchura(eleAdesencolar->valor, l, c);
+            l_agregar(l, te_crear_con_valor(n_recuperar(n)->clave, n));
+            if (!a_es_rama_nula(hijoIzq))
+            {
+                TipoElemento eleAencolar = te_crear_con_valor(n_recuperar(hijoIzq)->clave, hijoIzq);
+                c_encolar(c, eleAencolar);
+            }
+            if (!c_es_vacia(c))
+            {
+                TipoElemento eleAdesencolar = c_desencolar(c);
+                recorrerPorAnchura(eleAdesencolar->valor, l, c);
+            }
         }
     }
 }
