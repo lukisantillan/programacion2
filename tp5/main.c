@@ -344,7 +344,7 @@ Lista a_ej3_clavesmismonivel(ArbolBinario A, int nivel)
 }
 
 // Punto 4
-/*
+
 // a
 void recorrerPorAnchura(NodoArbol n, Lista l, Cola c)
 {
@@ -410,7 +410,7 @@ int a_ej4_q_hojas(ArbolBinario A)
     acumuladorHojas(a_raiz(A), acumulador);
     return *acumulador;
 }
-*/
+
 int main()
 {
     ArbolBinario arbol = a_crear();
