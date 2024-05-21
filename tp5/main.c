@@ -71,6 +71,7 @@ ArbolBinario cargarArbol()
 // Punto 2
 // FALTA COMPLEJIDADES
 // a
+//COMPLEJIDAD = 0(1) - Para listas con arreglos y 0(n) si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros) 
 void es_hoja(NodoArbol n, Lista l)
 {
     if (!a_es_rama_nula(n))
@@ -94,7 +95,7 @@ Lista a_ej2_hojas(ArbolBinario A)
 }
 
 // b
-
+//COMPLEJIDAD = 0(1) - Para listas con arreglos y 0(n) si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros) 
 void es_interno(NodoArbol n, Lista l, NodoArbol raiz)
 {
     if (!a_es_rama_nula(n))
@@ -123,6 +124,7 @@ Lista a_ej2_interiores(ArbolBinario A)
 }
 
 // c
+//COMPLEJIDAD = 0(1) - Para listas con arreglos y 0(n) si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros) 
 void es_igual_a_clave(NodoArbol n, Lista l, int clave)
 {
     if (!a_es_rama_nula(n))
@@ -410,6 +412,7 @@ int a_ej4_q_hojas(ArbolBinario A)
     acumuladorHojas(a_raiz(A), acumulador);
     return *acumulador;
 }
+
 
 int main()
 {
