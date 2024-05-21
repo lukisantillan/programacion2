@@ -479,7 +479,7 @@ int main()
     {
         printf("El nodo con la clave %d, se encuentra en la raiz..\n", clave);
     } else printf("El nodo con la clave %d se encuentra en el nivel numero : %d..\n", clave,resultado);
-
+    
     int clave=150;
     int altura= a_ej3_alturarama(arbol,clave);
     if(altura==-1){
@@ -490,17 +490,17 @@ int main()
     }
     else{
         printf("El nodo con la clave %d tiene una altura de: %d \n", clave, altura);
-    }
+    }*/
    int nivel=2;
    Lista lis=a_ej3_clavesmismonivel(arbol,nivel);
    printf("En el nivel: %d, se encuentran los siguientes Nodos: \n",nivel);
    l_mostrar(lis);
-
+   /*
   int resultado = a_ej4_q_hojas(arbol);
   printf("La cantidad de hojas es %d\n", resultado);
-   */
+
     Lista resu = a_ej4_anchura(arbol);
     l_mostrar(resu);
-
+    */
     return 0;
 }
