@@ -414,7 +414,49 @@ int a_ej4_q_hojas(ArbolBinario A)
     return *acumulador;
 }
 
-// Punto 6
+// c
+void similarAux(NodoArbol a, NodoArbol b, int *flag)
+{
+    if (!a_es_rama_nula(a) || !a_es_rama_nula(b))
+    {
+        NodoArbol hijoDer1 = n_hijoderecho(a);
+        NodoArbol hijoIzq1 = n_hijoizquierdo(a);
+        NodoArbol hijoDer2 = n_hijoderecho(b);
+        NodoArbol hijoIzq2 = n_hijoizquierdo(b);
+        if (a_es_rama_nula(hijoIzq1) && a_es_rama_nula(hijoIzq2))
+        {
+            similarAux(hijoIzq1, hijoIzq2, flag);
+        }
+        else if (a_es_rama_nula(hijoDer1) && a_es_rama_nula(hijoDer2))
+        {
+            similarAux(hijoIzq1, hijoIzq2, flag);
+        }
+        else
+        {
+            *flag = 1;
+            return;
+        }
+    }
+}
+
+bool a_ej4_similares(ArbolBinario A, ArbolBinario B)
+{
+    int *flag = malloc(sizeof(int));
+    *flag = 0;
+    similarAux(a_raiz(A), a_raiz(B), flag);
+    if (*flag == 0)
+    {
+        free(flag);
+        return true;
+    }
+    else
+    {
+        free(flag);
+        return false;
+    }
+}
+
+// Punto 7
 void equivalenteAux(NodoArbol a, NodoArbol b, int *flag)
 {
     if (!a_es_rama_nula(a) || !a_es_rama_nula(b))
@@ -431,7 +473,8 @@ void equivalenteAux(NodoArbol a, NodoArbol b, int *flag)
                 return;
             }
             equivalenteAux(hijoDer1, hijoDer2, flag);
-        } else if (!a_es_rama_nula(hijoIzq1) && !a_es_rama_nula(hijoIzq2))
+        }
+        else if (!a_es_rama_nula(hijoIzq1) && !a_es_rama_nula(hijoIzq2))
         {
             if (n_recuperar(hijoIzq1)->clave != n_recuperar(hijoIzq2)->clave)
             {
@@ -439,15 +482,19 @@ void equivalenteAux(NodoArbol a, NodoArbol b, int *flag)
                 return;
             }
             equivalenteAux(hijoIzq1, hijoIzq2, flag);
-        } else if (a_es_rama_nula(hijoIzq1) && a_es_rama_nula(hijoIzq2))
+        }
+        else if (a_es_rama_nula(hijoIzq1) && a_es_rama_nula(hijoIzq2))
         {
             equivalenteAux(hijoIzq1, hijoIzq2, flag);
-        }else if (a_es_rama_nula(hijoDer1) && a_es_rama_nula(hijoDer2))
+        }
+        else if (a_es_rama_nula(hijoDer1) && a_es_rama_nula(hijoDer2))
         {
             equivalenteAux(hijoIzq1, hijoIzq2, flag);
-        }else {
-        *flag = 1;
-        return;
+        }
+        else
+        {
+            *flag = 1;
+            return;
         }
     }
 }
@@ -559,13 +606,23 @@ int main()
     Lista resu = a_ej4_anchura(arbol);
     l_mostrar(resu);
     */
-    bool resultado = a_ej7_equivalente(arbol, arbol2);
+    bool resultado = a_ej4_similares(arbol, arbol2);
     if (resultado)
     {
-        printf("Los arboles son equvalentes\n");
+        printf("Los arboles son similares\n");
     }
     else
-        printf("Los arboles no son equivalentes\n");
+        printf("Los arboles no son similares\n");
 
+    return 0;
+    /*
+        bool resultado = a_ej7_equivalente(arbol, arbol2);
+        if (resultado)
+        {
+            printf("Los arboles son equvalentes\n");
+        }
+        else
+            printf("Los arboles no son equivalentes\n");
+    */
     return 0;
 }
