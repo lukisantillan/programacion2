@@ -516,6 +516,37 @@ bool a_ej7_equivalente(ArbolBinario A, ArbolBinario B)
     }
 }
 
+// Punto 8
+
+// c
+
+void internosAux(NodoArbol n, Lista nodosInternos, NodoArbol raiz)
+{
+    if (!a_es_rama_nula(n))
+    {
+        NodoArbol hijoDer = n_hijoderecho(n);
+        NodoArbol hijoIzq = n_hijoizquierdo(n);
+        if (n != raiz)
+        {
+            if (!a_es_rama_nula(hijoIzq))
+            {
+                l_agregar(nodosInternos, te_crear_con_valor(n_recuperar(n)->clave, n));
+            }
+        }
+
+        internosAux(hijoIzq, nodosInternos,raiz);
+        internosAux(hijoDer, nodosInternos,raiz);
+    }
+}
+
+Lista c_ej8_internos(ArbolBinario A)
+{
+    Lista nodosInternos = l_crear();
+    NodoArbol raiz = a_raiz(A);
+    internosAux(raiz, nodosInternos, raiz);
+    return nodosInternos;
+}
+
 int main()
 {
     ArbolBinario arbol = a_crear();
@@ -605,7 +636,6 @@ int main()
 
     Lista resu = a_ej4_anchura(arbol);
     l_mostrar(resu);
-    */
     bool resultado = a_ej4_similares(arbol, arbol2);
     if (resultado)
     {
@@ -614,8 +644,6 @@ int main()
     else
         printf("Los arboles no son similares\n");
 
-    return 0;
-    /*
         bool resultado = a_ej7_equivalente(arbol, arbol2);
         if (resultado)
         {
@@ -624,5 +652,12 @@ int main()
         else
             printf("Los arboles no son equivalentes\n");
     */
+    Lista resultadoEje8c = c_ej8_internos(arbol);
+    printf("Los nodos internos son: \n");
+    if (!l_es_vacia(resultadoEje8c))
+    {
+        l_mostrar(resultadoEje8c);
+    } else printf("No hay nodos internos\n");
+    
     return 0;
 }
