@@ -539,7 +539,6 @@ void alturaAux(NodoArbol n, int *alturaActual, int *acumulador){
     
 }
 
-
 int c_ej8_altura(ArbolBinario A){
     int *alturaActual = malloc(sizeof(int));
     int *acumulador = malloc(sizeof(int));
@@ -575,6 +574,32 @@ Lista c_ej8_internos(ArbolBinario A)
     NodoArbol raiz = a_raiz(A);
     internosAux(raiz, nodosInternos, raiz);
     return nodosInternos;
+}
+
+
+//9
+//FALTA RECURSIVIDAD
+void auxRellenarArbolAvl(NodoArbol n, ArbolAVL resu){
+    if(!a_es_rama_nula(n))
+    {
+        NodoArbol hd = n_hijoderecho(n);
+        NodoArbol hi = n_hijoizquierdo(n);
+        avl_insertar(resu, te_crear_con_valor(n_recuperar(n)->clave, n));
+        auxRellenarArbolAvl(hi, resu);
+        auxRellenarArbolAvl(hd, resu);
+    }
+}
+
+ArbolAVL a_ej9_construiravl(ArbolBinario A){
+    ArbolAVL resultado = avl_crear();
+    auxRellenarArbolAvl(a_raiz(A), resultado);
+    return resultado;
+}
+
+int a_ej9_diferenciaalturas(ArbolBinario A, ArbolAVL AVL){
+    int alturaArbolBinario = altura_arbol(a_raiz(A));
+    int alturaAVL = altura_arbol(avl_raiz(AVL));
+    return alturaArbolBinario - alturaAVL;
 }
 
 int main()
@@ -687,9 +712,13 @@ int main()
     {
         l_mostrar(resultadoEje8c);
     } else printf("No hay nodos internos\n");
-       */
 
     int resultado8a = c_ej8_altura(arbol);
     printf("La altura del arbol n-ario es %i\n", resultado8a);
+   ArbolAVL arbolAvl = a_ej9_construiravl(arbol);
+   int resultadoDiferenciaAltura = a_ej9_diferenciaalturas(arbol, arbolAvl);
+   printf("La diferencia entre alturas considerando (ARBOL - ARBOL AVL) es..  %i\n", resultadoDiferenciaAltura);
+   */
+
     return 0;
 }
