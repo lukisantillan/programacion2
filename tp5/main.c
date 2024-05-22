@@ -71,7 +71,7 @@ ArbolBinario cargarArbol()
 // Punto 2
 // FALTA COMPLEJIDADES
 // a
-//COMPLEJIDAD = 0(1) - Para listas con arreglos y 0(n) si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros) 
+// COMPLEJIDAD = 0(1) - Para listas con arreglos y 0(n) si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros)
 void es_hoja(NodoArbol n, Lista l)
 {
     if (!a_es_rama_nula(n))
@@ -95,7 +95,7 @@ Lista a_ej2_hojas(ArbolBinario A)
 }
 
 // b
-//COMPLEJIDAD = 0(1) - Para listas con arreglos y 0(n) si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros) 
+// COMPLEJIDAD = 0(1) - Para listas con arreglos y 0(n) si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros)
 void es_interno(NodoArbol n, Lista l, NodoArbol raiz)
 {
     if (!a_es_rama_nula(n))
@@ -124,7 +124,7 @@ Lista a_ej2_interiores(ArbolBinario A)
 }
 
 // c
-//COMPLEJIDAD = 0(1) - Para listas con arreglos y 0(n) si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros) 
+// COMPLEJIDAD = 0(1) - Para listas con arreglos y 0(n) si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros)
 void es_igual_a_clave(NodoArbol n, Lista l, int clave)
 {
     if (!a_es_rama_nula(n))
@@ -283,6 +283,7 @@ int altura_arbol(NodoArbol n)
         return ad + 1;
     }
 }
+
 void busquedadelnodo(NodoArbol n, int clave, NodoArbol *nodo_encontrado)
 {
     if (n != NULL)
@@ -413,11 +414,68 @@ int a_ej4_q_hojas(ArbolBinario A)
     return *acumulador;
 }
 
+// Punto 6
+void equivalenteAux(NodoArbol a, NodoArbol b, int *flag)
+{
+    if (!a_es_rama_nula(a) || !a_es_rama_nula(b))
+    {
+        NodoArbol hijoDer1 = n_hijoderecho(a);
+        NodoArbol hijoIzq1 = n_hijoizquierdo(a);
+        NodoArbol hijoDer2 = n_hijoderecho(b);
+        NodoArbol hijoIzq2 = n_hijoizquierdo(b);
+        if (!a_es_rama_nula(hijoDer1) && !a_es_rama_nula(hijoDer2))
+        {
+            if (n_recuperar(hijoDer1)->clave != n_recuperar(hijoDer2)->clave)
+            {
+                *flag = 1;
+                return;
+            }
+            equivalenteAux(hijoDer1, hijoDer2, flag);
+        } else if (!a_es_rama_nula(hijoIzq1) && !a_es_rama_nula(hijoIzq2))
+        {
+            if (n_recuperar(hijoIzq1)->clave != n_recuperar(hijoIzq2)->clave)
+            {
+                *flag = 1;
+                return;
+            }
+            equivalenteAux(hijoIzq1, hijoIzq2, flag);
+        } else if (a_es_rama_nula(hijoIzq1) && a_es_rama_nula(hijoIzq2))
+        {
+            equivalenteAux(hijoIzq1, hijoIzq2, flag);
+        }else if (a_es_rama_nula(hijoDer1) && a_es_rama_nula(hijoDer2))
+        {
+            equivalenteAux(hijoIzq1, hijoIzq2, flag);
+        }else {
+        *flag = 1;
+        return;
+        }
+    }
+}
+
+bool a_ej7_equivalente(ArbolBinario A, ArbolBinario B)
+{
+    int *flag = malloc(sizeof(int));
+    *flag = 0;
+    equivalenteAux(a_raiz(A), a_raiz(B), flag);
+    if (*flag == 0)
+    {
+        free(flag);
+        return true;
+    }
+    else
+    {
+        free(flag);
+        return false;
+    }
+}
 
 int main()
 {
     ArbolBinario arbol = a_crear();
     arbol = cargarArbol();
+    printf("----------------------\n");
+    ArbolBinario arbol2 = a_crear();
+    arbol2 = cargarArbol();
     /*
     Lista hojas = a_ej2_hojas(arbol);
     l_mostrar(hojas);
@@ -479,7 +537,7 @@ int main()
     {
         printf("El nodo con la clave %d, se encuentra en la raiz..\n", clave);
     } else printf("El nodo con la clave %d se encuentra en el nivel numero : %d..\n", clave,resultado);
-    
+
     int clave=150;
     int altura= a_ej3_alturarama(arbol,clave);
     if(altura==-1){
@@ -490,17 +548,24 @@ int main()
     }
     else{
         printf("El nodo con la clave %d tiene una altura de: %d \n", clave, altura);
-    }*/
+    }
    int nivel=2;
    Lista lis=a_ej3_clavesmismonivel(arbol,nivel);
    printf("En el nivel: %d, se encuentran los siguientes Nodos: \n",nivel);
    l_mostrar(lis);
-   /*
   int resultado = a_ej4_q_hojas(arbol);
   printf("La cantidad de hojas es %d\n", resultado);
 
     Lista resu = a_ej4_anchura(arbol);
     l_mostrar(resu);
     */
+    bool resultado = a_ej7_equivalente(arbol, arbol2);
+    if (resultado)
+    {
+        printf("Los arboles son equvalentes\n");
+    }
+    else
+        printf("Los arboles no son equivalentes\n");
+
     return 0;
 }
