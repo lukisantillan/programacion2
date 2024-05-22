@@ -517,9 +517,39 @@ bool a_ej7_equivalente(ArbolBinario A, ArbolBinario B)
 }
 
 // Punto 8
+//a
+void alturaAux(NodoArbol n, int *alturaActual, int *acumulador){
+    if (!a_es_rama_nula(n))
+    {
+        NodoArbol hijoDer = n_hijoderecho(n);
+        NodoArbol hijoIzq = n_hijoizquierdo(n);
+        if (!a_es_rama_nula(hijoIzq))
+        {
+            *acumulador+=1;
+        } else {
+            if (*acumulador > *alturaActual)
+            {
+                *alturaActual = *acumulador;
+                *acumulador = 0;
+            } else *acumulador = 0;
+        }
+        alturaAux(hijoIzq, alturaActual, acumulador);
+        alturaAux(hijoDer, alturaActual, acumulador);
+    }
+    
+}
 
-// c
 
+int c_ej8_altura(ArbolBinario A){
+    int *alturaActual = malloc(sizeof(int));
+    int *acumulador = malloc(sizeof(int));
+    *alturaActual = 0;
+    *acumulador = 0;
+    alturaAux(a_raiz(A), alturaActual, acumulador);
+    return *alturaActual;
+}
+
+//c
 void internosAux(NodoArbol n, Lista nodosInternos, NodoArbol raiz)
 {
     if (!a_es_rama_nula(n))
@@ -651,13 +681,15 @@ int main()
         }
         else
             printf("Los arboles no son equivalentes\n");
-    */
     Lista resultadoEje8c = c_ej8_internos(arbol);
     printf("Los nodos internos son: \n");
     if (!l_es_vacia(resultadoEje8c))
     {
         l_mostrar(resultadoEje8c);
     } else printf("No hay nodos internos\n");
-    
+       */
+
+    int resultado8a = c_ej8_altura(arbol);
+    printf("La altura del arbol n-ario es %i\n", resultado8a);
     return 0;
 }
