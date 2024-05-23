@@ -118,7 +118,7 @@ NodoArbol abb_eliminar_recursivo(NodoArbol root, int claveABorrar, bool *borre) 
     else if (claveABorrar > root->datos->clave)
         root->hd = abb_eliminar_recursivo(root->hd, claveABorrar, borre);
     else {
-        borre = true;
+        *borre = true;
         if (root->hi == NULL) {
             NodoArbol temp = root->hd;
             free(root);
