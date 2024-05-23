@@ -517,29 +517,34 @@ bool a_ej7_equivalente(ArbolBinario A, ArbolBinario B)
 }
 
 // Punto 8
-//a
-void alturaAux(NodoArbol n, int *alturaActual, int *acumulador){
+// a
+void alturaAux(NodoArbol n, int *alturaActual, int *acumulador)
+{
     if (!a_es_rama_nula(n))
     {
         NodoArbol hijoDer = n_hijoderecho(n);
         NodoArbol hijoIzq = n_hijoizquierdo(n);
         if (!a_es_rama_nula(hijoIzq))
         {
-            *acumulador+=1;
-        } else {
+            *acumulador += 1;
+        }
+        else
+        {
             if (*acumulador > *alturaActual)
             {
                 *alturaActual = *acumulador;
                 *acumulador = 0;
-            } else *acumulador = 0;
+            }
+            else
+                *acumulador = 0;
         }
         alturaAux(hijoIzq, alturaActual, acumulador);
         alturaAux(hijoDer, alturaActual, acumulador);
     }
-    
 }
 
-int c_ej8_altura(ArbolBinario A){
+int c_ej8_altura(ArbolBinario A)
+{
     int *alturaActual = malloc(sizeof(int));
     int *acumulador = malloc(sizeof(int));
     *alturaActual = 0;
@@ -548,7 +553,7 @@ int c_ej8_altura(ArbolBinario A){
     return *alturaActual;
 }
 
-//c
+// c
 void internosAux(NodoArbol n, Lista nodosInternos, NodoArbol raiz)
 {
     if (!a_es_rama_nula(n))
@@ -563,8 +568,8 @@ void internosAux(NodoArbol n, Lista nodosInternos, NodoArbol raiz)
             }
         }
 
-        internosAux(hijoIzq, nodosInternos,raiz);
-        internosAux(hijoDer, nodosInternos,raiz);
+        internosAux(hijoIzq, nodosInternos, raiz);
+        internosAux(hijoDer, nodosInternos, raiz);
     }
 }
 
@@ -576,11 +581,11 @@ Lista c_ej8_internos(ArbolBinario A)
     return nodosInternos;
 }
 
-
-//9
-//FALTA RECURSIVIDAD
-void auxRellenarArbolAvl(NodoArbol n, ArbolAVL resu){
-    if(!a_es_rama_nula(n))
+// 9
+// FALTA RECURSIVIDAD
+void auxRellenarArbolAvl(NodoArbol n, ArbolAVL resu)
+{
+    if (!a_es_rama_nula(n))
     {
         NodoArbol hd = n_hijoderecho(n);
         NodoArbol hi = n_hijoizquierdo(n);
@@ -590,13 +595,15 @@ void auxRellenarArbolAvl(NodoArbol n, ArbolAVL resu){
     }
 }
 
-ArbolAVL a_ej9_construiravl(ArbolBinario A){
+ArbolAVL a_ej9_construiravl(ArbolBinario A)
+{
     ArbolAVL resultado = avl_crear();
     auxRellenarArbolAvl(a_raiz(A), resultado);
     return resultado;
 }
 
-int a_ej9_diferenciaalturas(ArbolBinario A, ArbolAVL AVL){
+int a_ej9_diferenciaalturas(ArbolBinario A, ArbolAVL AVL)
+{
     int alturaArbolBinario = altura_arbol(a_raiz(A));
     int alturaAVL = altura_arbol(avl_raiz(AVL));
     return alturaArbolBinario - alturaAVL;
@@ -608,6 +615,12 @@ Lista a_ej10_generarlistaclaves(int cantidadclavesagenerar, int valorminimo, int
     for (int i = 0; i < cantidadclavesagenerar; i++)
     {
         int clave = rand() % (valormaximo - valorminimo + 1) + valorminimo;
+
+        while (l_buscar(lista, clave))
+        {
+            clave = rand() % (valormaximo - valorminimo + 1) + valorminimo;
+        }
+
         l_agregar(lista, te_crear(clave));
     }
     return lista;
@@ -615,11 +628,11 @@ Lista a_ej10_generarlistaclaves(int cantidadclavesagenerar, int valorminimo, int
 
 int main()
 {
-    ArbolBinario arbol = a_crear();
-    arbol = cargarArbol();
-    printf("----------------------\n");
-    ArbolBinario arbol2 = a_crear();
-    arbol2 = cargarArbol();
+    // ArbolBinario arbol = a_crear();
+    // arbol = cargarArbol();
+    // printf("----------------------\n");
+    // ArbolBinario arbol2 = a_crear();
+    // arbol2 = cargarArbol();
     /*
     Lista hojas = a_ej2_hojas(arbol);
     l_mostrar(hojas);
@@ -730,6 +743,9 @@ int main()
    int resultadoDiferenciaAltura = a_ej9_diferenciaalturas(arbol, arbolAvl);
    printf("La diferencia entre alturas considerando (ARBOL - ARBOL AVL) es..  %i\n", resultadoDiferenciaAltura);
    */
+
+    Lista lista = a_ej10_generarlistaclaves(3, 1, 3);
+    l_mostrar(lista);
 
     return 0;
 }
