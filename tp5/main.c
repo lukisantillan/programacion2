@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "./TP_5_Arboles.h"
 
@@ -121,7 +122,6 @@ Lista a_ej2_interiores(ArbolBinario A)
 {
     Lista internos = l_crear();
     NodoArbol raiz = a_raiz(A);
-    printf("| Clave: %d, Posicion: %p\n", raiz->datos->clave, (void *)raiz->datos->valor);
     es_interno(raiz, internos, raiz);
     return internos;
 }
@@ -130,7 +130,7 @@ Lista a_ej2_interiores(ArbolBinario A)
 // COMPLEJIDAD = 0(1) - Para listas con arreglos y 0(n) si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros)
 void es_igual_a_clave(NodoArbol n, Lista l, int clave)
 {
-    if (!a_es_rama_nula(n))
+    if (a_es_rama_nula(n))
     {
         return;
     }
@@ -192,7 +192,7 @@ int a_ej3_clavepadre(ArbolBinario A, int clavehijo)
 // b
 void encontrar_hijos(NodoArbol n, int clavePadre, Lista l)
 {
-    if (!a_es_rama_nula(n))
+    if (a_es_rama_nula(n))
     {
         return;
     }
@@ -200,8 +200,14 @@ void encontrar_hijos(NodoArbol n, int clavePadre, Lista l)
     NodoArbol hijoDer = n_hijoderecho(n);
     if (n_recuperar(n)->clave == clavePadre)
     {
-        l_agregar(l, te_crear_con_valor(n_recuperar(hijoIzq)->clave, n));
-        l_agregar(l, te_crear_con_valor(n_recuperar(hijoDer)->clave, n));
+        if (!a_es_rama_nula(hijoDer))
+        {
+            l_agregar(l, te_crear_con_valor(n_recuperar(hijoDer)->clave, hijoDer));
+        }
+        if (!a_es_rama_nula(hijoIzq))
+        {
+            l_agregar(l, te_crear_con_valor(n_recuperar(hijoIzq)->clave, hijoIzq));
+        }
         return;
     }
     encontrar_hijos(hijoIzq, clavePadre, l);
@@ -218,7 +224,7 @@ Lista a_ej3_hijos(ArbolBinario A, int clavepadre)
 // c
 void encontrar_hermano(NodoArbol n, int clave, int *claveHermano)
 {
-    if (!a_es_rama_nula(n))
+    if (a_es_rama_nula(n))
     {
         return;
     }
@@ -433,7 +439,7 @@ int a_ej4_q_hojas(ArbolBinario A)
 }
 
 // c
-void similarAux(NodoArbol a, NodoArbol b, int *flag)
+void similarAux(NodoArbol a, NodoArbol b, bool *flag)
 {
     if (!a_es_rama_nula(a) || !a_es_rama_nula(b))
     {
@@ -468,7 +474,7 @@ bool a_ej4_similares(ArbolBinario A, ArbolBinario B)
 }
 
 // Punto 7
-void equivalenteAux(NodoArbol a, NodoArbol b, int *flag)
+void equivalenteAux(NodoArbol a, NodoArbol b, bool *flag)
 {
     if (!a_es_rama_nula(a) || !a_es_rama_nula(b))
     {
@@ -616,7 +622,7 @@ int a_ej9_diferenciaalturas(ArbolBinario A, ArbolAVL AVL)
     return alturaArbolBinario - alturaAVL;
 }
 
-//Ejercicio 10
+// Ejercicio 10
 
 Lista a_ej10_generarlistaclaves(int cantidadclavesagenerar, int valorminimo, int valormaximo)
 {
@@ -659,33 +665,36 @@ ArbolAVL a_ej10_crearAVL(Lista L)
     return resultado;
 }
 
-int a_ej10_difalturas(ArbolBinarioBusqueda ABB, ArbolAVL AVL){
-    int resultadoABB = altura_arbol(a_raiz(ABB));
-    int resultadoAVL = altura_arbol(a_raiz(AVL));
+int a_ej10_difalturas(ArbolBinarioBusqueda ABB, ArbolAVL AVL)
+{
+    int resultadoABB = altura_arbol(abb_raiz(ABB));
+    int resultadoAVL = altura_arbol(avl_raiz(AVL));
     return resultadoABB - resultadoAVL;
 }
 
-Lista a_ej10_comparacionarboles(int N_repeticiones, int valorminimo, int valormaximo, int cantidaclavesagenerar){
+Lista a_ej10_comparacionarboles(int N_repeticiones, int valorminimo, int valormaximo, int cantidaclavesagenerar)
+{
     Lista resultado = l_crear();
     int i = 0;
     while (i < N_repeticiones)
     {
-        Lista clavesGeneradas = a_ej10_generarlistaclaves(cantidaclavesagenerar,valorminimo,valormaximo);
+        Lista clavesGeneradas = a_ej10_generarlistaclaves(cantidaclavesagenerar, valorminimo, valormaximo);
         ArbolAVL avl = a_ej10_crearAVL(clavesGeneradas);
         ArbolBinarioBusqueda abb = a_ej10_crearABB(clavesGeneradas);
         int diferenciaAltura = a_ej10_difalturas(abb, avl);
-        l_agregar(resultado,te_crear(diferenciaAltura));
+        l_agregar(resultado, te_crear(diferenciaAltura));
         i++;
     }
     return resultado;
 }
 
-
 int main()
 {
+    srand(time(NULL));
     ArbolBinario arbol = a_crear();
     arbol = cargarArbol();
     printf("----------------------\n");
+    /*
     ArbolBinario arbol2 = a_crear();
     arbol2 = cargarArbol();
     Lista hojas = a_ej2_hojas(arbol);
@@ -716,7 +725,7 @@ int main()
     {
         printf("El hijo %d, tiene como padre a %d \n", hijo, resultado);
     }
-
+      */
     // int clavePadre = 10;
     // Lista resu = a_ej3_hijos(arbol, clavePadre);
     // if (l_es_vacia(resu))
@@ -807,9 +816,8 @@ int main()
     // int resultadoDiferenciaAltura = a_ej9_diferenciaalturas(arbol, arbolAvl);
     // printf("La diferencia entre alturas considerando (ARBOL - ARBOL AVL) es..  %i\n", resultadoDiferenciaAltura);
 
-    // Lista lista = a_ej10_generarlistaclaves(3, 1, 3);
-    // l_mostrar(lista);
-
+     Lista lista = a_ej10_comparacionarboles(8,10,20,10);
+     l_mostrar(lista);
     return 0;
 }
 
