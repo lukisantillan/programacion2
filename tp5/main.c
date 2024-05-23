@@ -602,6 +602,17 @@ int a_ej9_diferenciaalturas(ArbolBinario A, ArbolAVL AVL){
     return alturaArbolBinario - alturaAVL;
 }
 
+Lista a_ej10_generarlistaclaves(int cantidadclavesagenerar, int valorminimo, int valormaximo)
+{
+    Lista lista = l_crear();
+    for (int i = 0; i < cantidadclavesagenerar; i++)
+    {
+        int clave = rand() % (valormaximo - valorminimo + 1) + valorminimo;
+        l_agregar(lista, te_crear(clave));
+    }
+    return lista;
+}
+
 int main()
 {
     ArbolBinario arbol = a_crear();
