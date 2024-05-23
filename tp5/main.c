@@ -609,6 +609,8 @@ int a_ej9_diferenciaalturas(ArbolBinario A, ArbolAVL AVL)
     return alturaArbolBinario - alturaAVL;
 }
 
+//Ejercicio 10
+
 Lista a_ej10_generarlistaclaves(int cantidadclavesagenerar, int valorminimo, int valormaximo)
 {
     Lista lista = l_crear();
@@ -625,6 +627,52 @@ Lista a_ej10_generarlistaclaves(int cantidadclavesagenerar, int valorminimo, int
     }
     return lista;
 }
+
+ArbolBinarioBusqueda a_ej10_crearABB(Lista L)
+{
+    ArbolBinarioBusqueda resultado = abb_crear();
+    Iterador ite = iterador(L);
+    while (hay_siguiente(ite))
+    {
+        TipoElemento ele = siguiente(ite);
+        abb_insertar(resultado, ele);
+    }
+    return resultado;
+}
+
+ArbolAVL a_ej10_crearAVL(Lista L)
+{
+    ArbolAVL resultado = avl_crear();
+    Iterador ite = iterador(L);
+    while (hay_siguiente(ite))
+    {
+        TipoElemento ele = siguiente(ite);
+        avl_insertar(resultado, ele);
+    }
+    return resultado;
+}
+
+int a_ej10_difalturas(ArbolBinarioBusqueda ABB, ArbolAVL AVL){
+    int resultadoABB = altura_arbol(a_raiz(ABB));
+    int resultadoAVL = altura_arbol(a_raiz(AVL));
+    return resultadoABB - resultadoAVL;
+}
+
+Lista a_ej10_comparacionarboles(int N_repeticiones, int valorminimo, int valormaximo, int cantidaclavesagenerar){
+    Lista resultado = l_crear();
+    int i = 0;
+    while (i < N_repeticiones)
+    {
+        Lista clavesGeneradas = a_ej10_generarlistaclaves(cantidaclavesagenerar,valorminimo,valormaximo);
+        ArbolAVL avl = a_ej10_crearAVL(clavesGeneradas);
+        ArbolBinarioBusqueda abb = a_ej10_crearABB(clavesGeneradas);
+        int diferenciaAltura = a_ej10_difalturas(abb, avl);
+        l_agregar(resultado,te_crear(diferenciaAltura));
+        i++;
+    }
+    return resultado;
+}
+
 
 int main()
 {
@@ -743,8 +791,7 @@ int main()
    int resultadoDiferenciaAltura = a_ej9_diferenciaalturas(arbol, arbolAvl);
    printf("La diferencia entre alturas considerando (ARBOL - ARBOL AVL) es..  %i\n", resultadoDiferenciaAltura);
    */
-
-    Lista lista = a_ej10_generarlistaclaves(3, 1, 3);
+    Lista lista = a_ej10_comparacionarboles(8, 10 , 21, 10);
     l_mostrar(lista);
 
     return 0;
