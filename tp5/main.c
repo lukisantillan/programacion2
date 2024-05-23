@@ -38,6 +38,38 @@ int solicitarNumero(bool *variable)
     }
 }
 
+void mostrarArbolRec(NodoArbol raiz, char prefijo[], int esIzquierda) {
+    if (raiz == NULL) {
+        return;
+    }
+
+    printf("%s", prefijo);
+
+    if (esIzquierda) {
+        printf("├──");
+    } else {
+        printf("└──");
+    }
+
+    printf("%d\n", n_recuperar(raiz)->clave);
+
+    char nuevoPrefijo[1000];
+    snprintf(nuevoPrefijo, sizeof(nuevoPrefijo), "%s%s", prefijo, esIzquierda ? "│   " : "    ");
+
+    mostrarArbolRec(n_hijoizquierdo(raiz), nuevoPrefijo, 1);
+    mostrarArbolRec(n_hijoderecho(raiz), nuevoPrefijo, 0);
+}
+// Función para mostrar el árbol
+void mostrarArbol(NodoArbol raiz) {
+    if (raiz == NULL) {
+        return;
+    }
+
+    printf("%d\n", n_recuperar(raiz)->clave); // Imprime la raíz sin prefijo
+    mostrarArbolRec(n_hijoizquierdo(raiz), "", 1); // Llama a los hijos con prefijos adecuados
+    mostrarArbolRec(n_hijoderecho(raiz), "", 0);
+}
+
 void cargarPreOrden(ArbolBinario a, NodoArbol nodo, int orden)
 {
     bool b = true;
@@ -56,6 +88,7 @@ void cargarPreOrden(ArbolBinario a, NodoArbol nodo, int orden)
         else
             pa = a_conectar_hd(a, nodo, te_crear(n));
         // PREORDEN
+        printf("El arbol esta quedando de la siguiente manera : \n\n\n");
         cargarPreOrden(a, pa, -1);
         printf("Hijo derecho\n");
         cargarPreOrden(a, pa, 1);
@@ -359,6 +392,7 @@ void nivel_nodos(NodoArbol n, int nivel, int niv_aux, Lista *list)
     nivel_nodos(n->hi, nivel, niv_aux + 1, list);
     nivel_nodos(n->hd, nivel, niv_aux + 1, list);
 }
+
 Lista a_ej3_clavesmismonivel(ArbolBinario A, int nivel)
 {
     NodoArbol raiz = a_raiz(A);
@@ -594,7 +628,7 @@ Lista c_ej8_internos(ArbolBinario A)
 }
 
 // 9
-// FALTA RECURSIVIDAD
+// COMPLEJIDAD 0(1)
 void auxRellenarArbolAvl(NodoArbol n, ArbolAVL resu)
 {
     if (a_es_rama_nula(n))
@@ -631,7 +665,7 @@ Lista a_ej10_generarlistaclaves(int cantidadclavesagenerar, int valorminimo, int
     {
         int clave = rand() % (valormaximo - valorminimo + 1) + valorminimo;
 
-        while (l_buscar(lista, clave))
+        while (l_buscar(lista, clave) != NULL)
         {
             clave = rand() % (valormaximo - valorminimo + 1) + valorminimo;
         }
@@ -672,6 +706,7 @@ int a_ej10_difalturas(ArbolBinarioBusqueda ABB, ArbolAVL AVL)
     return resultadoABB - resultadoAVL;
 }
 
+// EN EL MAIN VALIDAR QUE N_REPETICIONES SEA > 0, QUE CANTIDADDECLAVES > 0, VALIDAR QUE EL VALOR ABS DE MINIMO - MAXIMO > 10*CANTIDADCLAVES A GENERAR.
 Lista a_ej10_comparacionarboles(int N_repeticiones, int valorminimo, int valormaximo, int cantidaclavesagenerar)
 {
     Lista resultado = l_crear();
@@ -681,6 +716,9 @@ Lista a_ej10_comparacionarboles(int N_repeticiones, int valorminimo, int valorma
         Lista clavesGeneradas = a_ej10_generarlistaclaves(cantidaclavesagenerar, valorminimo, valormaximo);
         ArbolAVL avl = a_ej10_crearAVL(clavesGeneradas);
         ArbolBinarioBusqueda abb = a_ej10_crearABB(clavesGeneradas);
+        mostrarArbol(avl_raiz(avl));
+        printf("---------------\n");
+        mostrarArbol(abb_raiz(abb));
         int diferenciaAltura = a_ej10_difalturas(abb, avl);
         l_agregar(resultado, te_crear(diferenciaAltura));
         i++;
@@ -816,7 +854,7 @@ int main()
     // int resultadoDiferenciaAltura = a_ej9_diferenciaalturas(arbol, arbolAvl);
     // printf("La diferencia entre alturas considerando (ARBOL - ARBOL AVL) es..  %i\n", resultadoDiferenciaAltura);
 
-     Lista lista = a_ej10_comparacionarboles(8,10,20,10);
+     Lista lista = a_ej10_comparacionarboles(2,10,21,10);
      l_mostrar(lista);
     return 0;
 }
