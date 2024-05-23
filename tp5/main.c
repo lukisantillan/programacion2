@@ -791,7 +791,7 @@ int main()
    int resultadoDiferenciaAltura = a_ej9_diferenciaalturas(arbol, arbolAvl);
    printf("La diferencia entre alturas considerando (ARBOL - ARBOL AVL) es..  %i\n", resultadoDiferenciaAltura);
    */
-    Lista lista = a_ej10_comparacionarboles(8, 10 , 21, 10);
+    Lista lista = a_ej10_comparacionarboles(8, 10 , 20, 10);
     l_mostrar(lista);
 
     return 0;
