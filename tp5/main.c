@@ -848,14 +848,14 @@ int main()
     // else
     //     printf("No hay nodos internos\n");
 
-    // int resultado8a = c_ej8_altura(arbol);
-    // printf("La altura del arbol n-ario es %i\n", resultado8a);
+    int resultado8a = c_ej8_altura(arbol);
+    printf("La altura del arbol n-ario es %i\n", resultado8a);
     // ArbolAVL arbolAvl = a_ej9_construiravl(arbol);
     // int resultadoDiferenciaAltura = a_ej9_diferenciaalturas(arbol, arbolAvl);
     // printf("La diferencia entre alturas considerando (ARBOL - ARBOL AVL) es..  %i\n", resultadoDiferenciaAltura);
 
-     Lista lista = a_ej10_comparacionarboles(2,10,21,10);
-     l_mostrar(lista);
+    //Lista lista = a_ej10_comparacionarboles(2,10,21,10);
+    // l_mostrar(lista);
     return 0;
 }
 
