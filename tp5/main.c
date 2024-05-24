@@ -732,38 +732,46 @@ int main()
     ArbolBinario arbol = a_crear();
     arbol = cargarArbol();
     printf("----------------------\n");
-    /*
-    ArbolBinario arbol2 = a_crear();
-    arbol2 = cargarArbol();
-    Lista hojas = a_ej2_hojas(arbol);
-    l_mostrar(hojas);
-    printf("\n ----------------------------");
-    Lista interiores = a_ej2_interiores(arbol);
-    l_mostrar(interiores);
-    printf("\n ----------------------------");
-    Lista igual = a_ej2_buscarclave(arbol, 10);
-    Iterador iteIg = iterador(igual);
-    while (hay_siguiente(iteIg))
-    {
-        TipoElemento ele = siguiente(iteIg);
-        printf("\n| Clave: %d, Posicion: %p", ele->clave, (void *)ele->valor);
-    }
+    // ArbolBinario arbol2 = a_crear();
+    // arbol2 = cargarArbol();
+    // printf("\n ----------------------------");
 
-    int hijo = 2;
-    int resultado = a_ej3_clavepadre(arbol, hijo);
-    if (resultado == -999)
-    {
-        printf("El hijo no existe en el arbol, por lo tanto no se pudo buscar el padre\n");
-    }
-    else if (resultado == 999)
-    {
-        printf("La clave enviada es la raiz del arbol, por lo no tiene padre\n");
-    }
-    else
-    {
-        printf("El hijo %d, tiene como padre a %d \n", hijo, resultado);
-    }
-      */
+    // Lista hojas = a_ej2_hojas(arbol);
+    // l_mostrar(hojas);
+
+    // printf("\n ----------------------------");
+
+    // Lista interiores = a_ej2_interiores(arbol);
+    // l_mostrar(interiores);
+
+    // printf("\n ----------------------------");
+
+    // Lista igual = a_ej2_buscarclave(arbol, 10);
+    // Iterador iteIg = iterador(igual);
+    // while (hay_siguiente(iteIg))
+    // {
+    //     TipoElemento ele = siguiente(iteIg);
+    //     printf("\n| Clave: %d, Posicion: %p", ele->clave, (void *)ele->valor);
+    // }
+
+    // printf("\n ----------------------------");
+
+    // int hijo = 2;
+    // int resultado = a_ej3_clavepadre(arbol, hijo);
+    // if (resultado == -999)
+    // {
+    //     printf("El hijo no existe en el arbol, por lo tanto no se pudo buscar el padre\n");
+    // }
+    // else if (resultado == 999)
+    // {
+    //     printf("La clave enviada es la raiz del arbol, por lo no tiene padre\n");
+    // }
+    // else
+    // {
+    //     printf("El hijo %d, tiene como padre a %d \n", hijo, resultado);
+    // }
+    // printf("\n ----------------------------");
+
     // int clavePadre = 10;
     // Lista resu = a_ej3_hijos(arbol, clavePadre);
     // if (l_es_vacia(resu))
@@ -775,6 +783,9 @@ int main()
     //     printf("El padre %d, tiene el(los) siguiente(s) hijo(s)..\n", clavePadre);
     //     l_mostrar(resu);
     // }
+
+    // printf("\n ----------------------------");
+
     // int clave = 2;
     // int resultado = a_ej3_hermano(arbol, clave);
     // if (resultado == -999)
@@ -788,6 +799,8 @@ int main()
     //     printf("El hijo %d, tiene como hermano a %d \n", clave, resultado);
     // }
 
+    // printf("\n ----------------------------");
+
     // int clave = 5;
     // int resultado = a_ej3_nivel(arbol, clave);
     // if (resultado == -1)
@@ -800,6 +813,8 @@ int main()
     // }
     // else
     //     printf("El nodo con la clave %d se encuentra en el nivel numero : %d..\n", clave, resultado);
+
+    // printf("\n ----------------------------");
 
     // int clave = 150;
     // int altura = a_ej3_alturarama(arbol, clave);
@@ -815,15 +830,26 @@ int main()
     // {
     //     printf("El nodo con la clave %d tiene una altura de: %d \n", clave, altura);
     // }
+
+    // printf("\n ----------------------------");
+
     // int nivel = 2;
     // Lista lis = a_ej3_clavesmismonivel(arbol, nivel);
     // printf("En el nivel: %d, se encuentran los siguientes Nodos: \n", nivel);
     // l_mostrar(lis);
-    // int resultado = a_ej4_q_hojas(arbol);
-    // printf("La cantidad de hojas es %d\n", resultado);
+
+    // printf("\n ----------------------------");
 
     // Lista resu = a_ej4_anchura(arbol);
     // l_mostrar(resu);
+
+    // printf("\n ----------------------------");
+
+    // int resultado = a_ej4_q_hojas(arbol);
+    // printf("La cantidad de hojas es %d\n", resultado);
+
+    // printf("\n ----------------------------");
+
     // bool resultado = a_ej4_similares(arbol, arbol2);
     // if (resultado)
     // {
@@ -832,6 +858,18 @@ int main()
     // else
     //     printf("Los arboles no son similares\n");
 
+    // printf("\n ----------------------------"):
+
+    // FALTA 4 D
+
+    // printf("\n ----------------------------"):
+
+    // printf("\n ----------------------------"):
+
+    //FALTA 4E
+
+    // printf("\n ----------------------------"):
+
     // bool resultado = a_ej7_equivalente(arbol, arbol2);
     // if (resultado)
     // {
@@ -839,6 +877,18 @@ int main()
     // }
     // else
     //     printf("Los arboles no son equivalentes\n");
+
+    // printf("\n ----------------------------"):
+
+    // int resultado8a = c_ej8_altura(arbol);
+    // printf("La altura del arbol n-ario es %i\n", resultado8a);
+
+    // printf("\n ----------------------------"):
+
+    //FALTA 8B
+
+    // printf("\n ----------------------------"):
+
     // Lista resultadoEje8c = c_ej8_internos(arbol);
     // printf("Los nodos internos son: \n");
     // if (!l_es_vacia(resultadoEje8c))
@@ -848,12 +898,18 @@ int main()
     // else
     //     printf("No hay nodos internos\n");
 
-    int resultado8a = c_ej8_altura(arbol);
-    printf("La altura del arbol n-ario es %i\n", resultado8a);
+    // printf("\n ----------------------------"):
+
+    //FALTA 8C
+
+    // printf("\n ----------------------------"):
+
     // ArbolAVL arbolAvl = a_ej9_construiravl(arbol);
     // int resultadoDiferenciaAltura = a_ej9_diferenciaalturas(arbol, arbolAvl);
     // printf("La diferencia entre alturas considerando (ARBOL - ARBOL AVL) es..  %i\n", resultadoDiferenciaAltura);
 
+    // printf("\n ----------------------------"):
+    
     //Lista lista = a_ej10_comparacionarboles(2,10,21,10);
     // l_mostrar(lista);
     return 0;
