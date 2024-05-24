@@ -38,16 +38,21 @@ int solicitarNumero(bool *variable)
     }
 }
 
-void mostrarArbolRec(NodoArbol raiz, char prefijo[], int esIzquierda) {
-    if (raiz == NULL) {
+void mostrarArbolRec(NodoArbol raiz, char prefijo[], int esIzquierda)
+{
+    if (raiz == NULL)
+    {
         return;
     }
 
     printf("%s", prefijo);
 
-    if (esIzquierda) {
+    if (esIzquierda)
+    {
         printf("├──");
-    } else {
+    }
+    else
+    {
         printf("└──");
     }
 
@@ -60,12 +65,14 @@ void mostrarArbolRec(NodoArbol raiz, char prefijo[], int esIzquierda) {
     mostrarArbolRec(n_hijoderecho(raiz), nuevoPrefijo, 0);
 }
 // Función para mostrar el árbol
-void mostrarArbol(NodoArbol raiz) {
-    if (raiz == NULL) {
+void mostrarArbol(NodoArbol raiz)
+{
+    if (raiz == NULL)
+    {
         return;
     }
 
-    printf("%d\n", n_recuperar(raiz)->clave); // Imprime la raíz sin prefijo
+    printf("%d\n", n_recuperar(raiz)->clave);      // Imprime la raíz sin prefijo
     mostrarArbolRec(n_hijoizquierdo(raiz), "", 1); // Llama a los hijos con prefijos adecuados
     mostrarArbolRec(n_hijoderecho(raiz), "", 0);
 }
@@ -89,10 +96,35 @@ void cargarPreOrden(ArbolBinario a, NodoArbol nodo, int orden)
             pa = a_conectar_hd(a, nodo, te_crear(n));
         // PREORDEN
         printf("El arbol esta quedando de la siguiente manera : \n\n\n");
+        mostrarArbol(a_raiz(a));
         cargarPreOrden(a, pa, -1);
         printf("Hijo derecho\n");
         cargarPreOrden(a, pa, 1);
     }
+}
+
+void buscarClaveAux(NodoArbol n, bool *flag, int clave){
+    if (a_es_rama_nula(n))
+    {
+        return;
+    }
+    NodoArbol hi = n_hijoizquierdo(n);
+    NodoArbol hd = n_hijoderecho(n);
+    if (n_recuperar(hi)->clave == clave || n_recuperar(hd)->clave == clave)
+    {
+        *flag = true;
+    }
+    buscarClaveAux(hi,flag, clave);
+    buscarClaveAux(hd,flag, clave);
+}
+
+bool buscarClave(NodoArbol n, int clave){
+    bool *flag = malloc(sizeof(bool));
+    *flag = true;
+    buscarClaveAux(n,flag,clave);
+    bool resultado = *flag;
+    free(flag);
+    return resultado;
 }
 
 ArbolBinario cargarArbol()
@@ -507,6 +539,72 @@ bool a_ej4_similares(ArbolBinario A, ArbolBinario B)
     return resultado;
 }
 
+// d
+void padreAux(NodoArbol n, TipoElemento* posiblePa, Cola c, int clave)
+{
+    if (a_es_rama_nula(n))
+    {
+        return;
+    }
+    NodoArbol hd = n_hijoderecho(n);
+    NodoArbol hi = n_hijoizquierdo(n);
+    if (a_es_rama_nula(hd) && !a_es_rama_nula(hi))
+    {
+        *posiblePa = te_crear_con_valor(n_recuperar(n)->clave, n);
+        if (n_recuperar(hi)->clave == clave)
+        {
+            return;
+        }
+        padreAux(hi, posiblePa, c, clave);
+    }
+    else if (!a_es_rama_nula(hd) && !a_es_rama_nula(hi))
+    {
+        TipoElemento eleAencolar = te_crear_con_valor(n_recuperar(n)->clave, n);
+        c_encolar(c, eleAencolar);
+        if (n_recuperar(hd)->clave == clave)
+        {
+            return;
+        }
+        padreAux(hd, posiblePa, c, clave);
+    }
+    else if (a_es_rama_nula(hi) && !a_es_rama_nula(hd))
+    {
+        if (n_recuperar(hd)->clave == clave)
+        {
+            return;
+        }
+        padreAux(hd, posiblePa, c, clave);
+    } else if (a_es_rama_nula(hd) && a_es_rama_nula(hi))
+    {
+        if (n_recuperar(n)->clave == clave)
+        {
+            return;
+        }
+        c_mostrar(c);
+        TipoElemento eleAdesencolar = c_desencolar(c);
+        *posiblePa = te_crear_con_valor(eleAdesencolar->clave, eleAdesencolar->valor);
+        NodoArbol hi = n_hijoizquierdo(eleAdesencolar->valor);
+        padreAux(hi, posiblePa, c, clave);
+    }
+    
+}
+
+TipoElemento a_ej4_padre(ArbolBinario A, int clave)
+{
+    NodoArbol raiz = a_raiz(A);
+    bool hijoIzq = a_es_rama_nula(n_hijoizquierdo(raiz));
+    TipoElemento resultado = malloc(sizeof(TipoElemento));
+    if (hijoIzq)
+    {
+        free(resultado);
+        printf("EL ARBOL N-ARIO ESTA MAL CARGADO, YA QUE DE LA RAIZ NO SALE UN HI \n");
+        return resultado;
+    }
+    Cola aux = c_crear();
+    padreAux(raiz, &resultado, aux, clave);
+    printf("El padre de %d, es %d \n", clave, resultado->clave);
+    return resultado;
+}
 // Punto 7
 void equivalenteAux(NodoArbol a, NodoArbol b, bool *flag)
 {
@@ -859,14 +957,14 @@ int main()
     //     printf("Los arboles no son similares\n");
 
     // printf("\n ----------------------------"):
-
-    // FALTA 4 D
-
-    // printf("\n ----------------------------"):
+    int clave = 15; //pedir clave en el menu, validar que se encuentre en el arbol.
+    TipoElemento resultadoEj4Pa = a_ej4_padre(arbol, clave);
 
     // printf("\n ----------------------------"):
 
-    //FALTA 4E
+    // printf("\n ----------------------------"):
+
+    // FALTA 4E
 
     // printf("\n ----------------------------"):
 
@@ -885,7 +983,7 @@ int main()
 
     // printf("\n ----------------------------"):
 
-    //FALTA 8B
+    // FALTA 8B
 
     // printf("\n ----------------------------"):
 
@@ -900,7 +998,7 @@ int main()
 
     // printf("\n ----------------------------"):
 
-    //FALTA 8C
+    // FALTA 8C
 
     // printf("\n ----------------------------"):
 
@@ -909,9 +1007,9 @@ int main()
     // printf("La diferencia entre alturas considerando (ARBOL - ARBOL AVL) es..  %i\n", resultadoDiferenciaAltura);
 
     // printf("\n ----------------------------"):
-    
-    //Lista lista = a_ej10_comparacionarboles(2,10,21,10);
-    // l_mostrar(lista);
+
+    // Lista lista = a_ej10_comparacionarboles(2,10,21,10);
+    //  l_mostrar(lista);
     return 0;
 }
 
