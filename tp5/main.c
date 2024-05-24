@@ -957,8 +957,8 @@ int main()
     //     printf("Los arboles no son similares\n");
 
     // printf("\n ----------------------------"):
-    int clave = 15; //pedir clave en el menu, validar que se encuentre en el arbol.
-    TipoElemento resultadoEj4Pa = a_ej4_padre(arbol, clave);
+    // int clave = 15; //pedir clave en el menu, validar que se encuentre en el arbol.
+    // TipoElemento resultadoEj4Pa = a_ej4_padre(arbol, clave);
 
     // printf("\n ----------------------------"):
 
