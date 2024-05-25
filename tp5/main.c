@@ -506,6 +506,34 @@ bool a_ej4_similares(ArbolBinario A, ArbolBinario B)
     free(flag);
     return resultado;
 }
+//e
+void lista_hermanos(NodoArbol n, Lista *lis,int clave,NodoArbol *padre,NodoArbol *padreant){
+    if(!a_es_rama_nula(n)){
+        NodoArbol hijoDer1 = n_hijoderecho(n);
+        NodoArbol hijoIzq1 = n_hijoizquierdo(n);
+        if(n_recuperar(n)->clave == clave || !a_es_rama_nula(*padre)){
+            *padre=n;
+            if(!a_es_rama_nula(hijoDer1)){
+                TipoElemento ele=n_recuperar(hijoDer1);
+                l_agregar(*lis,ele);
+                padreant=padre;
+                lista_hermanos(hijoDer1,lis,clave,padre,padreant);
+            }
+            //sino la lista estara vacia
+            return;
+        }
+        lista_hermanos(hijoIzq1,lis,clave,padre,padreant);
+        lista_hermanos(hijoDer1,lis,clave,padre,padreant);
+    }    
+}
+Lista a_ej4_hermanos(ArbolBinario A, int clave){
+    Lista l=l_crear();
+    NodoArbol n=a_raiz(A);
+    NodoArbol padre=NULL;
+    NodoArbol padreant=NULL;
+    lista_hermanos(n,&l,clave,&padre,&padreant);
+    return l;
+}
 
 // Punto 7
 void equivalenteAux(NodoArbol a, NodoArbol b, bool *flag)
@@ -597,7 +625,30 @@ int c_ej8_altura(ArbolBinario A)
     alturaAux(a_raiz(A), alturaActual, acumulador);
     return *alturaActual;
 }
+//b
+void nivelnodo_ej8(NodoArbol n,int clave, int *nivel){
+    if(!a_es_rama_nula(n)){
+        NodoArbol hijo_izq=n_hijoizquierdo(n);
+        NodoArbol hijo_der=n_hijoderecho(n);
+        *nivel++;
+        if(n_recuperar(n)->clave == clave){
+            return;
+        }
+    }
+    nivelnodo_ej8(n->hi, clave,nivel);
+    nivelnodo_ej8(n->hd,clave,nivel);
+}
+int c_ej8_nivel(ArbolBinario A, int clave){
+    NodoArbol nodo= a_raiz(A);
+    int nivel_nodo=-1;
+    nivelnodo_ej8(nodo,clave,&nivel_nodo);
+    if (nivel_nodo == -1) {
+        // Manejo del caso cuando la clave no se encuentra en el árbol
+        return -1; // O cualquier otro valor que indique que la clave no se encontró
+    }
+    return nivel_nodo;
 
+}
 // c
 void internosAux(NodoArbol n, Lista nodosInternos, NodoArbol raiz)
 {
@@ -732,6 +783,7 @@ int main()
     ArbolBinario arbol = a_crear();
     arbol = cargarArbol();
     printf("----------------------\n");
+    
     /*
     ArbolBinario arbol2 = a_crear();
     arbol2 = cargarArbol();
@@ -848,15 +900,32 @@ int main()
     // else
     //     printf("No hay nodos internos\n");
 
-    int resultado8a = c_ej8_altura(arbol);
-    printf("La altura del arbol n-ario es %i\n", resultado8a);
+    //int resultado8a = c_ej8_altura(arbol);
+    //printf("La altura del arbol n-ario es %i\n", resultado8a);
     // ArbolAVL arbolAvl = a_ej9_construiravl(arbol);
     // int resultadoDiferenciaAltura = a_ej9_diferenciaalturas(arbol, arbolAvl);
     // printf("La diferencia entre alturas considerando (ARBOL - ARBOL AVL) es..  %i\n", resultadoDiferenciaAltura);
-
+    // test ej8_nivel
+    // int clave=4;
+    // int nivel= c_ej8_nivel(arbol,clave);
+    // if(nivel== -1){
+    //     printf("No se encontró el nodo\n");
+    // }
+    // else{
+    //     printf("El nivel del nodo con clave: %d, es : %d \n",clave,nivel);
+    // }
+    int clave=3;
+    Lista list=a_ej4_hermanos(arbol,clave);
+    printf("Para la clave: %d, la lista de hermanos son: \n",clave);
+    if(l_es_vacia(list)){
+        printf("La clave no tiene ningun hermano\n");
+    }
+    l_mostrar(list);
     //Lista lista = a_ej10_comparacionarboles(2,10,21,10);
     // l_mostrar(lista);
     return 0;
+
 }
 
-// gcc -o output ../libs/elementos/tipo_elemento.c ../libs/listas/listas_arreglos.c ../libs/nodos/nodo.c ../libs/arboles/arbol-binario.c ../libs/colas/colas_arreglos.c ../libs/arboles/arbol-avl.c main.c
+
+// gcc -o output ../libs/elementos/tipo_elemento.c ../libs/listas/listas_arreglos.c ../libs/nodos/nodo.c ../libs/arboles/arbol-binario.c ../libs/colas/colas_arreglos.c ../libs/arboles/arbol-avl.c ../libs/arboles/arbol-binario-busqueda.c main.c
