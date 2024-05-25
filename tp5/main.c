@@ -1070,13 +1070,11 @@ int main()
     l_mostrar(list);
     //Lista lista = a_ej10_comparacionarboles(2,10,21,10);
     // l_mostrar(lista);
-
     // printf("\n ----------------------------"):
 
     // Lista lista = a_ej10_comparacionarboles(2,10,21,10);
     //  l_mostrar(lista);
     return 0;
-    
 }
 
 
