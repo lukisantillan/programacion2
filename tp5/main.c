@@ -410,9 +410,11 @@ int a_ej3_alturarama(ArbolBinario A, int clave)
 // f
 void nivel_nodos(NodoArbol n, int nivel, int niv_aux, Lista *list)
 {
-
-    if (n == NULL)
+    NodoArbol hijoizq=n_hijoizquierdo(n);
+    NodoArbol hijoder=n_hijoderecho(n);
+    if (a_es_rama_nula(n))
     {
+        
         return;
     }
     if (nivel == niv_aux)
@@ -421,8 +423,8 @@ void nivel_nodos(NodoArbol n, int nivel, int niv_aux, Lista *list)
         l_agregar(*list, ele);
     }
 
-    nivel_nodos(n->hi, nivel, niv_aux + 1, list);
-    nivel_nodos(n->hd, nivel, niv_aux + 1, list);
+    nivel_nodos(hijoizq, nivel, niv_aux + 1, list);
+    nivel_nodos(hijoder, nivel, niv_aux + 1, list);
 }
 
 Lista a_ej3_clavesmismonivel(ArbolBinario A, int nivel)
@@ -976,10 +978,16 @@ int main()
 
     // printf("\n ----------------------------");
 
-    // int nivel = 2;
-    // Lista lis = a_ej3_clavesmismonivel(arbol, nivel);
-    // printf("En el nivel: %d, se encuentran los siguientes Nodos: \n", nivel);
-    // l_mostrar(lis);
+    int nivel = 2;
+    Lista lis = a_ej3_clavesmismonivel(arbol, nivel);
+    if(l_es_vacia(lis)){
+        printf("La lista esta vacia (porque ingresaron arbol vacio o no hay nodos para ese nivel)\n");
+    }
+    else{
+        printf("En el nivel: %d, se encuentran los siguientes Nodos: \n", nivel);
+        l_mostrar(lis);
+    }
+    
 
     // printf("\n ----------------------------");
 
@@ -1061,13 +1069,13 @@ int main()
     // else{
     //     printf("El nivel del nodo con clave: %d, es : %d \n",clave,nivel);
     // }
-    int clave=3;
-    Lista list=a_ej4_hermanos(arbol,clave);
-    printf("Para la clave: %d, la lista de hermanos son: \n",clave);
-    if(l_es_vacia(list)){
-        printf("La clave no tiene ningun hermano\n");
-    }
-    l_mostrar(list);
+    // int clave=3;
+    // Lista list=a_ej4_hermanos(arbol,clave);
+    // printf("Para la clave: %d, la lista de hermanos son: \n",clave);
+    // if(l_es_vacia(list)){
+    //     printf("La clave no tiene ningun hermano\n");
+    // }
+    // l_mostrar(list);
     //Lista lista = a_ej10_comparacionarboles(2,10,21,10);
     // l_mostrar(lista);
     // printf("\n ----------------------------"):
