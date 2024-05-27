@@ -1807,10 +1807,7 @@ int main()
     //     printf("En el nivel: %d, se encuentran los siguientes Nodos: \n", nivel);
     //     l_mostrar(lis);
     // }
-<<<<<<< HEAD
     
-=======
->>>>>>> ffa265849dc8554f790a2d01aedc6ffcc2a40577
 
     // printf("\n ----------------------------");
 
