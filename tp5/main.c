@@ -1904,6 +1904,72 @@ void testPt4()
     }
 }
 
+void testPt7()
+{
+    clearScreen();
+    ArbolBinario arbol = a_crear();
+    char tipo;
+    arbol = cargarArbol(&tipo);
+
+    mostrarArbol(a_raiz(arbol), tipo);
+
+    printf("\nArbol cargado exitosamente\n");
+    printf("Tipo de elementos: %c\n", tipo);
+    printf("Presione una tecla para cargar el segundo arbol\n");
+
+    waitForKey();
+
+    ArbolBinario arbol2 = a_crear();
+    char tipo_2;
+    arbol2 = cargarArbol(&tipo_2);
+    
+    mostrarArbol(a_raiz(arbol2), tipo_2);
+    printf("\nArbol cargado exitosamente\n");
+    printf("Tipo de elementos: %c\n", tipo_2);
+
+    bool resultado = a_ej7_equivalente(arbol, arbol2);
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Ver si dos arboles son equivalentes\n");
+        printf("| 2. Volver\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            if (resultado)
+            {
+                printf("\nLos arboles son iguales\n");
+            }
+            else
+            {
+                printf("\nLos arboles no son iguales\n");
+            }
+
+            waitForKey();
+        case 2:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+            break;
+        }
+    }
+}
+
 int main()
 {
     srand(time(NULL));
@@ -1919,9 +1985,7 @@ int main()
         printf("| 2. Probar funciones del punto 2\n");
         printf("| 3. Probar funciones del punto 3\n");
         printf("| 4. Probar funciones del punto 4\n");
-        printf("| 5. Probar funciones del punto 5\n");
-        printf("| 6. Probar funciones del punto 6\n");
-        printf("| 7. Probar funciones del punto 7\n");
+        printf("| 5. Probar funciones del punto 7\n");
         printf("| 8. Salir\n");
         printf("+------------------------------------------------------------------------------------------+\n");
         printf("\nIngrese una opcion: ");
@@ -1953,7 +2017,7 @@ int main()
             testPt4();
             break;
         case 5:
-            // testPt5();
+            testPt7();
             break;
         case 6:
             // testPt6();
