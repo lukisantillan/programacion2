@@ -773,6 +773,28 @@ Lista c_ej8_internos(ArbolBinario A)
     return nodosInternos;
 }
 
+//d
+void sacarHojas(NodoArbol n, Lista *l){
+    TipoElemento ele;
+    if (a_es_rama_nula(n))
+    {
+        return;
+    }
+    NodoArbol hd = n_hijoderecho(n);
+    NodoArbol hi = n_hijoizquierdo(n);
+    if (a_es_rama_nula(hd) && a_es_rama_nula(hi))
+    {
+        ele = te_crear(n_recuperar(n)->clave);
+    }
+    sacarHojas(hi,l);
+    sacarHojas(hd,l);
+}
+
+bool c_ej8_hojasmismonivel(ArbolBinario A){
+    Lista listaHojas = l_crear();
+    sacarHojasAux(a_raiz(A), &listaHojas);
+}
+
 // 9
 // COMPLEJIDAD 0(1)
 void auxRellenarArbolAvl(NodoArbol n, ArbolAVL resu)
