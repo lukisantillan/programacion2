@@ -371,15 +371,17 @@ int altura_arbol(NodoArbol n)
 
 void busquedadelnodo(NodoArbol n, int clave, NodoArbol *nodo_encontrado)
 {
-    if (n != NULL)
+    NodoArbol hijoizq=n_hijoizquierdo(n);
+    NodoArbol hijoder=n_hijoderecho(n);
+    if (!a_es_rama_nula(n))
     {
         if (n_recuperar(n)->clave == clave)
         {
             *nodo_encontrado = n;
             return;
         }
-        busquedadelnodo(n->hi, clave, nodo_encontrado);
-        busquedadelnodo(n->hd, clave, nodo_encontrado);
+        busquedadelnodo(hijoizq, clave, nodo_encontrado);
+        busquedadelnodo(hijoder, clave, nodo_encontrado);
     }
 }
 
@@ -980,32 +982,32 @@ int main()
 
     // printf("\n ----------------------------");
 
-    // int clave = 150;
-    // int altura = a_ej3_alturarama(arbol, clave);
-    // if (altura == -1)
-    // {
-    //     printf("No se encontro la clave en el arbol\n");
-    // }
-    // else if (altura == 0)
-    // {
-    //     printf("el arbol esta vacio o es una hoja(altura 0) \n");
-    // }
-    // else
-    // {
-    //     printf("El nodo con la clave %d tiene una altura de: %d \n", clave, altura);
-    // }
+    int clave = 1;
+    int altura = a_ej3_alturarama(arbol, clave);
+    if (altura == -1)
+    {
+        printf("No se encontro la clave en el arbol\n");
+    }
+    else if (altura == 0)
+    {
+        printf("el arbol esta vacio o es una hoja(altura 0) \n");
+    }
+    else
+    {
+        printf("El nodo con la clave %d tiene una altura de: %d \n", clave, altura);
+    }
 
     // printf("\n ----------------------------");
 
-    int nivel = 2;
-    Lista lis = a_ej3_clavesmismonivel(arbol, nivel);
-    if(l_es_vacia(lis)){
-        printf("La lista esta vacia (porque ingresaron arbol vacio o no hay nodos para ese nivel)\n");
-    }
-    else{
-        printf("En el nivel: %d, se encuentran los siguientes Nodos: \n", nivel);
-        l_mostrar(lis);
-    }
+    // int nivel = 2;
+    // Lista lis = a_ej3_clavesmismonivel(arbol, nivel);
+    // if(l_es_vacia(lis)){
+    //     printf("La lista esta vacia (porque ingresaron arbol vacio o no hay nodos para ese nivel)\n");
+    // }
+    // else{
+    //     printf("En el nivel: %d, se encuentran los siguientes Nodos: \n", nivel);
+    //     l_mostrar(lis);
+    // }
     
 
     // printf("\n ----------------------------");
@@ -1054,9 +1056,9 @@ int main()
     // printf("La altura del arbol n-ario es %i\n", resultado8a);
 
     // printf("\n ----------------------------"):
-    int clave = 13;
-    int resultado8b = c_ej8_nivel(arbol, clave);
-    printf("El nivel de %d es.. %d \n", clave, resultado8b);
+    // int clave = 13;
+    // int resultado8b = c_ej8_nivel(arbol, clave);
+    // printf("El nivel de %d es.. %d \n", clave, resultado8b);
 
     // printf("\n ----------------------------"):
 
@@ -1089,11 +1091,7 @@ int main()
     // else{
     //     printf("El nivel del nodo con clave: %d, es : %d \n",clave,nivel);
     // }
-<<<<<<< HEAD
-    // int clave=3;
-=======
     // int clave=10;
->>>>>>> 5a59038faf41b04b84c5e7922d83b8e26121f083
     // Lista list=a_ej4_hermanos(arbol,clave);
     // printf("Para la clave: %d, la lista de hermanos son: \n",clave);
     // if(l_es_vacia(list)){
