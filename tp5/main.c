@@ -1615,6 +1615,92 @@ void testPt3()
     }
 }
 
+void testPt4()
+{
+    clearScreen();
+    ArbolBinario arbol = a_crear();
+    char tipo;
+    arbol = cargarArbol(&tipo);
+
+    mostrarArbol(a_raiz(arbol), tipo);
+
+    printf("\nArbol cargado exitosamente\n");
+    printf("Tipo de elementos: %c\n", tipo);
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Ver anchura de un arbol\n");
+        printf("| 2. Ver cantidad de hojas (arbol n-ario)\n");
+        printf("| 3. ¿Son similares dos arboles? (estructura)\n");
+        printf("| 4. Ver padre de un nodo\n");
+        printf("| 5. Ver hermanos de un nodo\n");
+        printf("| 6. Volver\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            clearScreen();
+            Lista nodos = a_ej4_anchura(arbol);
+            Iterador iterador_nodos = iterador(nodos);
+            l_mostrar(nodos);
+            while (hay_siguiente(iterador_nodos))
+            {
+                TipoElemento elemento_nodos = siguiente(iterador_nodos);
+
+                // check if tipo is number or letter
+                if (tipo == 'n')
+                    printf("\n| Clave: %d, Posicion: %p", elemento_nodos->clave, (void *)elemento_nodos->valor);
+                else
+                    printf("\n| Clave: %c, Posicion: %p", (char)elemento_nodos->clave, (void *)elemento_nodos->valor);
+            }
+            waitForKey();
+            break;
+        case 2:
+            clearScreen();
+            int cantidadHojas = a_ej4_q_hojas(arbol);
+            printf("\nCantidad de hojas en el arbol: %d\n", cantidadHojas);
+            waitForKey();
+            break;
+        case 3:
+            clearScreen();
+            ArbolBinario arbol2 = a_crear();
+            char tipo2;
+            arbol2 = cargarArbol(&tipo2);
+
+            printf("1. Arbol 1\n");
+            mostrarArbol(a_raiz(arbol), tipo);
+
+            printf("\n2. Arbol 2\n");
+            mostrarArbol(a_raiz(arbol2), tipo2);
+
+            bool resultado = a_ej4_similares(arbol, arbol2);
+            if (resultado)
+            {
+                printf("\nLos arboles son similares\n");
+            }
+            else
+            {
+                printf("\nLos arboles no son similares\n");
+            }
+
+            waitForKey();
+            break;
+}
+
 int main()
 {
     srand(time(NULL));
