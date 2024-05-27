@@ -8,6 +8,19 @@
 
 // FUNCIONES EXTRAS
 
+void verComplejidades()
+{
+    printf(" Complejidad Ejercicio 2\n");
+    printf("------------------------------------------\n");
+    printf("- A) - HOJAS : 0(n^2) Ya que se llama dos veces a si misma - Para listas con arreglos y 0(n) lineal si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros)\n");
+    printf("- B) - INTERIORES : 0(n^2) Ya que se llama dos veces a si misma  - Para listas con arreglos y 0(n) lineal si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros)\n");
+    printf("- C) - BUSCAR CALVE : 0(n^2) Ya que se llama dos veces a si misma  - Para listas con arreglos y 0(n) lineal si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros)\n");
+    printf(" Complejidad Ejercicio 9\n");
+    printf(" Complejidad Ejercicio 2\n");
+    print("- O(n^2) Ya que se llama dos veces a si misma")
+    printf("------------------------------------------\n");
+}
+
 void clearScreen()
 {
     system("clear");
@@ -277,9 +290,7 @@ ArbolBinario cargarArbol(char *tipo)
 }
 
 // Punto 2
-// FALTA COMPLEJIDADES
 // a
-// COMPLEJIDAD = 0(1) - Para listas con arreglos y 0(n) si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros)
 void es_hoja(NodoArbol n, Lista l)
 {
     if (a_es_rama_nula(n))
@@ -304,7 +315,6 @@ Lista a_ej2_hojas(ArbolBinario A)
 }
 
 // b
-// COMPLEJIDAD = 0(1) - Para listas con arreglos y 0(n) si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros)
 void es_interno(NodoArbol n, Lista l, NodoArbol raiz)
 {
     if (a_es_rama_nula(n))
@@ -334,7 +344,6 @@ Lista a_ej2_interiores(ArbolBinario A)
 }
 
 // c
-// COMPLEJIDAD = 0(1) - Para listas con arreglos y 0(n) si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros)
 void es_igual_a_clave(NodoArbol n, Lista l, int clave)
 {
     if (a_es_rama_nula(n))
@@ -2429,7 +2438,7 @@ int main()
         {
         case 1:
             clearScreen();
-            // verComplejidades();
+            verComplejidades();
             waitForKey();
             break;
         case 2:
