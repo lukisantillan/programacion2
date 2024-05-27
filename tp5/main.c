@@ -1922,7 +1922,7 @@ void testPt7()
     ArbolBinario arbol2 = a_crear();
     char tipo_2;
     arbol2 = cargarArbol(&tipo_2);
-    
+
     mostrarArbol(a_raiz(arbol2), tipo_2);
     printf("\nArbol cargado exitosamente\n");
     printf("Tipo de elementos: %c\n", tipo_2);
@@ -1950,6 +1950,7 @@ void testPt7()
         switch (opcion)
         {
         case 1:
+            clearScreen();
             if (resultado)
             {
                 printf("\nLos arboles son iguales\n");
@@ -1960,6 +1961,227 @@ void testPt7()
             }
 
             waitForKey();
+            break;
+        case 2:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+            break;
+        }
+    }
+}
+
+void testPt8()
+{
+    clearScreen();
+    ArbolBinario arbol = a_crear();
+    char tipo;
+    arbol = cargarArbol(&tipo);
+
+    mostrarArbol(a_raiz(arbol), tipo);
+
+    printf("\nArbol cargado exitosamente\n");
+    printf("Tipo de elementos: %c\n", tipo);
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| Dado un arbol n-ario\n");
+        printf("| 1. Ver altura del arbol\n");
+        printf("| 2. Ver nivel de un nodo\n");
+        printf("| 3. Ver cantidad de nodos internos\n");
+        printf("| 4. Ver si todas las hojas estan al mismo nivel\n");
+        printf("| 5. Volver\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        int resultado8a = c_ej8_altura(arbol);
+
+        switch (opcion)
+        {
+        case 1:
+            clearScreen();
+            printf("\nLa altura del arbol es: %d\n", resultado8a);
+
+            waitForKey();
+            break;
+        case 2:
+            clearScreen();
+            int claveNivel;
+            printf("\nIngrese la clave del nodo: ");
+            while (1)
+            {
+                if (tipo == 'n')
+                {
+                    if (scanf("%d", &claveNivel) == 1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        printf("\nError: Ingresa un número válido para la clave: ");
+                        while (getchar() != '\n')
+                            ;
+                    }
+                }
+                else if (tipo == 'l')
+                {
+                    char temp;
+                    if (scanf(" %c", &temp) == 1)
+                    {
+                        claveNivel = (int)toupper(temp);
+                        break;
+                    }
+                    else
+                    {
+                        printf("\nError: Ingresa un carácter válido para la clave: ");
+                        while (getchar() != '\n')
+                            ;
+                    }
+                }
+                else
+                {
+                    printf("\nError: Tipo de clave no válido. Debe ser 'n' o 'l'.");
+                }
+            }
+
+            if (tipo == 'n')
+                printf("\nClave del nodo: %d", claveNivel);
+            else
+                printf("\nClave del nodo: %c", (char)claveNivel);
+            printf("\nTipo de clave: %c\n", tipo);
+
+            int resultado8b = c_ej8_nivel(arbol, claveNivel);
+            if (resultado8b == -1)
+            {
+                if (tipo == 'n')
+                    printf("No se encontro la clave %d en el arbol\n", claveNivel);
+                else
+                    printf("No se encontro la clave %c en el arbol\n", (char)claveNivel);
+            }
+            else if (resultado8b == 0)
+            {
+                if (tipo == 'n')
+                    printf("El nodo con la clave %d, se encuentra en la raiz..\n", claveNivel);
+                else
+                    printf("El nodo con la clave %c, se encuentra en la raiz..\n", (char)claveNivel);
+            }
+            else
+            {
+                if (tipo == 'n')
+                    printf("El nodo con la clave %d, se encuentra en el nivel %d\n", claveNivel, resultado8b);
+                else
+                    printf("El nodo con la clave %c, se encuentra en el nivel %d\n", (char)claveNivel, resultado8b);
+            }
+
+            waitForKey();
+            break;
+        case 3:
+            clearScreen();
+            Lista resultadoEje8c = c_ej8_internos(arbol);
+
+            if (l_es_vacia(resultadoEje8c))
+            {
+                printf("\nNo hay nodos internos en el arbol\n");
+            }
+            else
+            {
+                printf("\nNodos internos en el arbol: ");
+            }
+
+            Iterador iterador_resultadoEje8c = iterador(resultadoEje8c);
+            while (hay_siguiente(iterador_resultadoEje8c))
+            {
+                TipoElemento elemento_resultadoEje8c = siguiente(iterador_resultadoEje8c);
+
+                // check if tipo is number or letter
+                if (tipo == 'n')
+                    printf("\n| Clave: %d, Posicion: %p", elemento_resultadoEje8c->clave, (void *)elemento_resultadoEje8c->valor);
+                else
+                    printf("\n| Clave: %c, Posicion: %p", (char)elemento_resultadoEje8c->clave, (void *)elemento_resultadoEje8c->valor);
+            }
+
+            waitForKey();
+            break;
+        case 4:
+            clearScreen();
+            bool resultado8d = c_ej8_hojasmismonivel(arbol);
+
+            if (resultado8d)
+            {
+                printf("\nTodas las hojas estan al mismo nivel\n");
+            }
+            else
+            {
+                printf("\nNo todas las hojas estan al mismo nivel\n");
+            }
+
+            waitForKey();
+            break;
+        case 5:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+            break;
+        }
+    }
+}
+
+void testPt9()
+{
+    clearScreen();
+    ArbolBinario arbol = a_crear();
+    char tipo;
+    arbol = cargarArbol(&tipo);
+
+    mostrarArbol(a_raiz(arbol), tipo);
+
+    printf("\nArbol cargado exitosamente\n");
+    printf("Tipo de elementos: %c\n", tipo);
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Ver diferencia de alturas entre arbol binario y arbol AVL\n");
+        printf("| 2. Volver\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            clearScreen();
+
+            ArbolAVL arbolAvl = a_ej9_construiravl(arbol);
+            printf("\nArbol AVL cargado exitosamente\n");
+
+            int diferenciaAlturas = a_ej9_diferenciaalturas(arbol, arbolAvl);
+            printf("\nDiferencia de alturas entre arbol binario y arbol AVL: %d\n", diferenciaAlturas);
+
+            waitForKey();
+            break;
         case 2:
             clearScreen();
             return;
@@ -1986,7 +2208,10 @@ int main()
         printf("| 3. Probar funciones del punto 3\n");
         printf("| 4. Probar funciones del punto 4\n");
         printf("| 5. Probar funciones del punto 7\n");
-        printf("| 8. Salir\n");
+        printf("| 6. Probar funciones del punto 8\n");
+        printf("| 7. Probar funciones del punto 9\n");
+        printf("| 8. Probar funciones del punto 10\n");
+        printf("| 9. Salir\n");
         printf("+------------------------------------------------------------------------------------------+\n");
         printf("\nIngrese una opcion: ");
         int opcion;
@@ -1995,9 +2220,7 @@ int main()
         {
             printf("\nError: Ingresa un número válido para la opción: ");
             while (getchar() != '\n')
-            {
-                // clear input buffer
-            }
+                ;
         }
 
         switch (opcion)
@@ -2020,12 +2243,15 @@ int main()
             testPt7();
             break;
         case 6:
-            // testPt6();
+            testPt8();
             break;
         case 7:
-            // testPt7();
+            testPt9();
             break;
         case 8:
+            testPt10();
+            break;
+        case 9:
             clearScreen();
             return 0;
         default:
