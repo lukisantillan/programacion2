@@ -117,9 +117,12 @@ void mostrarArbolRec(NodoArbol raiz, char prefijo[], int esIzquierda, char tipo)
     }
 
     TipoElemento ele = n_recuperar(raiz);
-    if (tipo == 'n') {
+    if (tipo == 'n')
+    {
         printf("%d\n", ele->clave);
-    } else if (tipo == 'l') {
+    }
+    else if (tipo == 'l')
+    {
         printf("%c\n", (char)ele->clave);
     }
 
@@ -138,9 +141,12 @@ void mostrarArbol(NodoArbol raiz, char tipo)
         return;
     }
 
-    if (tipo == 'n') {
+    if (tipo == 'n')
+    {
         printf("%d\n", n_recuperar(raiz)->clave);
-    } else if (tipo == 'l') {
+    }
+    else if (tipo == 'l')
+    {
         printf("%c\n", (char)n_recuperar(raiz)->clave);
     }
 
@@ -525,11 +531,11 @@ int a_ej3_alturarama(ArbolBinario A, int clave)
 // f
 void nivel_nodos(NodoArbol n, int nivel, int niv_aux, Lista *list)
 {
-    NodoArbol hijoizq=n_hijoizquierdo(n);
-    NodoArbol hijoder=n_hijoderecho(n);
+    NodoArbol hijoizq = n_hijoizquierdo(n);
+    NodoArbol hijoder = n_hijoderecho(n);
     if (a_es_rama_nula(n))
     {
-        
+
         return;
     }
     if (nivel == niv_aux)
@@ -845,23 +851,28 @@ int c_ej8_altura(ArbolBinario A)
     alturaAux(a_raiz(A), alturaActual, acumulador);
     return *alturaActual;
 }
-//b
-void auxNivel(NodoArbol n, int clave, int *nivel, int c){
+// b
+void auxNivel(NodoArbol n, int clave, int *nivel, int c)
+{
     TipoElemento X;
-    if (!a_es_rama_nula(n)) {
+    if (!a_es_rama_nula(n))
+    {
         X = n_recuperar(n);
-        if (X->clave == clave) {
+        if (X->clave == clave)
+        {
             *nivel = c;
             return;
         }
-        else{
-            auxNivel(n_hijoizquierdo(n), clave, nivel, c+1);
+        else
+        {
+            auxNivel(n_hijoizquierdo(n), clave, nivel, c + 1);
             auxNivel(n_hijoderecho(n), clave, nivel, c);
         }
     }
 }
 
-int c_ej8_nivel(ArbolBinario A, int clave){
+int c_ej8_nivel(ArbolBinario A, int clave)
+{
     int nivel = -1;
     auxNivel(a_raiz(A), clave, &nivel, 0);
     return nivel;
@@ -1082,7 +1093,8 @@ void testPt2()
                     else
                     {
                         printf("\nError: Ingresa un número válido para la clave: ");
-                        while (getchar() != '\n');
+                        while (getchar() != '\n')
+                            ;
                     }
                 }
                 else if (tipo == 'l')
@@ -1096,7 +1108,8 @@ void testPt2()
                     else
                     {
                         printf("\nError: Ingresa un carácter válido para la clave: ");
-                        while (getchar() != '\n');
+                        while (getchar() != '\n')
+                            ;
                     }
                 }
                 else
@@ -1128,6 +1141,392 @@ void testPt2()
             waitForKey();
             break;
         case 4:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+            break;
+        }
+    }
+}
+
+void testPt3()
+{
+    clearScreen();
+    ArbolBinario arbol = a_crear();
+    char tipo;
+    arbol = cargarArbol(&tipo);
+
+    mostrarArbol(a_raiz(arbol), tipo);
+
+    printf("\nArbol cargado exitosamente\n");
+    printf("Tipo de elementos: %c\n", tipo);
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Buscar padre de un nodo\n");
+        printf("| 2. Buscar hijos de un nodo\n");
+        printf("| 3. Buscar hermano de un nodo\n");
+        printf("| 4. Buscar nivel de un nodo\n");
+        printf("| 5. Buscar altura de una rama\n");
+        printf("| 6. Listar nodos de un nivel\n");
+        printf("| 7. Volver\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+            {
+                // clear input buffer
+            }
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            clearScreen();
+            int clavePadre;
+            printf("\nIngrese la clave del nodo hijo: ");
+            while (1)
+            {
+                if (tipo == 'n')
+                {
+                    if (scanf("%d", &clavePadre) == 1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        printf("\nError: Ingresa un número válido para la clave: ");
+                        while (getchar() != '\n')
+                            ;
+                    }
+                }
+                else if (tipo == 'l')
+                {
+                    char temp;
+                    if (scanf(" %c", &temp) == 1)
+                    {
+                        clavePadre = (int)toupper(temp);
+                        break;
+                    }
+                    else
+                    {
+                        printf("\nError: Ingresa un carácter válido para la clave: ");
+                        while (getchar() != '\n')
+                            ;
+                    }
+                }
+                else
+                {
+                    printf("\nError: Tipo de clave no válido. Debe ser 'n' o 'l'.");
+                }
+            }
+
+            printf("\nClave del nodo hijo: %d", clavePadre);
+            printf("\nTipo de clave: %c", tipo);
+
+            int resultado = a_ej3_clavepadre(arbol, clavePadre);
+            if (resultado == -999)
+            {
+                printf("El hijo no existe en el arbol, por lo tanto no se pudo buscar el padre\n");
+            }
+            else if (resultado == 999)
+            {
+                printf("La clave enviada es la raiz del arbol, por lo no tiene padre\n");
+            }
+            else
+            {
+                printf("El hijo %d, tiene como padre a %d \n", clavePadre, resultado);
+            }
+
+            waitForKey();
+            break;
+        case 2:
+            clearScreen();
+            int clavePadreHijos;
+            printf("\nIngrese la clave del nodo padre: ");
+            while (1)
+            {
+                if (tipo == 'n')
+                {
+                    if (scanf("%d", &clavePadreHijos) == 1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        printf("\nError: Ingresa un número válido para la clave: ");
+                        while (getchar() != '\n')
+                            ;
+                    }
+                }
+                else if (tipo == 'l')
+                {
+                    char temp;
+                    if (scanf(" %c", &temp) == 1)
+                    {
+                        clavePadreHijos = (int)toupper(temp);
+                        break;
+                    }
+                    else
+                    {
+                        printf("\nError: Ingresa un carácter válido para la clave: ");
+                        while (getchar() != '\n')
+                            ;
+                    }
+                }
+                else
+                {
+                    printf("\nError: Tipo de clave no válido. Debe ser 'n' o 'l'.");
+                }
+            }
+
+            printf("\nClave del nodo padre: %d", clavePadreHijos);
+            printf("\nTipo de clave: %c", tipo);
+
+            Lista hijos = a_ej3_hijos(arbol, clavePadreHijos);
+            if (l_es_vacia(hijos))
+            {
+                printf("La clave era una hoja, por lo tanto no tenia hijos\n");
+            }
+            else
+            {
+                printf("El padre %d, tiene el(los) siguiente(s) hijo(s)..\n", clavePadreHijos);
+
+                Iterador iteHijos = iterador(hijos);
+                while (hay_siguiente(iteHijos))
+                {
+                    TipoElemento ele = siguiente(iteHijos);
+
+                    if (tipo == 'n')
+                        printf("\n| Clave: %d, Posicion: %p", ele->clave, (void *)ele->valor);
+                    else
+                        printf("\n| Clave: %c, Posicion: %p", (char)ele->clave, (void *)ele->valor);
+                }
+            }
+
+            waitForKey();
+            break;
+        case 3:
+            clearScreen();
+            int claveHermano;
+            printf("\nIngrese la clave del nodo: ");
+            while (1)
+            {
+                if (tipo == 'n')
+                {
+                    if (scanf("%d", &claveHermano) == 1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        printf("\nError: Ingresa un número válido para la clave: ");
+                        while (getchar() != '\n')
+                            ;
+                    }
+                }
+                else if (tipo == 'l')
+                {
+                    char temp;
+                    if (scanf(" %c", &temp) == 1)
+                    {
+                        claveHermano = (int)toupper(temp);
+                        break;
+                    }
+                    else
+                    {
+                        printf("\nError: Ingresa un carácter válido para la clave: ");
+                        while (getchar() != '\n')
+                            ;
+                    }
+                }
+                else
+                {
+                    printf("\nError: Tipo de clave no válido. Debe ser 'n' o 'l'.");
+                }
+            }
+
+            printf("\nClave del nodo: %d", claveHermano);
+            printf("\nTipo de clave: %c", tipo);
+
+            int resultadoHermano = a_ej3_hermano(arbol, claveHermano);
+            if (resultadoHermano == -999)
+            {
+                printf("Hay 2 posibles opciones..\n");
+                printf("1 - El hijo con la clave %d, no tiene hermano\n", claveHermano);
+                printf("2 - No existe un hijo con la clave %d, por lo tanto no existe un hermano\n", claveHermano);
+            }
+            else
+            {
+                printf("El hijo %d, tiene como hermano a %d \n", claveHermano, resultadoHermano);
+            }
+
+            waitForKey();
+            break;
+
+        case 4:
+            clearScreen();
+            int claveNivel;
+            printf("\nIngrese la clave del nodo: ");
+            while (1)
+            {
+                if (tipo == 'n')
+                {
+                    if (scanf("%d", &claveNivel) == 1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        printf("\nError: Ingresa un número válido para la clave: ");
+                        while (getchar() != '\n')
+                            ;
+                    }
+                }
+                else if (tipo == 'l')
+                {
+                    char temp;
+                    if (scanf(" %c", &temp) == 1)
+                    {
+                        claveNivel = (int)toupper(temp);
+                        break;
+                    }
+                    else
+                    {
+                        printf("\nError: Ingresa un carácter válido para la clave: ");
+                        while (getchar() != '\n')
+                            ;
+                    }
+                }
+                else
+                {
+                    printf("\nError: Tipo de clave no válido. Debe ser 'n' o 'l'.");
+                }
+            }
+
+            printf("\nClave del nodo: %d", claveNivel);
+            printf("\nTipo de clave: %c", tipo);
+
+            int resultadoNivel = a_ej3_nivel(arbol, claveNivel);
+            if (resultadoNivel == -1)
+            {
+                printf("El nodo con la clave %d, no se encuentra en el arbol..\n", claveNivel);
+            }
+            else if (resultadoNivel == 0)
+            {
+                printf("El nodo con la clave %d, se encuentra en la raiz..\n", claveNivel);
+            }
+            else
+                printf("El nodo con la clave %d se encuentra en el nivel numero : %d..\n", claveNivel, resultadoNivel);
+
+            waitForKey();
+            break;
+
+        case 5:
+            clearScreen();
+            int claveAltura;
+            printf("\nIngrese la clave del nodo: ");
+            while (1)
+            {
+                if (tipo == 'n')
+                {
+                    if (scanf("%d", &claveAltura) == 1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        printf("\nError: Ingresa un número válido para la clave: ");
+                        while (getchar() != '\n')
+                            ;
+                    }
+                }
+                else if (tipo == 'l')
+                {
+                    char temp;
+                    if (scanf(" %c", &temp) == 1)
+                    {
+                        claveAltura = (int)toupper(temp);
+                        break;
+                    }
+                    else
+                    {
+                        printf("\nError: Ingresa un carácter válido para la clave: ");
+                        while (getchar() != '\n')
+                            ;
+                    }
+                }
+                else
+                {
+                    printf("\nError: Tipo de clave no válido. Debe ser 'n' o 'l'.");
+                }
+            }
+
+            printf("\nClave del nodo: %d", claveAltura);
+            printf("\nTipo de clave: %c", tipo);
+
+            int resultadoAltura = a_ej3_alturarama(arbol, claveAltura);
+            if (resultadoAltura == -1)
+            {
+                printf("No se encontro la clave en el arbol\n");
+            }
+            else if (resultadoAltura == 0)
+            {
+                printf("La clave enviada es la raiz del arbol, por lo no tiene padre\n");
+            }
+            else
+            {
+                printf("La altura de la rama con la clave %d es: %d\n", claveAltura, resultadoAltura);
+            }
+
+            waitForKey();
+            break;
+
+        case 6:
+            clearScreen();
+            int nivel;
+            printf("\nIngrese el nivel a buscar: ");
+            while (1)
+            {
+                if (scanf("%d", &nivel) == 1)
+                {
+                    break;
+                }
+                else
+                {
+                    printf("\nError: Ingresa un número válido para el nivel: ");
+                    while (getchar() != '\n')
+                        ;
+                }
+            }
+
+            printf("\nNivel a buscar: %d", nivel);
+
+            Lista nodosNivel = a_ej3_clavesmismonivel(arbol, nivel);
+            l_mostrar(nodosNivel);
+
+            Iterador iterador_nodosNivel = iterador(nodosNivel);
+            while (hay_siguiente(iterador_nodosNivel))
+            {
+                TipoElemento elemento_nodosNivel = siguiente(iterador_nodosNivel);
+
+                // check if tipo is number or letter
+                if (tipo == 'n')
+                    printf("\n| Clave: %d, Posicion: %p", elemento_nodosNivel->clave, (void *)elemento_nodosNivel->valor);
+                else
+                    printf("\n| Clave: %c, Posicion: %p", (char)elemento_nodosNivel->clave, (void *)elemento_nodosNivel->valor);
+            }
+
+            waitForKey();
+            break;
+
+        case 7:
             clearScreen();
             return;
         default:
@@ -1180,7 +1579,7 @@ int main()
             testPt2();
             break;
         case 3:
-            // testPt3();
+            testPt3();
             break;
         case 4:
             // testPt4();
@@ -1300,7 +1699,6 @@ int main()
     //     printf("En el nivel: %d, se encuentran los siguientes Nodos: \n", nivel);
     //     l_mostrar(lis);
     // }
-    
 
     // printf("\n ----------------------------");
 
@@ -1363,9 +1761,9 @@ int main()
     // else
     //     printf("No hay nodos internos\n");
 
-    //int resultado8a = c_ej8_altura(arbol);
-    //printf("La altura del arbol n-ario es %i\n", resultado8a);
-    // printf("\n ----------------------------"):
+    // int resultado8a = c_ej8_altura(arbol);
+    // printf("La altura del arbol n-ario es %i\n", resultado8a);
+    //  printf("\n ----------------------------"):
 
     // FALTA 8C
 
@@ -1390,7 +1788,7 @@ int main()
     //     printf("La clave no tiene ningun hermano\n");
     // }
     // l_mostrar(list);
-    //Lista lista = a_ej10_comparacionarboles(2,10,21,10);
+    // Lista lista = a_ej10_comparacionarboles(2,10,21,10);
     // l_mostrar(lista);
     // printf("\n ----------------------------"):
 
