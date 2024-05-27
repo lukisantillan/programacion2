@@ -2192,6 +2192,199 @@ void testPt9()
     }
 }
 
+void testPt10()
+{
+    clearScreen();
+    bool lista_generada = false;
+    Lista numeros_aleratorios;
+    ArbolBinarioBusqueda abb;
+    ArbolAVL avl;
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Generar una lista con cierta serie de numeros (unicos no repetidos)");
+        if (lista_generada)
+        {
+            printf("\n| 2. Crear Arbol Binario de Busqueda y Arbol AVL con la lista generada\n");
+            printf("| 3. Diferencia de alturas entre arbol binario y arbol AVL");
+        }
+        printf("\n| 4. Comparar Arbol Binario de Busqueda y Arbol AVL\n");
+        printf("| 5. Volver\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n');
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            clearScreen();
+
+            int cantidad_numeros_2;
+            printf("\nIngrese la cantidad de numeros a generar: ");
+            while (1)
+            {
+                if (scanf("%d", &cantidad_numeros_2) == 1)
+                {
+                    break;
+                }
+                else
+                {
+                    printf("\nError: Ingresa un número válido para la cantidad de numeros: ");
+                    while (getchar() != '\n')
+                        ;
+                }
+            }
+
+            int min_2;
+            printf("\nIngrese el rango minimo de los numeros a generar: ");
+            while (1)
+            {
+                if (scanf("%d", &min_2) == 1)
+                {
+                    break;
+                }
+                else
+                {
+                    printf("\nError: Ingresa un número válido para el rango minimo: ");
+                    while (getchar() != '\n')
+                        ;
+                }
+            }
+
+            int max_2;
+            printf("\nIngrese el rango maximo de los numeros a generar: ");
+            while (1)
+            {
+                if (scanf("%d", &max_2) == 1)
+                {
+                    break;
+                }
+                else
+                {
+                    printf("\nError: Ingresa un número válido para el rango maximo: ");
+                    while (getchar() != '\n')
+                        ;
+                }
+            }
+
+            numeros_aleratorios = a_ej10_generarlistaclaves(cantidad_numeros_2, min_2, max_2);
+            lista_generada = true;
+
+            printf("\nLista generada exitosamente\n");
+            l_mostrar(numeros_aleratorios);
+
+            waitForKey();
+            break;
+        case 2:
+            clearScreen();
+
+            printf ("\nArbol Binario de Busqueda\n");
+            abb = a_ej10_crearABB(numeros_aleratorios);
+            printf("\n Arbol creado exitosamente\n");
+
+            printf("\nArbol AVL\n");
+            avl = a_ej10_crearAVL(numeros_aleratorios);
+            printf("\n Arbol creado exitosamente\n");
+
+            waitForKey();
+            break;
+        case 3:
+            clearScreen();
+
+            int diferenciaAlturas = a_ej10_difalturas(abb, avl);
+            printf("\nDiferencia de alturas entre arbol binario y arbol AVL: %d\n", diferenciaAlturas);
+
+            waitForKey();
+            break;
+        case 4:
+            clearScreen();
+
+            int repeticiones;
+            printf("\nIngrese la cantidad de veces que se repetira el proceso: ");
+            while (1)
+            {
+                if (scanf("%d", &repeticiones) == 1)
+                {
+                    break;
+                }
+                else
+                {
+                    printf("\nError: Ingresa un número válido para la cantidad de repeticiones: ");
+                    while (getchar() != '\n')
+                        ;
+                }
+            }
+
+            int min;
+            printf("\nIngrese el rango minimo de los numeros a generar: ");
+            while (1)
+            {
+                if (scanf("%d", &min) == 1)
+                {
+                    break;
+                }
+                else
+                {
+                    printf("\nError: Ingresa un número válido para el rango minimo: ");
+                    while (getchar() != '\n')
+                        ;
+                }
+            }
+
+            int max;
+            printf("\nIngrese el rango maximo de los numeros a generar: ");
+            while (1)
+            {
+                if (scanf("%d", &max) == 1)
+                {
+                    break;
+                }
+                else
+                {
+                    printf("\nError: Ingresa un número válido para el rango maximo: ");
+                    while (getchar() != '\n')
+                        ;
+                }
+            }
+
+            int cantidad_numeros;
+            printf("\nIngrese la cantidad de numeros a generar: ");
+            while (1)
+            {
+                if (scanf("%d", &cantidad_numeros) == 1)
+                {
+                    break;
+                }
+                else
+                {
+                    printf("\nError: Ingresa un número válido para la cantidad de numeros: ");
+                    while (getchar() != '\n')
+                        ;
+                }
+            }
+
+            Lista arboles = a_ej10_comparacionarboles(repeticiones, min, max, cantidad_numeros);
+            l_mostrar(arboles);
+            
+            waitForKey();
+            break;
+        case 5:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+            break;
+        }
+    }
+}
+
 int main()
 {
     srand(time(NULL));
