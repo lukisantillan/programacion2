@@ -12,12 +12,11 @@ void verComplejidades()
 {
     printf(" Complejidad Ejercicio 2\n");
     printf("------------------------------------------\n");
-    printf("- A) - HOJAS : 0(n^2) Ya que se llama dos veces a si misma - Para listas con arreglos y 0(n) lineal si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros)\n");
-    printf("- B) - INTERIORES : 0(n^2) Ya que se llama dos veces a si misma  - Para listas con arreglos y 0(n) lineal si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros)\n");
-    printf("- C) - BUSCAR CALVE : 0(n^2) Ya que se llama dos veces a si misma  - Para listas con arreglos y 0(n) lineal si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros)\n");
+    printf("- A) - HOJAS : 0(n^2) Ya que se llama dos veces a si misma - Para listas con arreglos y 0(n^3) lineal si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros)\n");
+    printf("- B) - INTERIORES : 0(n^2) Ya que se llama dos veces a si misma  - Para listas con arreglos y 0(n^3) lineal si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros)\n");
+    printf("- C) - BUSCAR CALVE : 0(n^2) Ya que se llama dos veces a si misma  - Para listas con arreglos y 0(n^3) lineal si se utiliza alguna de las otras dos implementaciones (Cursores, Punteros)\n");
     printf(" Complejidad Ejercicio 9\n");
-    printf(" Complejidad Ejercicio 2\n");
-    print("- O(n^2) Ya que se llama dos veces a si misma")
+    printf("- O(n^2) Ya que se llama dos veces a si misma");
     printf("------------------------------------------\n");
 }
 
@@ -572,7 +571,7 @@ void nivel_nodos(NodoArbol n, int nivel, int niv_aux, Lista *list)
     }
     if (nivel == niv_aux)
     {
-        TipoElemento ele = n_recuperar(n);
+        TipoElemento ele = te_crear_con_valor(n_recuperar(n)->clave, n);
         l_agregar(*list, ele);
     }
 
