@@ -1917,11 +1917,7 @@ void testPt4()
     // else{
     //     printf("El nivel del nodo con clave: %d, es : %d \n",clave,nivel);
     // }
-<<<<<<< HEAD
-    // int clave=10;
-=======
     // int clave=3;
->>>>>>> ffa265849dc8554f790a2d01aedc6ffcc2a40577
     // Lista list=a_ej4_hermanos(arbol,clave);
     // printf("Para la clave: %d, la lista de hermanos son: \n",clave);
     // if(l_es_vacia(list)){
