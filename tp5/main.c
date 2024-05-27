@@ -23,18 +23,6 @@ void waitForKey()
     system("clear");
 }
 
-char transformarClave(int clave, char tipo)
-{
-    if (tipo == 'n')
-    {
-        return (int)clave;
-    }
-    else
-    {
-        return (char)clave;
-    }
-}
-
 void buscarClaveAux(NodoArbol n, bool *flag, int clave)
 {
     if (a_es_rama_nula(n))
