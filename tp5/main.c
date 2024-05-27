@@ -749,38 +749,58 @@ TipoElemento a_ej4_padre(ArbolBinario A, int clave)
     padreAux(raiz, &resultado, aux, clave);
     return resultado;
 }
+
 // e
-void lista_hermanos(NodoArbol n, Lista *lis, int clave, NodoArbol *padre, NodoArbol *padreant)
+void BuscarHermanos(NodoArbol N, Lista *hermanos, int H, bool *flag)
 {
-    if (!a_es_rama_nula(n))
+    int i;
+    if (n_hijoderecho(N) != NULL)
     {
-        NodoArbol hijoDer1 = n_hijoderecho(n);
-        NodoArbol hijoIzq1 = n_hijoizquierdo(n);
-        if (n_recuperar(n)->clave == clave || !a_es_rama_nula(*padre))
+        if (n_recuperar(N)->clave == H)
         {
-            *padre = n;
-            if (!a_es_rama_nula(hijoDer1))
-            {
-                TipoElemento ele = n_recuperar(hijoDer1);
-                l_agregar(*lis, ele);
-                padreant = padre;
-                lista_hermanos(hijoDer1, lis, clave, padre, padreant);
-            }
-            // sino la lista estara vacia
-            return;
+            *flag = true;
+            BuscarHermanos(n_hijoderecho(N), hermanos, H, flag);
         }
-        lista_hermanos(hijoIzq1, lis, clave, padre, padreant);
-        lista_hermanos(hijoDer1, lis, clave, padre, padreant);
+        else
+        {
+            TipoElemento eleAagregar = te_crear_con_valor(n_recuperar(N)->clave, N);
+            l_agregar(*hermanos, eleAagregar);
+            BuscarHermanos(n_hijoderecho(N), hermanos, H, flag);
+        }
+    }
+    else if (n_recuperar(N)->clave == H)
+    {
+        *flag = true;
+    }
+    else
+    {
+        TipoElemento eleAagregar = te_crear_con_valor(n_recuperar(N)->clave, N);
+        l_agregar(*hermanos, eleAagregar);
+    }
+
+    if (*flag)
+    {
+        return;
+    }
+    if (!a_es_rama_nula(n_hijoizquierdo(N)))
+    {
+        Iterador ite = iterador(*hermanos);
+        while (hay_siguiente(ite))
+        {
+            l_borrar(*hermanos, siguiente(ite)->clave);
+        }
+        BuscarHermanos(n_hijoizquierdo(N), hermanos, H, flag);
     }
 }
 Lista a_ej4_hermanos(ArbolBinario A, int clave)
 {
-    Lista l = l_crear();
-    NodoArbol n = a_raiz(A);
-    NodoArbol padre = NULL;
-    NodoArbol padreant = NULL;
-    lista_hermanos(n, &l, clave, &padre, &padreant);
-    return l;
+    bool flag = false;
+    Lista hermanos;
+    hermanos = l_crear();
+    NodoArbol raiz = a_raiz(A);
+    BuscarHermanos(raiz, &hermanos, clave, &flag);
+
+    return hermanos;
 }
 
 // Punto 7
@@ -2206,7 +2226,8 @@ void testPt10()
         while (scanf("%d", &opcion) != 1)
         {
             printf("\nError: Ingresa un número válido para la opción: ");
-            while (getchar() != '\n');
+            while (getchar() != '\n')
+                ;
         }
 
         switch (opcion)
@@ -2273,7 +2294,7 @@ void testPt10()
         case 2:
             clearScreen();
 
-            printf ("\nArbol Binario de Busqueda\n");
+            printf("\nArbol Binario de Busqueda\n");
             abb = a_ej10_crearABB(numeros_aleratorios);
             printf("\n Arbol creado exitosamente\n");
 
@@ -2360,7 +2381,7 @@ void testPt10()
 
             Lista arboles = a_ej10_comparacionarboles(repeticiones, min, max, cantidad_numeros);
             l_mostrar(arboles);
-            
+
             waitForKey();
             break;
         case 5:
