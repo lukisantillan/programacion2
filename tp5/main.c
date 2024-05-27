@@ -49,11 +49,11 @@ void mostrarArbolRec(NodoArbol raiz, char prefijo[], int esIzquierda)
 
     if (esIzquierda)
     {
-        printf("├──");
+        printf("|---");
     }
     else
     {
-        printf("└──");
+        printf("|___");
     }
 
     printf("%d\n", n_recuperar(raiz)->clave);
@@ -605,33 +605,32 @@ TipoElemento a_ej4_padre(ArbolBinario A, int clave)
     return resultado;
 }
 //e
-void lista_hermanos(NodoArbol n, Lista *lis,int clave,NodoArbol *padre,NodoArbol *padreant){
-    if(!a_es_rama_nula(n)){
-        NodoArbol hijoDer1 = n_hijoderecho(n);
-        NodoArbol hijoIzq1 = n_hijoizquierdo(n);
-        if(n_recuperar(n)->clave == clave || !a_es_rama_nula(*padre)){
-            *padre=n;
-            if(!a_es_rama_nula(hijoDer1)){
-                TipoElemento ele=n_recuperar(hijoDer1);
-                l_agregar(*lis,ele);
-                padreant=padre;
-                lista_hermanos(hijoDer1,lis,clave,padre,padreant);
-            }
-            //sino la lista estara vacia
-            return;
-        }
-        lista_hermanos(hijoIzq1,lis,clave,padre,padreant);
-        lista_hermanos(hijoDer1,lis,clave,padre,padreant);
-    }    
-}
-Lista a_ej4_hermanos(ArbolBinario A, int clave){
-    Lista l=l_crear();
-    NodoArbol n=a_raiz(A);
-    NodoArbol padre=NULL;
-    NodoArbol padreant=NULL;
-    lista_hermanos(n,&l,clave,&padre,&padreant);
-    return l;
-}
+// void lista_hermanos(NodoArbol n, Lista *lis,int clave){
+//     if(!a_es_rama_nula(n)){
+//         NodoArbol hijoDer1 = n_hijoderecho(n);
+//         NodoArbol hijoIzq1 = n_hijoizquierdo(n);
+//         if(n_recuperar(n)->clave == clave || !a_es_rama_nula(*padre)){
+//             *padre=n;
+//             if(!a_es_rama_nula(hijoDer1)){
+//                 TipoElemento ele=n_recuperar(hijoDer1);
+//                 l_agregar(*lis,ele);
+//                 padreant=padre;
+//                 lista_hermanos(hijoDer1,lis,clave,padre,padreant);
+//             }
+//             //sino la lista estara vacia
+//             return;
+//         }
+//         lista_hermanos(hijoIzq1,lis,clave,padre,padreant);
+//         lista_hermanos(hijoDer1,lis,clave,padre,padreant);
+//     }    
+// }
+
+// Lista a_ej4_hermanos(ArbolBinario A, int clave){
+//     Lista l=l_crear();
+//     NodoArbol n=a_raiz(A);
+//     lista_hermanos(n,&l, clave);
+//     return l;
+// }
 
 // Punto 7
 void equivalenteAux(NodoArbol a, NodoArbol b, bool *flag)
@@ -724,6 +723,26 @@ int c_ej8_altura(ArbolBinario A)
     return *alturaActual;
 }
 //b
+void auxNivel(NodoArbol n, int clave, int *nivel, int c){
+    TipoElemento X;
+    if (!a_es_rama_nula(n)) {
+        X = n_recuperar(n);
+        if (X->clave == clave) {
+            *nivel = c;
+            return;
+        }
+        else{
+            auxNivel(n_hijoizquierdo(n), clave, nivel, c+1);
+            auxNivel(n_hijoderecho(n), clave, nivel, c);
+        }
+    }
+}
+
+int c_ej8_nivel(ArbolBinario A, int clave){
+    int nivel = -1;
+    auxNivel(a_raiz(A), clave, &nivel, 0);
+    return nivel;
+}
 
 // c
 void internosAux(NodoArbol n, Lista nodosInternos, NodoArbol raiz)
@@ -1027,8 +1046,9 @@ int main()
     // printf("La altura del arbol n-ario es %i\n", resultado8a);
 
     // printf("\n ----------------------------"):
-
-    // FALTA 8B
+    int clave = 13;
+    int resultado8b = c_ej8_nivel(arbol, clave);
+    printf("El nivel de %d es.. %d \n", clave, resultado8b);
 
     // printf("\n ----------------------------"):
 
@@ -1061,13 +1081,13 @@ int main()
     // else{
     //     printf("El nivel del nodo con clave: %d, es : %d \n",clave,nivel);
     // }
-    int clave=3;
-    Lista list=a_ej4_hermanos(arbol,clave);
-    printf("Para la clave: %d, la lista de hermanos son: \n",clave);
-    if(l_es_vacia(list)){
-        printf("La clave no tiene ningun hermano\n");
-    }
-    l_mostrar(list);
+    // int clave=10;
+    // Lista list=a_ej4_hermanos(arbol,clave);
+    // printf("Para la clave: %d, la lista de hermanos son: \n",clave);
+    // if(l_es_vacia(list)){
+    //     printf("La clave no tiene ningun hermano\n");
+    // }
+    // l_mostrar(list);
     //Lista lista = a_ej10_comparacionarboles(2,10,21,10);
     // l_mostrar(lista);
     // printf("\n ----------------------------"):
