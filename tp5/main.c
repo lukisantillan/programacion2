@@ -908,7 +908,7 @@ Lista c_ej8_internos(ArbolBinario A)
 }
 
 //d
-void sacarHojas(NodoArbol n, Lista *l){
+void sacarHojasAux(NodoArbol n, Lista *l){
     TipoElemento ele;
     if (a_es_rama_nula(n))
     {
@@ -916,17 +916,44 @@ void sacarHojas(NodoArbol n, Lista *l){
     }
     NodoArbol hd = n_hijoderecho(n);
     NodoArbol hi = n_hijoizquierdo(n);
-    if (a_es_rama_nula(hd) && a_es_rama_nula(hi))
+    if (a_es_rama_nula(hi))
     {
         ele = te_crear(n_recuperar(n)->clave);
+        l_agregar(*l, ele);
     }
-    sacarHojas(hi,l);
-    sacarHojas(hd,l);
+    sacarHojasAux(hi,l);
+    sacarHojasAux(hd,l);
 }
 
 bool c_ej8_hojasmismonivel(ArbolBinario A){
     Lista listaHojas = l_crear();
     sacarHojasAux(a_raiz(A), &listaHojas);
+    l_mostrar(listaHojas);
+    Iterador ite = iterador(listaHojas);
+    bool resultado = true;
+    bool flagPrimero = false;
+    int nivelAct;
+    int nivelSacado;
+    while (hay_siguiente(ite) && resultado)
+    {
+        TipoElemento ele1 = siguiente(ite);
+        int clave = ele1->clave;
+        printf("Clave = %d \n", clave);
+        if (!flagPrimero)
+        {
+            nivelAct = c_ej8_nivel(A, clave);
+            nivelSacado = nivelAct;
+            flagPrimero = true;
+        }else {
+            nivelSacado = c_ej8_nivel(A, clave);
+            if (nivelSacado != nivelAct)
+            {
+                resultado = false;
+            }
+            
+        }
+    }
+    return resultado;
 }
 
 // 9
@@ -1563,66 +1590,66 @@ int main()
     srand(time(NULL));
 
     // clearScreen();
-    printf("Archivo compilado exitosamente\n");
-    printf("Esto es unicamente para comprobar que la compilacion fue exitosa\n");
+    // printf("Archivo compilado exitosamente\n");
+    // printf("Esto es unicamente para comprobar que la compilacion fue exitosa\n");
 
-    while (1)
-    {
-        printf("\n+------------------------------------------------------------------------------------------+\n");
-        printf("| 1. Ver complejidad algoritmica de cada punto\n");
-        printf("| 2. Probar funciones del punto 2\n");
-        printf("| 3. Probar funciones del punto 3\n");
-        printf("| 4. Probar funciones del punto 4\n");
-        printf("| 5. Probar funciones del punto 5\n");
-        printf("| 6. Probar funciones del punto 6\n");
-        printf("| 7. Probar funciones del punto 7\n");
-        printf("| 8. Salir\n");
-        printf("+------------------------------------------------------------------------------------------+\n");
-        printf("\nIngrese una opcion: ");
-        int opcion;
+    // while (1)
+    // {
+    //     printf("\n+------------------------------------------------------------------------------------------+\n");
+    //     printf("| 1. Ver complejidad algoritmica de cada punto\n");
+    //     printf("| 2. Probar funciones del punto 2\n");
+    //     printf("| 3. Probar funciones del punto 3\n");
+    //     printf("| 4. Probar funciones del punto 4\n");
+    //     printf("| 5. Probar funciones del punto 5\n");
+    //     printf("| 6. Probar funciones del punto 6\n");
+    //     printf("| 7. Probar funciones del punto 7\n");
+    //     printf("| 8. Salir\n");
+    //     printf("+------------------------------------------------------------------------------------------+\n");
+    //     printf("\nIngrese una opcion: ");
+    //     int opcion;
 
-        while (scanf("%d", &opcion) != 1)
-        {
-            printf("\nError: Ingresa un número válido para la opción: ");
-            while (getchar() != '\n')
-            {
-                // clear input buffer
-            }
-        }
+    //     while (scanf("%d", &opcion) != 1)
+    //     {
+    //         printf("\nError: Ingresa un número válido para la opción: ");
+    //         while (getchar() != '\n')
+    //         {
+    //             // clear input buffer
+    //         }
+    //     }
 
-        switch (opcion)
-        {
-        case 1:
-            clearScreen();
-            // verComplejidades();
-            waitForKey();
-            break;
-        case 2:
-            testPt2();
-            break;
-        case 3:
-            testPt3();
-            break;
-        case 4:
-            // testPt4();
-            break;
-        case 5:
-            // testPt5();
-            break;
-        case 6:
-            // testPt6();
-            break;
-        case 7:
-            // testPt7();
-            break;
-        case 8:
-            clearScreen();
-            return 0;
-        default:
-            printf("\nOpcion no valida");
-            break;
-        }
-    }
+    //     switch (opcion)
+    //     {
+    //     case 1:
+    //         clearScreen();
+    //         // verComplejidades();
+    //         waitForKey();
+    //         break;
+    //     case 2:
+    //         testPt2();
+    //         break;
+    //     case 3:
+    //         testPt3();
+    //         break;
+    //     case 4:
+    //         // testPt4();
+    //         break;
+    //     case 5:
+    //         // testPt5();
+    //         break;
+    //     case 6:
+    //         // testPt6();
+    //         break;
+    //     case 7:
+    //         // testPt7();
+    //         break;
+    //     case 8:
+    //         clearScreen();
+    //         return 0;
+    //     default:
+    //         printf("\nOpcion no valida");
+    //         break;
+    //     }
+    // }
     // printf("\n ----------------------------");
 
     // Lista igual = a_ej2_buscarclave(arbol, 10);
@@ -1786,8 +1813,15 @@ int main()
     // int resultado8a = c_ej8_altura(arbol);
     // printf("La altura del arbol n-ario es %i\n", resultado8a);
     //  printf("\n ----------------------------"):
-
-    // FALTA 8C
+    ArbolBinario arbol = a_crear();
+    char *tipo = malloc(sizeof(char));
+    arbol = cargarArbol(tipo);
+    bool resultado = c_ej8_hojasmismonivel(arbol);
+    if (resultado)
+    {
+        printf("Tiene todas las hojas al mismo nivel \n");
+    } else printf("No tiene todas las hojas al mismo nivels \n");
+    
 
     // printf("\n ----------------------------"):
 
