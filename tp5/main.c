@@ -35,6 +35,29 @@ char transformarClave(int clave, char tipo)
     }
 }
 
+void buscarClaveAux(NodoArbol n, bool *flag, int clave)
+{
+    if (a_es_rama_nula(n))
+    {
+        return;
+    }
+    NodoArbol hi = n_hijoizquierdo(n);
+    NodoArbol hd = n_hijoderecho(n);
+    if (n_recuperar(n)->clave == clave)
+    {
+        *flag = true;
+        return;
+    }
+    buscarClaveAux(hi, flag, clave);
+    buscarClaveAux(hd, flag, clave);
+}
+bool buscarClave(NodoArbol n, int clave)
+{
+    bool flag = false;
+    buscarClaveAux(n, &flag, clave);
+    return flag;
+}
+
 int solicitarNumero(bool *variable)
 {
     printf("\n| Desea agregar un numero? (s/n): ");
@@ -174,93 +197,91 @@ void cargarPreOrden(ArbolBinario arbol, NodoArbol nodo, int orden, char tipo)
         int n = solicitarNumero(&b);
         if (b)
         {
-            NodoArbol pa;
-            if (orden == 0)
+            if (buscarClave(a_raiz(arbol), n))
             {
-                pa = a_establecer_raiz(arbol, te_crear(n));
-            }
-            else if (orden == -1)
-            {
-                pa = a_conectar_hi(arbol, nodo, te_crear(n));
+                printf("El número ya existe en el árbol, ingrese otro número\n");
+                cargarPreOrden(arbol, nodo, orden, tipo);
             }
             else
             {
-                pa = a_conectar_hd(arbol, nodo, te_crear(n));
+                NodoArbol pa;
+                if (orden == 0)
+                {
+                    pa = a_establecer_raiz(arbol, te_crear(n));
+                }
+                else if (orden == -1)
+                {
+                    pa = a_conectar_hi(arbol, nodo, te_crear(n));
+                }
+                else
+                {
+                    pa = a_conectar_hd(arbol, nodo, te_crear(n));
+                }
+                printf("El arbol esta quedando de la siguiente manera : \n\n");
+                mostrarArbol(a_raiz(arbol), tipo);
+                cargarPreOrden(arbol, pa, -1, tipo);
+                printf("Hijo derecho\n");
+                cargarPreOrden(arbol, pa, 1, tipo);
             }
-            printf("El arbol esta quedando de la siguiente manera : \n\n");
-            mostrarArbol(a_raiz(arbol), tipo);
-            cargarPreOrden(arbol, pa, -1, tipo);
-            printf("Hijo derecho\n");
-            cargarPreOrden(arbol, pa, 1, tipo);
         }
     }
     else
     {
         char l = solicitarLetra(&b);
+
         if (b)
         {
-            NodoArbol pa;
-            if (orden == 0)
+            if (buscarClave(a_raiz(arbol), (int) l))
             {
-                pa = a_establecer_raiz(arbol, te_crear(l));
-            }
-            else if (orden == -1)
-            {
-                pa = a_conectar_hi(arbol, nodo, te_crear(l));
+                printf("La letra ya existe en el árbol, ingrese otra letra\n");
+                cargarPreOrden(arbol, nodo, orden, tipo);
             }
             else
             {
-                pa = a_conectar_hd(arbol, nodo, te_crear(l));
+                NodoArbol pa;
+                if (orden == 0)
+                {
+                    pa = a_establecer_raiz(arbol, te_crear(l));
+                }
+                else if (orden == -1)
+                {
+                    pa = a_conectar_hi(arbol, nodo, te_crear(l));
+                }
+                else
+                {
+                    pa = a_conectar_hd(arbol, nodo, te_crear(l));
+                }
+                printf("El arbol esta quedando de la siguiente manera : \n\n");
+                mostrarArbol(a_raiz(arbol), tipo);
+                cargarPreOrden(arbol, pa, -1, tipo);
+                printf("Hijo derecho\n");
+                cargarPreOrden(arbol, pa, 1, tipo);
             }
-            printf("El arbol esta quedando de la siguiente manera : \n\n");
-            mostrarArbol(a_raiz(arbol), tipo);
-            cargarPreOrden(arbol, pa, -1, tipo);
-            printf("Hijo derecho\n");
-            cargarPreOrden(arbol, pa, 1, tipo);
         }
     }
-}
-
-void buscarClaveAux(NodoArbol n, bool *flag, int clave)
-{
-    if (a_es_rama_nula(n))
-    {
-        return;
-    }
-    NodoArbol hi = n_hijoizquierdo(n);
-    NodoArbol hd = n_hijoderecho(n);
-    if (n_recuperar(hi)->clave == clave || n_recuperar(hd)->clave == clave)
-    {
-        *flag = true;
-    }
-    buscarClaveAux(hi, flag, clave);
-    buscarClaveAux(hd, flag, clave);
-}
-
-bool buscarClave(NodoArbol n, int clave)
-{
-    bool *flag = malloc(sizeof(bool));
-    *flag = true;
-    buscarClaveAux(n, flag, clave);
-    bool resultado = *flag;
-    free(flag);
-    return resultado;
 }
 
 ArbolBinario cargarArbol(char *tipo)
 {
     ArbolBinario arbol = a_crear();
-    printf("Ingrese el tipo de elementos a cargar (n: números, l: letras): ");
+    printf("Ingrese el tipo de elementos a cargar (1: numeros, 2: letras): ");
     while (1)
     {
-        scanf(" %c", tipo);
-        if (*tipo == 'n' || *tipo == 'l') // Desreferenciando el puntero
+        char opcion;
+        scanf(" %c", &opcion);
+        if (opcion == '1')
         {
+            *tipo = 'n';
+            break;
+        }
+        else if (opcion == '2')
+        {
+            *tipo = 'l';
             break;
         }
         else
         {
-            printf("Tipo inválido. Ingrese nuevamente (n: números, l: letras): ");
+            printf("Opción no válida, intente nuevamente: ");
         }
     }
     cargarPreOrden(arbol, NULL, 0, *tipo); // Pasando el valor de tipo, no la dirección
@@ -731,12 +752,11 @@ TipoElemento a_ej4_padre(ArbolBinario A, int clave)
     if (hijoIzq)
     {
         free(resultado);
-        printf("EL ARBOL N-ARIO ESTA MAL CARGADO, YA QUE DE LA RAIZ NO SALE UN HI \n");
+        printf("El arbol n-ario esta mal formado, no se puede buscar el padre de un nodo que no tiene hijos\n");
         return resultado;
     }
     Cola aux = c_crear();
     padreAux(raiz, &resultado, aux, clave);
-    printf("El padre de %d, es %d \n", clave, resultado->clave);
     return resultado;
 }
 // e
@@ -938,7 +958,7 @@ void sacarHojas(NodoArbol n, Lista *l){
 
 bool c_ej8_hojasmismonivel(ArbolBinario A){
     Lista listaHojas = l_crear();
-    sacarHojasAux(a_raiz(A), &listaHojas);
+    // sacarHojasAux(a_raiz(A), &listaHojas);
 }
 
 // 9
@@ -1699,6 +1719,158 @@ void testPt4()
 
             waitForKey();
             break;
+        case 4:
+            clearScreen();
+            int clavePadre;
+            printf("\nIngrese la clave del nodo hijo: ");
+            while (1)
+            {
+                if (tipo == 'n')
+                {
+                    if (scanf("%d", &clavePadre) == 1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        printf("\nError: Ingresa un número válido para la clave: ");
+                        while (getchar() != '\n')
+                            ;
+                    }
+                }
+                else if (tipo == 'l')
+                {
+                    char temp;
+                    if (scanf(" %c", &temp) == 1)
+                    {
+                        clavePadre = (int)toupper(temp);
+                        break;
+                    }
+                    else
+                    {
+                        printf("\nError: Ingresa un carácter válido para la clave: ");
+                        while (getchar() != '\n')
+                            ;
+                    }
+                }
+                else
+                {
+                    printf("\nError: Tipo de clave no válido. Debe ser 'n' o 'l'.");
+                }
+            }
+
+            if (tipo == 'n')
+                printf("\nClave del nodo hijo: %d", clavePadre);
+            else
+                printf("\nClave del nodo hijo: %c", (char)clavePadre);
+
+            printf("\nTipo de clave: %c\n", tipo);
+
+            TipoElemento resultadoPadre = a_ej4_padre(arbol, clavePadre);
+            if (resultadoPadre == NULL)
+            {
+                printf("El hijo no existe en el arbol, por lo tanto no se pudo buscar el padre\n");
+            }
+            else
+            {
+                if (tipo == 'n')
+                    printf("\nEl padre del nodo %d, es %d\n", clavePadre, resultadoPadre->clave);
+                else
+                    printf("\nEl padre del nodo %c, es %c\n", (char)clavePadre, (char)resultadoPadre->clave);
+            }
+
+            waitForKey();
+            break;
+        case 5:
+            clearScreen();
+            int claveHermano;
+            printf("\nIngrese la clave del nodo: ");
+            while (1)
+            {
+                if (tipo == 'n')
+                {
+                    if (scanf("%d", &claveHermano) == 1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        printf("\nError: Ingresa un número válido para la clave: ");
+                        while (getchar() != '\n')
+                            ;
+                    }
+                }
+                else if (tipo == 'l')
+                {
+                    char temp;
+                    if (scanf(" %c", &temp) == 1)
+                    {
+                        claveHermano = (int)toupper(temp);
+                        break;
+                    }
+                    else
+                    {
+                        printf("\nError: Ingresa un carácter válido para la clave: ");
+                        while (getchar() != '\n')
+                            ;
+                    }
+                }
+                else
+                {
+                    printf("\nError: Tipo de clave no válido. Debe ser 'n' o 'l'.");
+                }
+            }
+
+            if (tipo == 'n')
+                printf("\nClave del nodo: %d", claveHermano);
+            else
+                printf("\nClave del nodo: %c", (char)claveHermano);
+            printf("\nTipo de clave: %c\n", tipo);
+
+            Lista resultadoHermano = a_ej4_hermanos(arbol, claveHermano);
+            if (l_es_vacia(resultadoHermano))
+            {
+                printf("Hay 2 posibles opciones..\n");
+
+                if (tipo == 'n')
+                    printf("1. El hijo con la clave %d, no tiene hermano\n", claveHermano);
+                else
+                    printf("1. El hijo con la clave %c, no tiene hermano\n", (char)claveHermano);
+
+                if (tipo == 'n')
+                    printf("2. No existe un hijo con la clave %d, por lo tanto no existe un hermano\n", claveHermano);
+                else
+                    printf("2. No existe un hijo con la clave %c, por lo tanto no existe un hermano\n", (char)claveHermano);
+            }
+            else
+            {
+                if (tipo == 'n')
+                    printf("El hijo %d, tiene como hermano(s) a: ", claveHermano);
+                else
+                    printf("El hijo %c, tiene como hermano(s) a: ", (char)claveHermano);
+            }
+
+            Iterador iteHermanos = iterador(resultadoHermano);
+            while (hay_siguiente(iteHermanos))
+            {
+                TipoElemento ele = siguiente(iteHermanos);
+
+                if (tipo == 'n')
+                    printf("\n| Clave: %d, Posicion: %p", ele->clave, (void *)ele->valor);
+                else
+                    printf("\n| Clave: %c, Posicion: %p", (char)ele->clave, (void *)ele->valor);
+            }
+
+            waitForKey();
+            break;
+        case 6:
+            clearScreen();
+            return;
+        default:
+            printf("\nOpcion no valida");
+            break;
+        }
+    }
 }
 
 int main()
@@ -1747,7 +1919,7 @@ int main()
             testPt3();
             break;
         case 4:
-            // testPt4();
+            testPt4();
             break;
         case 5:
             // testPt5();
