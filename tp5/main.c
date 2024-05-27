@@ -1813,14 +1813,14 @@ int main()
     // int resultado8a = c_ej8_altura(arbol);
     // printf("La altura del arbol n-ario es %i\n", resultado8a);
     //  printf("\n ----------------------------"):
-    ArbolBinario arbol = a_crear();
-    char *tipo = malloc(sizeof(char));
-    arbol = cargarArbol(tipo);
-    bool resultado = c_ej8_hojasmismonivel(arbol);
-    if (resultado)
-    {
-        printf("Tiene todas las hojas al mismo nivel \n");
-    } else printf("No tiene todas las hojas al mismo nivels \n");
+    // ArbolBinario arbol = a_crear();
+    // char *tipo = malloc(sizeof(char));
+    // arbol = cargarArbol(tipo);
+    // bool resultado = c_ej8_hojasmismonivel(arbol);
+    // if (resultado)
+    // {
+    //     printf("Tiene todas las hojas al mismo nivel \n");
+    // } else printf("No tiene todas las hojas al mismo nivels \n");
     
 
     // printf("\n ----------------------------"):
