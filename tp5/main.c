@@ -1144,6 +1144,9 @@ void testPt2()
         {
         case 1:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
+
             Lista hojas = a_ej2_hojas(arbol);
             Iterador iterador_hojas = iterador(hojas);
             while (hay_siguiente(iterador_hojas))
@@ -1161,6 +1164,9 @@ void testPt2()
             break;
         case 2:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
+
             Lista interiores = a_ej2_interiores(arbol);
             l_mostrar(interiores);
 
@@ -1180,6 +1186,8 @@ void testPt2()
             break;
         case 3:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
 
             int clave;
 
@@ -1291,6 +1299,9 @@ void testPt3()
         {
         case 1:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
+
             int clavePadre;
             printf("\nIngrese la clave del nodo hijo: ");
             while (1)
@@ -1357,6 +1368,9 @@ void testPt3()
             break;
         case 2:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
+
             int clavePadreHijos;
             printf("\nIngrese la clave del nodo padre: ");
             while (1)
@@ -1429,6 +1443,9 @@ void testPt3()
             break;
         case 3:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
+
             int claveHermano;
             printf("\nIngrese la clave del nodo: ");
             while (1)
@@ -1501,6 +1518,9 @@ void testPt3()
 
         case 4:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
+
             int claveNivel;
             printf("\nIngrese la clave del nodo: ");
             while (1)
@@ -1570,6 +1590,9 @@ void testPt3()
 
         case 5:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
+
             int claveAltura;
             printf("\nIngrese la clave del nodo: ");
             while (1)
@@ -1636,6 +1659,9 @@ void testPt3()
 
         case 6:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
+
             int nivel;
             printf("\nIngrese el nivel a buscar: ");
             while (1)
@@ -1721,6 +1747,9 @@ void testPt4()
         {
         case 1:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
+
             Lista nodos = a_ej4_anchura(arbol);
             Iterador iterador_nodos = iterador(nodos);
             l_mostrar(nodos);
@@ -1738,6 +1767,9 @@ void testPt4()
             break;
         case 2:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
+
             int cantidadHojas = a_ej4_q_hojas(arbol);
             printf("\nCantidad de hojas en el arbol: %d\n", cantidadHojas);
             waitForKey();
@@ -1768,6 +1800,9 @@ void testPt4()
             break;
         case 4:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
+
             int clavePadre;
             printf("\nIngrese la clave del nodo hijo: ");
             while (1)
@@ -1830,6 +1865,9 @@ void testPt4()
             break;
         case 5:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
+
             int claveHermano;
             printf("\nIngrese la clave del nodo: ");
             while (1)
@@ -1967,6 +2005,13 @@ void testPt7()
         {
         case 1:
             clearScreen();
+
+            printf("1. Arbol 1\n");
+            mostrarArbol(a_raiz(arbol), tipo);
+
+            printf("\n2. Arbol 2\n");
+            mostrarArbol(a_raiz(arbol2), tipo_2);
+
             if (resultado)
             {
                 printf("\nLos arboles son iguales\n");
@@ -2028,12 +2073,18 @@ void testPt8()
         {
         case 1:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
+
             printf("\nLa altura del arbol es: %d\n", resultado8a);
 
             waitForKey();
             break;
         case 2:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
+
             int claveNivel;
             printf("\nIngrese la clave del nodo: ");
             while (1)
@@ -2105,6 +2156,9 @@ void testPt8()
             break;
         case 3:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
+
             Lista resultadoEje8c = c_ej8_internos(arbol);
 
             if (l_es_vacia(resultadoEje8c))
@@ -2132,6 +2186,9 @@ void testPt8()
             break;
         case 4:
             clearScreen();
+
+            mostrarArbol(a_raiz(arbol), tipo);
+
             bool resultado8d = c_ej8_hojasmismonivel(arbol);
 
             if (resultado8d)
@@ -2314,6 +2371,14 @@ void testPt10()
             break;
         case 3:
             clearScreen();
+
+            // check lista generada
+            if (!lista_generada)
+            {
+                printf("\nError: Debes generar una lista primero\n");
+                waitForKey();
+                break;
+            }
 
             int diferenciaAlturas = a_ej10_difalturas(abb, avl);
             printf("\nDiferencia de alturas entre arbol binario y arbol AVL: %d\n", diferenciaAlturas);
