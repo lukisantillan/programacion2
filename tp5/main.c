@@ -502,13 +502,13 @@ int a_ej3_nivel(ArbolBinario A, int clave)
 // e
 int altura_arbol(NodoArbol n)
 {
-    if (n == NULL)
+    if (a_es_rama_nula(n))
     {
         return -1; // no se encontro la clave
     }
 
-    int ai = altura_arbol(n->hi);
-    int ad = altura_arbol(n->hd);
+    int ai = altura_arbol(n_hijoizquierdo(n));
+    int ad = altura_arbol(n_hijoderecho(n));
     if (ai > ad)
     {
         return ai + 1;
@@ -547,7 +547,7 @@ int a_ej3_alturarama(ArbolBinario A, int clave)
     else
     {
         busquedadelnodo(raiz, clave, &nodoencontrado);
-        if (nodoencontrado != NULL)
+        if (!a_es_rama_nula(nodoencontrado))
         {
             int altura = altura_arbol(nodoencontrado);
             return altura;
