@@ -4,7 +4,6 @@
 #include <stdbool.h>
 #include "../hash/tabla_hash.h"
 #include "../listas/listas.h"
-#include "../elementos/tipo_elemento.h"
 
 struct TipoRegistroTabla {
     TipoElemento tipo_elemento;
