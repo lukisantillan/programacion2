@@ -1,5 +1,4 @@
 #include "conjuntos.h"
-#include "D:\Mario\Prog_2_2009\2024\TADs\Arboles\Arbolesbinarios\ArbolesAVL\arbol-avl.h"
 #include "../listas/listas.h"
 #include <stdlib.h>
 #include "../nodos/nodo.h"
