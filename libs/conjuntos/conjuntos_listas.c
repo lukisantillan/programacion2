@@ -1,5 +1,5 @@
 #include "conjuntos.h"
-#include "D:\Mario\Prog_2_2009\2024\TADs\Listas\listas.h"
+#include "../listas/listas.h"
 #include <stdlib.h>
 
 struct ConjuntoRep {
