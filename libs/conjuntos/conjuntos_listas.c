@@ -1,6 +1,7 @@
 #include "conjuntos.h"
-#include "../listas/listas.h"
+#include "../conjuntos/conjuntos.h"
 #include <stdlib.h>
+#include "../listas/listas.h"
 
 struct ConjuntoRep {
     Lista lista;
