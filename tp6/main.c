@@ -16,18 +16,18 @@ typedef struct
 } Alumno;
 
 // punto 4
-int abm_alumnos(char *filename)
+// TODO: verificar cada vez que se ingresa un legajo que tenga 6 digitos
+void abm_alumnos(char *filename)
 {
   int opcion;
-  bool flag = true;
-  bool flag2 = false;
+  bool flag_menu = true;
+  bool flag_abm = false;
 
   FILE *file;
 
-  while (flag)
+  while (flag_menu)
   {
-    printf("Desea realizar cambios en el archivo de alumnos?\n");
-    printf("0. No realizar cambios\n");
+    printf("0. No realizar cambios en el archivo \n");
     printf("1. Crear nuevo archivo\n");
     printf("2. Modificar archivo actual\n");
     printf("Ingrese una opcion: ");
@@ -37,58 +37,107 @@ int abm_alumnos(char *filename)
     switch (opcion)
     {
     case 0:
-      return 0;
+      flag_menu = false;
+      break;
     case 1:
-      printf("Creando nuevo archivo...\n");
       file = fopen(filename, "wb");
-      flag = false;
-      flag2 = true;
+      flag_abm = true;
+      flag_menu = false;
       break;
     case 2:
-      printf("Modificando archivo actual...\n");
       file = fopen(filename, "ab");
-      flag = false;
-      flag2 = true;
+      flag_abm = true;
+      flag_menu = false;
       break;
     default:
       printf("Opcion invalida\n");
-      break;
     }
   }
 
   if (file == NULL)
   {
     printf("Error al abrir el archivo\n");
-    return 1;
+    return;
   }
 
-  while (flag2)
+  while (flag_abm)
   {
     Alumno alumno;
-    printf("Ingrese el legajo del alumno (o 0 si desea no cargar mas datos): ");
-    // TODO: chequear que tenga 6 digitos
-    scanf("%d", &alumno.legajo);
-    fflush(stdin);
-    if (alumno.legajo == 0)
-    {
-      flag2 = false;
-      break;
-    }
-    printf("Ingrese el nombre del alumno: ");
-    fgets(alumno.nombre, sizeof(alumno.nombre), stdin);
-    fflush(stdin);
-    printf("Ingrese el apellido del alumno: ");
-    fgets(alumno.apellido, sizeof(alumno.apellido), stdin);
-    fflush(stdin);
-    printf("Ingrese el domicilio del alumno: ");
-    fgets(alumno.domicilio, sizeof(alumno.domicilio), stdin);
+    int legajo;
+    bool alumnoEncontrado = false;
+    printf("0. Salir\n");
+    printf("1. Agregar alumno\n");
+    printf("2. Modificar alumno\n");
+    printf("3. Eliminar alumno\n");
+    printf("Ingrese una opcion: ");
+    scanf("%d", &opcion);
     fflush(stdin);
 
-    fwrite(&alumno, sizeof(Alumno), 1, file);
+    switch (opcion)
+    {
+    case 0:
+      flag_abm = false;
+      break;
+
+    case 1:
+      // TODO: verificar que el legajo no exista
+      printf("Ingrese el legajo: ");
+      scanf("%d", &alumno.legajo);
+      fflush(stdin);
+      printf("Ingrese el nombre: ");
+      fgets(alumno.nombre, sizeof(alumno.nombre), stdin);
+      fflush(stdin);
+      printf("Ingrese el apellido: ");
+      fgets(alumno.apellido, sizeof(alumno.apellido), stdin);
+      fflush(stdin);
+      printf("Ingrese el domicilio: ");
+      fgets(alumno.domicilio, sizeof(alumno.domicilio), stdin);
+      fflush(stdin);
+
+      fwrite(&alumno, sizeof(Alumno), 1, file);
+      printf("Alumno agregado\n");
+
+      break;
+
+    case 2:
+      printf("Ingrese el legajo del alumno a modificar: ");
+      scanf("%d", &legajo);
+      fflush(stdin);
+
+      while (fread(&alumno, sizeof(Alumno), 1, file) == 1 && !alumnoEncontrado)
+      {
+        if (alumno.legajo == legajo)
+        {
+          alumnoEncontrado = true;
+          printf("Ingrese el nuevo legajo: ");
+          scanf("%d", &alumno.legajo);
+          fflush(stdin);
+          printf("Ingrese el nuevo nombre: ");
+          fgets(alumno.nombre, sizeof(alumno.nombre), stdin);
+          fflush(stdin);
+          printf("Ingrese el nuevo apellido: ");
+          fgets(alumno.apellido, sizeof(alumno.apellido), stdin);
+          fflush(stdin);
+          printf("Ingrese el nuevo domicilio: ");
+          fgets(alumno.domicilio, sizeof(alumno.domicilio), stdin);
+          fflush(stdin);
+
+          fseek(file, -sizeof(Alumno), SEEK_CUR);
+          fwrite(&alumno, sizeof(Alumno), 1, file);
+          printf("Alumno modificado\n");
+        }
+      }
+
+      if (!alumnoEncontrado)
+      {
+        printf("Alumno no encontrado\n");
+      }
+
+      break;
+    }
   }
 
   fclose(file);
-  return 0;
 }
 
 int funcion_hash_alumnos(int clave)
@@ -99,7 +148,6 @@ int funcion_hash_alumnos(int clave)
 
 TablaHash punto3(char *filename)
 {
-  abm_alumnos(filename);
   // tamaño 1000 porque no se de cuanto tiene que ser
   TablaHash tabla = th_crear(1000, funcion_hash_alumnos);
 
@@ -113,8 +161,13 @@ TablaHash punto3(char *filename)
   Alumno alumno;
   while (fread(&alumno, sizeof(Alumno), 1, file) == 1)
   {
-    TipoElemento te = te_crear_con_valor(alumno.legajo, (void*)&alumno);
-    th_insertar(tabla, te);
+    TipoElemento te = te_crear_con_valor(alumno.legajo, (void *)&alumno);
+    bool inserto = th_insertar(tabla, te);
+    if (!inserto)
+    {
+      printf("Error al insertar alumnos a la tabla hash\n");
+      return;
+    }
   }
 
   fclose(file);
@@ -125,16 +178,25 @@ TablaHash punto3(char *filename)
 int main()
 {
   // TODO: en el menu hay que preguntar por el nombre del archivo
+  // TODO: en el menu hay que preguntar si quiere hacer cambios en el archivo
+  abm_alumnos("alumnos.dat");
+
   TablaHash tabla = punto3("alumnos.dat");
+
+  FILE *file = fopen("alumnos.dat", "rb");
+  Alumno alumno;
+  while (fread(&alumno, sizeof(Alumno), 1, file) == 1)
+  {
+    printf("Legajo: %d\n", alumno.legajo);
+    printf("Nombre: %s", alumno.nombre);
+    printf("Apellido: %s", alumno.apellido);
+    printf("Domicilio: %s", alumno.domicilio);
+    printf("\n");
+  }
+  fclose(file);
+
   th_mostrar_solo_ocupados(tabla);
 
-  //funcionar funciona pero no se como mostrar los valores de cada elemento
-  TipoElemento alumno = th_recuperar(tabla, 195311);
-  printf("Legajo: %d\n", ((Alumno*)alumno->valor)->legajo);
-  printf("Nombre: %s\n", ((Alumno*)alumno->valor)->nombre);
-  printf("Apellido: %s\n", ((Alumno*)alumno->valor)->apellido);
-  printf("Domicilio: %s\n", ((Alumno*)alumno->valor)->domicilio);
-  
   return 0;
 }
 
