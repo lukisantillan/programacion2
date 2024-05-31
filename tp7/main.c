@@ -23,7 +23,7 @@ bool verificarUnion(Conjunto c1, Conjunto c2, Conjunto conjUnion)
         i++;
     }
 
-    i = 1
+    i = 1;
 
     while (i <= tamañoC2)
     {
@@ -46,11 +46,11 @@ bool verificarInterseccion(Conjunto c1, Conjunto c2, Conjunto conjInter)
     while (i <= tamañoC1)
     {
         ele = cto_recuperar(c1, i);
-        if (cto_pertenece(c2, ele->clave) && !cto_pertenece(conjDif, ele->clave))
+        if (cto_pertenece(c2, ele->clave) && !cto_pertenece(conjInter, ele->clave))
         {
             return false;
         } 
-        if (!cto_pertenece(c2, ele->clave) && cto_pertenece(conjDif, ele->clave))
+        if (!cto_pertenece(c2, ele->clave) && cto_pertenece(conjInter, ele->clave))
         {
             return false;
         }
@@ -84,7 +84,7 @@ bool transitividad(Conjunto a, Conjunto b, Conjunto c){
     int longitud = cto_cantidad_elementos(b);
     int i = 1;
     TipoElemento ele;
-    while (i < longitudB)
+    while (i < longitud)
     {
         //Primero valido que todos los elementos de B, pertenezcan a C
         ele = cto_recuperar(b, i);
