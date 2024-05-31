@@ -208,9 +208,7 @@ void abm_alumnos(char *filename)
 
   while (flag_abm)
   {
-    Alumno alumno;
     int legajo;
-    bool alumnoEncontrado = false;
     printf("0. Salir\n");
     printf("1. Agregar alumno\n");
     printf("2. Modificar alumno\n");
