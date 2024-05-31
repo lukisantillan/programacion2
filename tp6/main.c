@@ -100,39 +100,68 @@ void abm_alumnos(char *filename)
       break;
 
     case 2:
-      printf("Ingrese el legajo del alumno a modificar: ");
+    printf("Ingrese el legajo del alumno a modificar: ");
+    scanf("%d", &legajo);
+    fflush(stdin);
+
+    rewind(file);
+    alumnoEncontrado = false;
+
+    while (fread(&alumno, sizeof(Alumno), 1, file) == 1)
+    {
+        if (alumno.legajo == legajo)
+        {
+            alumnoEncontrado = true;
+
+            printf("Ingrese el nuevo legajo: ");
+            scanf("%d", &alumno.legajo);
+            fflush(stdin);
+            printf("Ingrese el nuevo nombre: ");
+            fgets(alumno.nombre, sizeof(alumno.nombre), stdin);
+            fflush(stdin);
+            printf("Ingrese el nuevo apellido: ");
+            fgets(alumno.apellido, sizeof(alumno.apellido), stdin);
+            fflush(stdin);
+            printf("Ingrese el nuevo domicilio: ");
+            fgets(alumno.domicilio, sizeof(alumno.domicilio), stdin);
+            fflush(stdin);
+
+            fseek(file, -sizeof(Alumno), SEEK_CUR); // Mover el puntero al inicio del registro actual
+            fwrite(&alumno, sizeof(Alumno), 1, file); // Sobrescribir el registro
+            printf("Alumno modificado\n");
+            break;
+        }
+    }
+
+    if (!alumnoEncontrado)
+    {
+        printf("Alumno no encontrado\n");
+    }
+    break;
+
+    case 3:
+      printf("Ingrese el legajo del alumno a eliminar: ");
       scanf("%d", &legajo);
       fflush(stdin);
 
-      while (fread(&alumno, sizeof(Alumno), 1, file) == 1 && !alumnoEncontrado)
-      {
-        if (alumno.legajo == legajo)
-        {
-          alumnoEncontrado = true;
-          printf("Ingrese el nuevo legajo: ");
-          scanf("%d", &alumno.legajo);
-          fflush(stdin);
-          printf("Ingrese el nuevo nombre: ");
-          fgets(alumno.nombre, sizeof(alumno.nombre), stdin);
-          fflush(stdin);
-          printf("Ingrese el nuevo apellido: ");
-          fgets(alumno.apellido, sizeof(alumno.apellido), stdin);
-          fflush(stdin);
-          printf("Ingrese el nuevo domicilio: ");
-          fgets(alumno.domicilio, sizeof(alumno.domicilio), stdin);
-          fflush(stdin);
+      rewind(file);
 
-          fseek(file, -sizeof(Alumno), SEEK_CUR);
-          fwrite(&alumno, sizeof(Alumno), 1, file);
-          printf("Alumno modificado\n");
+      FILE *temp = fopen("temp.dat", "wb");
+      while (fread(&alumno, sizeof(Alumno), 1, file) == 1)
+      {
+        if (alumno.legajo != legajo)
+        {
+          fwrite(&alumno, sizeof(Alumno), 1, temp);
         }
       }
+      fclose(file);
+      fclose(temp);
 
-      if (!alumnoEncontrado)
-      {
-        printf("Alumno no encontrado\n");
-      }
+      remove(filename);
+      rename("temp.dat", filename);
+      file = fopen(filename, "ab");
 
+      printf("Alumno eliminado\n");
       break;
     }
   }
