@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <time.h>
 #include <ctype.h>
@@ -8,15 +9,160 @@
 
 typedef struct
 {
+  int legajo;
   char nombre[50];
   char apellido[50];
-  int legajo;
   char domicilio[200];
+  int estado;
   // TE?
 } Alumno;
 
 // punto 4
 // TODO: verificar cada vez que se ingresa un legajo que tenga 6 digitos
+
+void ingresarAlumno(char *filename)
+{
+  FILE *file = fopen(filename, "ab"); // Abre el archivo en modo de adición binaria
+  if (file == NULL)
+  {
+    perror("Error al abrir el archivo");
+    return;
+  }
+
+  Alumno alumno;
+
+  printf("Ingrese el legajo del alumno: ");
+  scanf("%d", &alumno.legajo);
+  fflush(stdin);
+
+  printf("Ingrese el nombre del alumno: ");
+  fgets(alumno.nombre, sizeof(alumno.nombre), stdin);
+  alumno.nombre[strcspn(alumno.nombre, "\n")] = 0; // Elimina el salto de línea
+  fflush(stdin);
+
+  printf("Ingrese el apellido del alumno: ");
+  fgets(alumno.apellido, sizeof(alumno.apellido), stdin);
+  alumno.apellido[strcspn(alumno.apellido, "\n")] = 0; // Elimina el salto de línea
+  fflush(stdin);
+
+  printf("Ingrese el domicilio del alumno: ");
+  fgets(alumno.domicilio, sizeof(alumno.domicilio), stdin);
+  alumno.domicilio[strcspn(alumno.domicilio, "\n")] = 0; // Elimina el salto de línea
+  fflush(stdin);
+  alumno.estado = 1;
+
+  fwrite(&alumno, sizeof(Alumno), 1, file); // Escribe el registro del alumno en el archivo
+
+  printf("Alumno ingresado exitosamente.\n");
+
+  fclose(file);
+}
+
+void bajaLogicaAlumno(char *filename, int legajo)
+{
+  FILE *file = fopen(filename, "rb+"); // Abre el archivo en modo de lectura/escritura binaria
+  if (file == NULL)
+  {
+    perror("Error al abrir el archivo");
+    return;
+  }
+
+  Alumno alumno;
+  bool alumnoEncontrado = false;
+
+  while (fread(&alumno, sizeof(Alumno), 1, file) == 1)
+  {
+    if (alumno.legajo == legajo)
+    {
+      alumnoEncontrado = true;
+      alumno.estado = 0;                        // Cambia el estado a inactivo
+      fseek(file, -sizeof(Alumno), SEEK_CUR);   // Vuelve al inicio del registro actual
+      fwrite(&alumno, sizeof(Alumno), 1, file); // Sobrescribe el registro
+      printf("Estado del alumno con legajo %d cambiado a inactivo.\n", legajo);
+      break;
+    }
+  }
+
+  if (!alumnoEncontrado)
+  {
+    printf("Alumno con legajo %d no encontrado.\n", legajo);
+  }
+
+  fclose(file);
+}
+
+void mostrarAlumnosActivos(char *filename)
+{
+  FILE *file = fopen(filename, "rb"); // Abre el archivo en modo de lectura binaria
+  if (file == NULL)
+  {
+    perror("Error al abrir el archivo");
+    return;
+  }
+
+  Alumno alumno;
+  printf("Alumnos Activos:\n\n");
+
+  while (fread(&alumno, sizeof(Alumno), 1, file) == 1)
+  {
+    if (alumno.estado == 1)
+    {
+      printf("Legajo: %d\n", alumno.legajo);
+      printf("Nombre: %s\n", alumno.nombre);
+      printf("Apellido: %s\n", alumno.apellido);
+      printf("Domicilio: %s\n", alumno.domicilio);
+      printf("--------------------------\n");
+    }
+  }
+
+  fclose(file);
+}
+
+void modificacion(char *filename, int legajo)
+{
+  FILE *file = fopen(filename, "rb+"); // Abre el archivo en modo de lectura/escritura binaria
+  if (file == NULL)
+  {
+    perror("Error al abrir el archivo");
+    return;
+  }
+
+  Alumno alumno;
+  bool alumnoEncontrado = false;
+
+  while (fread(&alumno, sizeof(Alumno), 1, file) == 1)
+  {
+    if (alumno.legajo == legajo)
+    {
+      alumnoEncontrado = true;
+      printf("Ingrese el nombre del alumno: ");
+      fgets(alumno.nombre, sizeof(alumno.nombre), stdin);
+      alumno.nombre[strcspn(alumno.nombre, "\n")] = 0; // Elimina el salto de línea
+      fflush(stdin);
+
+      printf("Ingrese el apellido del alumno: ");
+      fgets(alumno.apellido, sizeof(alumno.apellido), stdin);
+      alumno.apellido[strcspn(alumno.apellido, "\n")] = 0; // Elimina el salto de línea
+      fflush(stdin);
+
+      printf("Ingrese el domicilio del alumno: ");
+      fgets(alumno.domicilio, sizeof(alumno.domicilio), stdin);
+      alumno.domicilio[strcspn(alumno.domicilio, "\n")] = 0; // Elimina el salto de línea
+      fseek(file, -sizeof(Alumno), SEEK_CUR);                // Vuelve al inicio del registro actual
+      fwrite(&alumno, sizeof(Alumno), 1, file);              // Sobrescribe el registro
+      printf("Alumno con legajo %d modificado.\n", legajo);
+      break;
+    }
+  }
+
+  if (!alumnoEncontrado)
+  {
+    printf("Alumno con legajo %d no encontrado.\n", legajo);
+  }
+
+  fclose(file);
+}
+
 void abm_alumnos(char *filename)
 {
   int opcion;
@@ -80,86 +226,21 @@ void abm_alumnos(char *filename)
       break;
 
     case 1:
-      // TODO: verificar que el legajo no exista
-      printf("Ingrese el legajo: ");
-      scanf("%d", &alumno.legajo);
-      fflush(stdin);
-      printf("Ingrese el nombre: ");
-      fgets(alumno.nombre, sizeof(alumno.nombre), stdin);
-      fflush(stdin);
-      printf("Ingrese el apellido: ");
-      fgets(alumno.apellido, sizeof(alumno.apellido), stdin);
-      fflush(stdin);
-      printf("Ingrese el domicilio: ");
-      fgets(alumno.domicilio, sizeof(alumno.domicilio), stdin);
-      fflush(stdin);
-
-      fwrite(&alumno, sizeof(Alumno), 1, file);
-      printf("Alumno agregado\n");
-
+      ingresarAlumno(filename);
       break;
 
     case 2:
-    printf("Ingrese el legajo del alumno a modificar: ");
-    scanf("%d", &legajo);
-    fflush(stdin);
-
-    rewind(file);
-    alumnoEncontrado = false;
-
-    while (fread(&alumno, sizeof(Alumno), 1, file) == 1)
-    {
-        if (alumno.legajo == legajo)
-        {
-            alumnoEncontrado = true;
-
-            printf("Ingrese el nuevo legajo: ");
-            scanf("%d", &alumno.legajo);
-            fflush(stdin);
-            printf("Ingrese el nuevo nombre: ");
-            fgets(alumno.nombre, sizeof(alumno.nombre), stdin);
-            fflush(stdin);
-            printf("Ingrese el nuevo apellido: ");
-            fgets(alumno.apellido, sizeof(alumno.apellido), stdin);
-            fflush(stdin);
-            printf("Ingrese el nuevo domicilio: ");
-            fgets(alumno.domicilio, sizeof(alumno.domicilio), stdin);
-            fflush(stdin);
-
-            fseek(file, -sizeof(Alumno), SEEK_CUR); // Mover el puntero al inicio del registro actual
-            fwrite(&alumno, sizeof(Alumno), 1, file); // Sobrescribir el registro
-            printf("Alumno modificado\n");
-            break;
-        }
-    }
-
-    if (!alumnoEncontrado)
-    {
-        printf("Alumno no encontrado\n");
-    }
-    break;
-
+      printf("Ingrese el legajo del alumno a modificar: ");
+      scanf("%d", &legajo);
+      fflush(stdin);
+      modificacion(filename,legajo);
+      break;
+      
     case 3:
       printf("Ingrese el legajo del alumno a eliminar: ");
       scanf("%d", &legajo);
       fflush(stdin);
-
-      rewind(file);
-
-      FILE *temp = fopen("temp.dat", "wb");
-      while (fread(&alumno, sizeof(Alumno), 1, file) == 1)
-      {
-        if (alumno.legajo != legajo)
-        {
-          fwrite(&alumno, sizeof(Alumno), 1, temp);
-        }
-      }
-      fclose(file);
-      fclose(temp);
-
-      remove(filename);
-      rename("temp.dat", filename);
-      file = fopen(filename, "ab");
+      bajaLogicaAlumno(filename, legajo);
 
       printf("Alumno eliminado\n");
       break;
@@ -180,22 +261,25 @@ TablaHash punto3(char *filename)
   // tamaño 1000 porque no se de cuanto tiene que ser
   TablaHash tabla = th_crear(1000, funcion_hash_alumnos);
 
-  FILE *file = fopen(filename, "rb");
+  FILE *file = fopen(filename, "rb+");
   if (file == NULL)
   {
     printf("Error al abrir el archivo\n");
-    return;
+    return tabla;
   }
 
   Alumno alumno;
   while (fread(&alumno, sizeof(Alumno), 1, file) == 1)
   {
-    TipoElemento te = te_crear_con_valor(alumno.legajo, (void *)&alumno);
-    bool inserto = th_insertar(tabla, te);
-    if (!inserto)
+    if (alumno.estado == 1)
     {
-      printf("Error al insertar alumnos a la tabla hash\n");
-      return;
+      TipoElemento te = te_crear_con_valor(alumno.legajo, (void *)&alumno);
+      bool inserto = th_insertar(tabla, te);
+      if (!inserto)
+      {
+        printf("Error al insertar alumnos a la tabla hash\n");
+        return tabla;
+      }
     }
   }
 
@@ -212,18 +296,9 @@ int main()
 
   TablaHash tabla = punto3("alumnos.dat");
 
-  FILE *file = fopen("alumnos.dat", "rb");
-  Alumno alumno;
-  while (fread(&alumno, sizeof(Alumno), 1, file) == 1)
-  {
-    printf("Legajo: %d\n", alumno.legajo);
-    printf("Nombre: %s", alumno.nombre);
-    printf("Apellido: %s", alumno.apellido);
-    printf("Domicilio: %s", alumno.domicilio);
-    printf("\n");
-  }
-  fclose(file);
+  printf("\n");
 
+  mostrarAlumnosActivos("alumnos.dat");
   th_mostrar_solo_ocupados(tabla);
 
   return 0;
