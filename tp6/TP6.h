@@ -4,8 +4,13 @@
 #include <time.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include <math.h>
 #include "../libs/hash/tabla_hash.h"
 #include "../libs/elementos/tipo_elemento.h"
+#include "../libs/listas/listas.h"
+#include "../libs/arboles/arbol-avl.h"
+#include "../libs/arboles/arbol-binario-busqueda.h"
+
 
 /**
  * Permite ingresar alumnos al archivo.
@@ -57,4 +62,8 @@ void abm_alumnos(char *filename);
  */
 int funcion_hash_alumnos(int clave);
 
-TablaHash punto3(char *filename);
+TablaHash punto4(char *filename);
+
+Lista Generarlistaclaves(int cantidadclavesagenerar, int valorminimo, int valormaximo);
+
+ArbolAVL crearAVL(Lista L);

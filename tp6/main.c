@@ -1,5 +1,7 @@
 #include "TP6.h"
 
+static int cantidad;
+
 typedef struct
 {
   int legajo;
@@ -224,9 +226,9 @@ void abm_alumnos(char *filename)
       printf("Ingrese el legajo del alumno a modificar: ");
       scanf("%d", &legajo);
       fflush(stdin);
-      modificacion(filename,legajo);
+      modificacion(filename, legajo);
       break;
-      
+
     case 3:
       printf("Ingrese el legajo del alumno a eliminar: ");
       scanf("%d", &legajo);
@@ -247,7 +249,7 @@ int funcion_hash_alumnos(int clave)
   return clave % 997;
 }
 
-TablaHash punto3(char *filename)
+TablaHash punto4(char *filename)
 {
   // tamaño 1000 porque no se de cuanto tiene que ser
   TablaHash tabla = th_crear(1000, funcion_hash_alumnos);
@@ -279,13 +281,95 @@ TablaHash punto3(char *filename)
   return tabla;
 }
 
+// punto5
+
+Lista Generarlistaclaves(int cantidadclavesagenerar, int valorminimo, int valormaximo)
+{
+  Lista lista = l_crear();
+  for (int i = 0; i < cantidadclavesagenerar; i++)
+  {
+    int clave = rand() % (valormaximo - valorminimo + 1) + valorminimo;
+
+    while (l_buscar(lista, clave) != NULL)
+    {
+      clave = rand() % (valormaximo - valorminimo + 1) + valorminimo;
+    }
+
+    l_agregar(lista, te_crear(clave));
+  }
+  return lista;
+}
+
+ArbolAVL crearAVL(Lista L)
+{
+  ArbolAVL resultado = avl_crear();
+  Iterador ite = iterador(L);
+  while (hay_siguiente(ite))
+  {
+    TipoElemento ele = siguiente(ite);
+    avl_insertar(resultado, ele);
+  }
+  return resultado;
+}
+
+bool esPrimo(int num)
+{
+  if (num <= 1)
+    return false;
+
+  for (int i = 2; i <= sqrt(num); i++)
+    if (num % i == 0)
+      return false;
+
+  return true;
+}
+
+int encontrarPrimoMasCercano(int num)
+{
+  if (num <= 1)
+    return 2;
+  else if (esPrimo(num))
+    return num;
+
+  int menorPrimo = num - 1;
+  int mayorPrimo = num + 1;
+
+  while (true)
+  {
+    if (esPrimo(menorPrimo))
+      return menorPrimo;
+    else if (esPrimo(mayorPrimo))
+      return mayorPrimo;
+    menorPrimo--;
+    mayorPrimo++;
+  }
+}
+
+int funcionHashPunto5(int clave)
+{
+  return clave % encontrarPrimoMasCercano(cantidad);
+}
+
+TablaHash crearTablaHash(Lista L)
+{
+  TablaHash resultado = th_crear(cantidad, funcionHashPunto5);
+  Iterador ite = iterador(L);
+  while (hay_siguiente(ite))
+  {
+    TipoElemento ele = siguiente(ite);
+    th_insertar(resultado, ele);
+  }
+  return resultado;
+}
+
+
 int main()
 {
   // TODO: en el menu hay que preguntar por el nombre del archivo
   // TODO: en el menu hay que preguntar si quiere hacer cambios en el archivo
   abm_alumnos("alumnos.dat");
 
-  TablaHash tabla = punto3("alumnos.dat");
+  TablaHash tabla = punto4("alumnos.dat");
 
   printf("\n");
 
@@ -295,4 +379,4 @@ int main()
   return 0;
 }
 
-// gcc -o output main.c ../libs/hash/tabla_hash_lista_colisiones.c ../libs/elementos/tipo_elemento.c ../libs/listas/listas_arreglos.c
+// gcc -o output ../libs/hash/tabla_hash_lista_colisiones.c ../libs/elementos/tipo_elemento.c ../libs/listas/listas_arreglos.c ../libs/nodos/nodo.c ../libs/arboles/arbol-binario.c ../libs/colas/colas_arreglos.c ../libs/arboles/arbol-avl.c ../libs/arboles/arbol-binario-busqueda.c main.c
