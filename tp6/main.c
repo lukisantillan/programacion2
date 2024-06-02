@@ -160,11 +160,10 @@ void modificacion(char *filename, int legajo)
 
 void abm_alumnos(char *filename)
 {
+  FILE *file = NULL;
   int opcion;
   bool flag_menu = true;
   bool flag_abm = false;
-
-  FILE *file;
 
   while (flag_menu)
   {
@@ -239,8 +238,10 @@ void abm_alumnos(char *filename)
       break;
     }
   }
-
-  fclose(file);
+  if (file != NULL)
+  {
+    fclose(file);
+  }
 }
 
 int funcion_hash_alumnos(int clave)
@@ -253,6 +254,7 @@ TablaHash punto4(char *filename)
 {
   // tamaño 1000 porque no se de cuanto tiene que ser
   TablaHash tabla = th_crear(1000, funcion_hash_alumnos);
+  int i = 1;
 
   FILE *file = fopen(filename, "rb+");
   if (file == NULL)
@@ -266,7 +268,7 @@ TablaHash punto4(char *filename)
   {
     if (alumno.estado == 1)
     {
-      TipoElemento te = te_crear_con_valor(alumno.legajo, (void *)&alumno);
+      TipoElemento te = te_crear_con_valor(alumno.legajo, i++);
       bool inserto = th_insertar(tabla, te);
       if (!inserto)
       {
@@ -362,7 +364,6 @@ TablaHash crearTablaHash(Lista L)
   return resultado;
 }
 
-
 int main()
 {
   // TODO: en el menu hay que preguntar por el nombre del archivo
@@ -375,6 +376,15 @@ int main()
 
   mostrarAlumnosActivos("alumnos.dat");
   th_mostrar_solo_ocupados(tabla);
+  TipoElemento te = th_recuperar(tabla, 195311);
+  if (te != NULL)
+  {
+    printf("Legajo: %d\nPosicion en el archivo: %d", te->clave, te->valor);
+  }
+  else
+  {
+    printf("Elemento no encontrado\n");
+  }
 
   return 0;
 }
