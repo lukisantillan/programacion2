@@ -408,7 +408,7 @@ void diferenciaTiempos(Lista tiempoAvl, Lista tiempoHash){
     {
       menorTiempoAvl++;
     }
-    else if ((double *)ele_avl > (double *)ele_hash->valor)
+    else if ((double *)ele_avl->valor > (double *)ele_hash->valor)
     {
       menorTiempoHash++;
     } else {igualdad++;}
