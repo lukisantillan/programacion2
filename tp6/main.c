@@ -288,7 +288,7 @@ TablaHash punto4(char *filename)
   if (file == NULL)
   {
     printf("Error al abrir el archivo\n");
-    //TODO: chequear que si la tabla esta vacia no se corra ningun ejercicio en el menu
+    // TODO: chequear que si la tabla esta vacia no se corra ningun ejercicio en el menu
     return tabla;
   }
 
@@ -535,20 +535,22 @@ void mostrarArbol(NodoArbol raiz)
 
 // Punto 6
 
-// Se desea poder implementar una solución para encontrar de forma rápida los datos de 
-// las personas que a una fecha determinada se presentaron a vacunar contra el COVID.  
-// Es decir dada una fecha determinada debería obtener quienes se vacunaron. De cada 
-// persona se guarda básicamente el DNI, Apellido y Nombre.  Se debe además hacer una 
-// pantalla de carga donde se pueda especificar la fecha y los datos de las personas que 
+// Se desea poder implementar una solución para encontrar de forma rápida los datos de
+// las personas que a una fecha determinada se presentaron a vacunar contra el COVID.
+// Es decir dada una fecha determinada debería obtener quienes se vacunaron. De cada
+// persona se guarda básicamente el DNI, Apellido y Nombre.  Se debe además hacer una
+// pantalla de carga donde se pueda especificar la fecha y los datos de las personas que
 // se vacunaron en esa fecha.
 
-typedef struct {
+typedef struct
+{
   int dia;
   int mes;
   int anio;
 } Fecha;
 
-typedef struct {
+typedef struct
+{
   int dni;
   char nombre[50];
   char apellido[50];
@@ -583,17 +585,29 @@ void ingresarPersona(char *filename)
   fflush(stdin);
 
   printf("Ingrese el día de la fecha de vacunación: ");
-  scanf("%d", &persona.fecha.dia);
+  while (scanf("%d", &persona.fecha.dia) != 1 || persona.fecha.dia < 1 || persona.fecha.dia > 31)
+  {
+    printf("Error: Ingrese un día válido (entre 1 y 31): ");
+    fflush(stdin);
+  }
   fflush(stdin);
 
   printf("Ingrese el mes de la fecha de vacunación: ");
-  scanf("%d", &persona.fecha.mes);
+  while (scanf("%d", &persona.fecha.mes) != 1 || persona.fecha.mes < 1 || persona.fecha.mes > 12)
+  {
+    printf("Error: Ingrese un mes válido (entre 1 y 12): ");
+    fflush(stdin);
+  }
   fflush(stdin);
 
   printf("Ingrese el año de la fecha de vacunación: ");
-  scanf("%d", &persona.fecha.anio);
+  while (scanf("%d", &persona.fecha.anio) != 1 || persona.fecha.anio < 2020)
+  {
+    printf("Error: Ingrese un año válido (mayor o igual a 2020): ");
+    fflush(stdin);
+  }
   fflush(stdin);
-
+  
   fwrite(&persona, sizeof(Persona), 1, file); // Escribe el registro de la persona en el archivo
 
   printf("Persona ingresada exitosamente.\n");
@@ -618,7 +632,7 @@ void eliminarPersona(char *filename, int dni)
     if (persona.dni == dni)
     {
       personaEncontrada = true;
-      fseek(file, -sizeof(Persona), SEEK_CUR);   // Vuelve al inicio del registro actual
+      fseek(file, -sizeof(Persona), SEEK_CUR);    // Vuelve al inicio del registro actual
       fwrite(&persona, sizeof(Persona), 1, file); // Sobrescribe el registro
       printf("Persona con DNI %d eliminada.\n", dni);
       break;
@@ -661,19 +675,31 @@ void modificarPersona(char *filename, int dni)
       fflush(stdin);
 
       printf("Ingrese el día de la fecha de vacunación: ");
-      scanf("%d", &persona.fecha.dia);
+      while (scanf("%d", &persona.fecha.dia) != 1 || persona.fecha.dia < 1 || persona.fecha.dia > 31)
+      {
+        printf("Error: Ingrese un día válido (entre 1 y 31): ");
+        fflush(stdin);
+      }
       fflush(stdin);
 
       printf("Ingrese el mes de la fecha de vacunación: ");
-      scanf("%d", &persona.fecha.mes);
+      while (scanf("%d", &persona.fecha.mes) != 1 || persona.fecha.mes < 1 || persona.fecha.mes > 12)
+      {
+        printf("Error: Ingrese un mes válido (entre 1 y 12): ");
+        fflush(stdin);
+      }
       fflush(stdin);
 
       printf("Ingrese el año de la fecha de vacunación: ");
-      scanf("%d", &persona.fecha.anio);
+      while (scanf("%d", &persona.fecha.anio) != 1 || persona.fecha.anio < 0)
+      {
+        printf("Error: Ingrese un año válido (mayor o igual a 0): ");
+        fflush(stdin);
+      }
       fflush(stdin);
 
-      fseek(file, -sizeof(Persona), SEEK_CUR);                // Vuelve al inicio del registro actual
-      fwrite(&persona, sizeof(Persona), 1, file);              // Sobrescribe el registro
+      fseek(file, -sizeof(Persona), SEEK_CUR);    // Vuelve al inicio del registro actual
+      fwrite(&persona, sizeof(Persona), 1, file); // Sobrescribe el registro
       printf("Persona con DNI %d modificada.\n", dni);
       break;
     }
@@ -704,7 +730,7 @@ void mostrarPersonas(char *filename)
     printf("DNI: %d\n", persona.dni);
     printf("Nombre: %s\n", persona.nombre);
     printf("Apellido: %s\n", persona.apellido);
-    printf("Fecha de vacunación: %d/%d/%d\n", persona.fecha.dia, persona.fecha.mes, persona.fecha.anio);
+    printf("Fecha de vacunación: %02d/%02d/%d\n", persona.fecha.dia, persona.fecha.mes, persona.fecha.anio);
     printf("--------------------------\n");
   }
 
@@ -721,7 +747,7 @@ void mostrarPersonasVacunadasEnFecha(char *filename, Fecha fecha)
   }
 
   Persona persona;
-  printf("Personas vacunadas el %d/%d/%d:\n\n", fecha.dia, fecha.mes, fecha.anio);
+  printf("Personas vacunadas el %02d/%02d/%d:\n\n", fecha.dia, fecha.mes, fecha.anio);
 
   while (fread(&persona, sizeof(Persona), 1, file) == 1)
   {
@@ -737,7 +763,7 @@ void mostrarPersonasVacunadasEnFecha(char *filename, Fecha fecha)
   fclose(file);
 }
 
-// ingresarPersonas 
+// ingresarPersonas
 // modificarPersona
 // eliminarPersona
 // mostrarPersonas
@@ -828,11 +854,10 @@ void ABM_Personas(char *filename)
   }
 }
 
-
 int main()
 {
-   //TODO: en el menu hay que preguntar por el nombre del archivo
-   //TODO: en el menu hay que preguntar si quiere hacer cambios en el archivo
+  // TODO: en el menu hay que preguntar por el nombre del archivo
+  // TODO: en el menu hay que preguntar si quiere hacer cambios en el archivo
   //  abm_alumnos("alumnos.dat");
 
   //  TablaHash tabla = punto4("alumnos.dat");
