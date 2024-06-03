@@ -399,16 +399,16 @@ void diferenciaTiempos(Lista tiempoAvl, Lista tiempoHash){
   int menorTiempoHash = 0;
   int igualdad = 0;
   Iterador ite_avl = iterador(tiempoAvl);
-  Iterador ite_has = iterador(tiempoHash);
-  while (hay_siguiente(tiempoAvl) && hay_siguiente(tiempoHash))
+  Iterador ite_hash = iterador(tiempoHash);
+  while (hay_siguiente(ite_avl) && hay_siguiente(ite_hash))
   {
-    ele_avl = siguiente(tiempoAvl);
-    ele_hash = siguiente(tiempoHash);
-    if (ele_avl->valor < ele_hash->valor)
+    ele_avl = siguiente(ite_avl);
+    ele_hash = siguiente(ite_hash);
+    if ((double *)ele_avl->valor < (double *)ele_hash->valor)
     {
       menorTiempoAvl++;
     }
-    else if (ele_avl > ele_hash->valor)
+    else if ((double *)ele_avl > (double *)ele_hash->valor)
     {
       menorTiempoHash++;
     } else {igualdad++;}
