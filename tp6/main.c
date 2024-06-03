@@ -113,6 +113,33 @@ void mostrarAlumnosActivos(char *filename)
   fclose(file);
 }
 
+void mostrarAlumnosInactivos(char *filename)
+{
+  FILE *file = fopen(filename, "rb"); // Abre el archivo en modo de lectura binaria
+  if (file == NULL)
+  {
+    perror("Error al abrir el archivo");
+    return;
+  }
+
+  Alumno alumno;
+  printf("Alumnos Inactivos:\n\n");
+
+  while (fread(&alumno, sizeof(Alumno), 1, file) == 1)
+  {
+    if (alumno.estado != 1)
+    {
+      printf("Legajo: %d\n", alumno.legajo);
+      printf("Nombre: %s\n", alumno.nombre);
+      printf("Apellido: %s\n", alumno.apellido);
+      printf("Domicilio: %s\n", alumno.domicilio);
+      printf("--------------------------\n");
+    }
+  }
+
+  fclose(file);
+}
+
 void modificacion(char *filename, int legajo)
 {
   FILE *file = fopen(filename, "rb+"); // Abre el archivo en modo de lectura/escritura binaria
@@ -254,8 +281,7 @@ TablaHash punto4(char *filename)
 {
   // tamaño 1000 porque no se de cuanto tiene que ser
   TablaHash tabla = th_crear(1000, funcion_hash_alumnos);
-  int *i = malloc(sizeof(int));
-  *i = 1;
+  int i = 1;
 
   FILE *file = fopen(filename, "rb+");
   if (file == NULL)
@@ -269,8 +295,7 @@ TablaHash punto4(char *filename)
   {
     if (alumno.estado == 1)
     {
-      i++;
-      TipoElemento te = te_crear_con_valor(alumno.legajo, i);
+      TipoElemento te = te_crear_con_valor(alumno.legajo, i++);
       bool inserto = th_insertar(tabla, te);
       if (!inserto)
       {
@@ -483,23 +508,26 @@ int main()
 {
   // TODO: en el menu hay que preguntar por el nombre del archivo
   // TODO: en el menu hay que preguntar si quiere hacer cambios en el archivo
-  //   abm_alumnos("alumnos.dat");
+  abm_alumnos("alumnos.dat");
 
-  //   TablaHash tabla = punto4("alumnos.dat");
+  TablaHash tabla = punto4("alumnos.dat");
 
-  //   printf("\n");
+  printf("\n");
 
-  //   mostrarAlumnosActivos("alumnos.dat");
-  //   th_mostrar_solo_ocupados(tabla);
-  //   TipoElemento te = th_recuperar(tabla, 195311);
-  //   if (te != NULL)
-  //   {
-  //     printf("Legajo: %d\nPosicion en el archivo: %d", te->clave, te->valor);
-  //   }
-  //   else
-  //   {
-  //     printf("Elemento no encontrado\n");
-  //   }
+  mostrarAlumnosActivos("alumnos.dat");
+  mostrarAlumnosInactivos("alumnos.dat");
+  th_mostrar_solo_ocupados(tabla);
+  TipoElemento te = th_recuperar(tabla, 195311);
+  if (te != NULL)
+  {
+    printf("Legajo: %d\nPosicion en el archivo: %d", te->clave, te->valor);
+  }
+  else
+  {
+    printf("Elemento no encontrado\n");
+  }
+
+  //Punto5
   Lista resultadosHash = l_crear();
   Lista resultadosAvl = l_crear();
   int repeticiones;
@@ -509,7 +537,7 @@ int main()
   scanf("%i", &repeticiones);
   int minimo;
   int maximo;
-  //VALIDAR QUE LA CANTIDAD DE CLAVES A GENERAR NO SEAN > 10000
+  //VALIDAR QUE LA CANTIDAD DE CLAVES A GENERAR NO SEAN > 5000
   printf("Ingrese la cantidad de claves a generar: \n");
   scanf("%i", &cantidad);
 
@@ -537,6 +565,7 @@ int main()
   }
 
   diferenciaTiempos(resultadosAvl, resultadosHash);
+
   return 0;
 }
 
