@@ -221,7 +221,7 @@ void abm_alumnos(char *filename)
     }
   }
 
-  if (file == NULL)
+  if (file == NULL && opcion != 0)
   {
     printf("Error al abrir el archivo\n");
     return;
