@@ -281,8 +281,7 @@ TablaHash punto4(char *filename)
 {
   // tamaño 1000 porque no se de cuanto tiene que ser
   TablaHash tabla = th_crear(1000, funcion_hash_alumnos);
-  int *i = malloc(sizeof(int));
-  *i = 1;
+  int i = 1;
 
   FILE *file = fopen(filename, "rb+");
   if (file == NULL)
@@ -296,8 +295,7 @@ TablaHash punto4(char *filename)
   {
     if (alumno.estado == 1)
     {
-      *i+= 1;
-      TipoElemento te = te_crear_con_valor(alumno.legajo, i);
+      TipoElemento te = te_crear_con_valor(alumno.legajo, i++);
       bool inserto = th_insertar(tabla, te);
       if (!inserto)
       {
@@ -522,8 +520,7 @@ int main()
   TipoElemento te = th_recuperar(tabla, 195311);
   if (te != NULL)
   {
-    int *valor = te->valor;
-    printf("Legajo: %d\nPosicion en el archivo: %d\n", te->clave, *valor);
+    printf("Legajo: %d\nPosicion en el archivo: %d", te->clave, te->valor);
   }
   else
   {
