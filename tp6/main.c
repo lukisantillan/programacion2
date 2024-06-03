@@ -288,6 +288,7 @@ TablaHash punto4(char *filename)
   if (file == NULL)
   {
     printf("Error al abrir el archivo\n");
+    //TODO: chequear que si la tabla esta vacia no se corra ningun ejercicio en el menu
     return tabla;
   }
 
@@ -559,52 +560,52 @@ int main()
    }
 
   // Punto5
-  Lista resultadosHash = l_crear();
-  Lista resultadosAvl = l_crear();
-  int repeticiones;
+  // Lista resultadosHash = l_crear();
+  // Lista resultadosAvl = l_crear();
+  // int repeticiones;
 
-  // VALIDAR QUE SEA MAYOR A 0;
-  printf("Ingrese la cantidad de veces que quiere repetir el proceso: \n");
-  scanf("%i", &repeticiones);
-  int minimo;
-  int maximo;
-  // VALIDAR QUE LA CANTIDAD DE CLAVES A GENERAR NO SEAN > 5000
-  printf("Ingrese la cantidad de claves a generar: \n");
-  scanf("%i", &cantidad);
+  // // VALIDAR QUE SEA MAYOR A 0;
+  // printf("Ingrese la cantidad de veces que quiere repetir el proceso: \n");
+  // scanf("%i", &repeticiones);
+  // int minimo;
+  // int maximo;
+  // // VALIDAR QUE LA CANTIDAD DE CLAVES A GENERAR NO SEAN > 5000
+  // printf("Ingrese la cantidad de claves a generar: \n");
+  // scanf("%i", &cantidad);
 
-  printf("Ingrese el numero menor del rango de las claves a generar: \n");
-  scanf("%i", &minimo);
+  // printf("Ingrese el numero menor del rango de las claves a generar: \n");
+  // scanf("%i", &minimo);
 
-  // VALIDAR QUE SEA MAYOR AL MENOR Y QUE SEA MENOR A 100.000.
-  printf("Ingrese el numero mayor del rango de las claves a generar: \n");
-  scanf("%i", &maximo);
+  // // VALIDAR QUE SEA MAYOR AL MENOR Y QUE SEA MENOR A 100.000.
+  // printf("Ingrese el numero mayor del rango de las claves a generar: \n");
+  // scanf("%i", &maximo);
 
-  int masArb = 0;
-  int masHash = 0;
-  for (int i = 0; i < repeticiones; i++)
-  {
-    int cantidadBus;
-    // VALIDAR QUE NO SEA MAYOR A LA CANTIDAD DE CLAVES GENERADAS
-    printf("Ingrese la cantidad de claves a a generar (Para la busqueda en las estructuras): \n");
-    scanf("%i", &cantidadBus);
-    srand(time(NULL));
-    Lista clavesParaRellenar = Generarlistaclaves(cantidad, minimo, maximo);
-    Lista clavesParaBuscar = Generarlistaclaves(cantidadBus, minimo, maximo);
-    ArbolAVL arbol = crearAVL(clavesParaRellenar);
-    TablaHash hash5 = crearTablaHash(clavesParaRellenar);
-    int resuPar = AlmacenarTiempos(hash5, arbol, clavesParaBuscar, resultadosAvl, resultadosHash, clavesParaRellenar);
-    if (resuPar == 0)
-    {
-      masArb++;
-    }
-    else if (resuPar == 1)
-    {
-      masHash++;
-    }
-    printf("------------------------\n");
-  }
-  printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en AVL\n\n", repeticiones, masArb);
-  printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en HASH\n\n", repeticiones, masHash);
+  // int masArb = 0;
+  // int masHash = 0;
+  // for (int i = 0; i < repeticiones; i++)
+  // {
+  //   int cantidadBus;
+  //   // VALIDAR QUE NO SEA MAYOR A LA CANTIDAD DE CLAVES GENERADAS
+  //   printf("Ingrese la cantidad de claves a a generar (Para la busqueda en las estructuras): \n");
+  //   scanf("%i", &cantidadBus);
+  //   srand(time(NULL));
+  //   Lista clavesParaRellenar = Generarlistaclaves(cantidad, minimo, maximo);
+  //   Lista clavesParaBuscar = Generarlistaclaves(cantidadBus, minimo, maximo);
+  //   ArbolAVL arbol = crearAVL(clavesParaRellenar);
+  //   TablaHash hash5 = crearTablaHash(clavesParaRellenar);
+  //   int resuPar = AlmacenarTiempos(hash5, arbol, clavesParaBuscar, resultadosAvl, resultadosHash, clavesParaRellenar);
+  //   if (resuPar == 0)
+  //   {
+  //     masArb++;
+  //   }
+  //   else if (resuPar == 1)
+  //   {
+  //     masHash++;
+  //   }
+  //   printf("------------------------\n");
+  // }
+  // printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en AVL\n\n", repeticiones, masArb);
+  // printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en HASH\n\n", repeticiones, masHash);
 
   return 0;
 }
