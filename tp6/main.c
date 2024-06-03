@@ -20,7 +20,7 @@ void ingresarAlumno(char *filename)
   FILE *file = fopen(filename, "ab"); // Abre el archivo en modo de adición binaria
   if (file == NULL)
   {
-    perror("Error al abrir el archivo");
+    printf("Error al abrir el archivo");
     return;
   }
 
@@ -221,7 +221,7 @@ void abm_alumnos(char *filename)
     }
   }
 
-  if (file == NULL)
+  if (file == NULL && opcion != 0)
   {
     printf("Error al abrir el archivo\n");
     return;
@@ -533,29 +533,325 @@ void mostrarArbol(NodoArbol raiz)
   mostrarArbolRec(n_hijoderecho(raiz), "", 0);
 }
 
+// Punto 6
+
+// Se desea poder implementar una solución para encontrar de forma rápida los datos de 
+// las personas que a una fecha determinada se presentaron a vacunar contra el COVID.  
+// Es decir dada una fecha determinada debería obtener quienes se vacunaron. De cada 
+// persona se guarda básicamente el DNI, Apellido y Nombre.  Se debe además hacer una 
+// pantalla de carga donde se pueda especificar la fecha y los datos de las personas que 
+// se vacunaron en esa fecha.
+
+typedef struct {
+  int dia;
+  int mes;
+  int anio;
+} Fecha;
+
+typedef struct {
+  int dni;
+  char nombre[50];
+  char apellido[50];
+
+  Fecha fecha;
+
+} Persona;
+
+void ingresarPersona(char *filename)
+{
+  FILE *file = fopen(filename, "ab"); // Abre el archivo en modo de adición binaria
+  if (file == NULL)
+  {
+    printf("Error al abrir el archivo");
+    return;
+  }
+
+  Persona persona;
+
+  printf("Ingrese el DNI de la persona: ");
+  scanf("%d", &persona.dni);
+  fflush(stdin);
+
+  printf("Ingrese el nombre de la persona: ");
+  fgets(persona.nombre, sizeof(persona.nombre), stdin);
+  persona.nombre[strcspn(persona.nombre, "\n")] = 0; // Elimina el salto de línea
+  fflush(stdin);
+
+  printf("Ingrese el apellido de la persona: ");
+  fgets(persona.apellido, sizeof(persona.apellido), stdin);
+  persona.apellido[strcspn(persona.apellido, "\n")] = 0; // Elimina el salto de línea
+  fflush(stdin);
+
+  printf("Ingrese el día de la fecha de vacunación: ");
+  scanf("%d", &persona.fecha.dia);
+  fflush(stdin);
+
+  printf("Ingrese el mes de la fecha de vacunación: ");
+  scanf("%d", &persona.fecha.mes);
+  fflush(stdin);
+
+  printf("Ingrese el año de la fecha de vacunación: ");
+  scanf("%d", &persona.fecha.anio);
+  fflush(stdin);
+
+  fwrite(&persona, sizeof(Persona), 1, file); // Escribe el registro de la persona en el archivo
+
+  printf("Persona ingresada exitosamente.\n");
+
+  fclose(file);
+}
+
+void eliminarPersona(char *filename, int dni)
+{
+  FILE *file = fopen(filename, "rb+"); // Abre el archivo en modo de lectura/escritura binaria
+  if (file == NULL)
+  {
+    perror("Error al abrir el archivo");
+    return;
+  }
+
+  Persona persona;
+  bool personaEncontrada = false;
+
+  while (fread(&persona, sizeof(Persona), 1, file) == 1)
+  {
+    if (persona.dni == dni)
+    {
+      personaEncontrada = true;
+      fseek(file, -sizeof(Persona), SEEK_CUR);   // Vuelve al inicio del registro actual
+      fwrite(&persona, sizeof(Persona), 1, file); // Sobrescribe el registro
+      printf("Persona con DNI %d eliminada.\n", dni);
+      break;
+    }
+  }
+
+  if (!personaEncontrada)
+  {
+    printf("Persona con DNI %d no encontrada.\n", dni);
+  }
+
+  fclose(file);
+}
+
+void modificarPersona(char *filename, int dni)
+{
+  FILE *file = fopen(filename, "rb+"); // Abre el archivo en modo de lectura/escritura binaria
+  if (file == NULL)
+  {
+    perror("Error al abrir el archivo");
+    return;
+  }
+
+  Persona persona;
+  bool personaEncontrada = false;
+
+  while (fread(&persona, sizeof(Persona), 1, file) == 1)
+  {
+    if (persona.dni == dni)
+    {
+      personaEncontrada = true;
+      printf("Ingrese el nombre de la persona: ");
+      fgets(persona.nombre, sizeof(persona.nombre), stdin);
+      persona.nombre[strcspn(persona.nombre, "\n")] = 0; // Elimina el salto de línea
+      fflush(stdin);
+
+      printf("Ingrese el apellido de la persona: ");
+      fgets(persona.apellido, sizeof(persona.apellido), stdin);
+      persona.apellido[strcspn(persona.apellido, "\n")] = 0; // Elimina el salto de línea
+      fflush(stdin);
+
+      printf("Ingrese el día de la fecha de vacunación: ");
+      scanf("%d", &persona.fecha.dia);
+      fflush(stdin);
+
+      printf("Ingrese el mes de la fecha de vacunación: ");
+      scanf("%d", &persona.fecha.mes);
+      fflush(stdin);
+
+      printf("Ingrese el año de la fecha de vacunación: ");
+      scanf("%d", &persona.fecha.anio);
+      fflush(stdin);
+
+      fseek(file, -sizeof(Persona), SEEK_CUR);                // Vuelve al inicio del registro actual
+      fwrite(&persona, sizeof(Persona), 1, file);              // Sobrescribe el registro
+      printf("Persona con DNI %d modificada.\n", dni);
+      break;
+    }
+  }
+
+  if (!personaEncontrada)
+  {
+    printf("Persona con DNI %d no encontrada.\n", dni);
+  }
+
+  fclose(file);
+}
+
+void mostrarPersonas(char *filename)
+{
+  FILE *file = fopen(filename, "rb"); // Abre el archivo en modo de lectura binaria
+  if (file == NULL)
+  {
+    perror("Error al abrir el archivo");
+    return;
+  }
+
+  Persona persona;
+  printf("Personas:\n\n");
+
+  while (fread(&persona, sizeof(Persona), 1, file) == 1)
+  {
+    printf("DNI: %d\n", persona.dni);
+    printf("Nombre: %s\n", persona.nombre);
+    printf("Apellido: %s\n", persona.apellido);
+    printf("Fecha de vacunación: %d/%d/%d\n", persona.fecha.dia, persona.fecha.mes, persona.fecha.anio);
+    printf("--------------------------\n");
+  }
+
+  fclose(file);
+}
+
+void mostrarPersonasVacunadasEnFecha(char *filename, Fecha fecha)
+{
+  FILE *file = fopen(filename, "rb"); // Abre el archivo en modo de lectura binaria
+  if (file == NULL)
+  {
+    perror("Error al abrir el archivo");
+    return;
+  }
+
+  Persona persona;
+  printf("Personas vacunadas el %d/%d/%d:\n\n", fecha.dia, fecha.mes, fecha.anio);
+
+  while (fread(&persona, sizeof(Persona), 1, file) == 1)
+  {
+    if (persona.fecha.dia == fecha.dia && persona.fecha.mes == fecha.mes && persona.fecha.anio == fecha.anio)
+    {
+      printf("DNI: %d\n", persona.dni);
+      printf("Nombre: %s\n", persona.nombre);
+      printf("Apellido: %s\n", persona.apellido);
+      printf("--------------------------\n");
+    }
+  }
+
+  fclose(file);
+}
+
+// ingresarPersonas 
+// modificarPersona
+// eliminarPersona
+// mostrarPersonas
+// mostrarPersonasVacunadasEnFecha
+void ABM_Personas(char *filename)
+{
+  FILE *file = NULL;
+  int opcion;
+  bool flag_menu = true;
+  bool flag_abm = false;
+
+  while (flag_menu)
+  {
+    printf("0. No realizar cambios en el archivo \n");
+    printf("1. Crear nuevo archivo\n");
+    printf("2. Modificar archivo actual\n");
+    printf("Ingrese una opcion: ");
+    scanf("%d", &opcion);
+    fflush(stdin);
+
+    switch (opcion)
+    {
+    case 0:
+      flag_menu = false;
+      break;
+    case 1:
+      file = fopen(filename, "wb");
+      flag_abm = true;
+      flag_menu = false;
+      break;
+    case 2:
+      file = fopen(filename, "ab");
+      flag_abm = true;
+      flag_menu = false;
+      break;
+    default:
+      printf("Opcion invalida\n");
+    }
+  }
+
+  if (file == NULL)
+  {
+    printf("Error al abrir el archivo\n");
+    return;
+  }
+
+  while (flag_abm)
+  {
+    int dni;
+    printf("0. Salir\n");
+    printf("1. Agregar persona\n");
+    printf("2. Modificar persona\n");
+    printf("3. Eliminar persona\n");
+    printf("Ingrese una opcion: ");
+    scanf("%d", &opcion);
+    fflush(stdin);
+
+    switch (opcion)
+    {
+    case 0:
+      flag_abm = false;
+      break;
+
+    case 1:
+      ingresarPersona(filename);
+      break;
+
+    case 2:
+      printf("Ingrese el DNI de la persona a modificar: ");
+      scanf("%d", &dni);
+      fflush(stdin);
+      modificarPersona(filename, dni);
+      break;
+
+    case 3:
+      printf("Ingrese el DNI de la persona a eliminar: ");
+      scanf("%d", &dni);
+      fflush(stdin);
+      eliminarPersona(filename, dni);
+
+      printf("Persona eliminada\n");
+      break;
+    }
+  }
+  if (file != NULL)
+  {
+    fclose(file);
+  }
+}
+
+
 int main()
 {
    //TODO: en el menu hay que preguntar por el nombre del archivo
    //TODO: en el menu hay que preguntar si quiere hacer cambios en el archivo
-   abm_alumnos("alumnos.dat");
+  //  abm_alumnos("alumnos.dat");
 
-   TablaHash tabla = punto4("alumnos.dat");
+  //  TablaHash tabla = punto4("alumnos.dat");
 
-   printf("\n");
+  //  printf("\n");
 
-   mostrarAlumnosActivos("alumnos.dat");
-   mostrarAlumnosInactivos("alumnos.dat");
-   th_mostrar_solo_ocupados(tabla);
-   TipoElemento te = th_recuperar(tabla, 195311);
-   if (te != NULL)
-   {
-     int *valor = te->valor;
-     printf("Legajo: %d\nPosicion en el archivo: %d\n", te->clave, *valor);
-   }
-   else
-   {
-     printf("Elemento no encontrado\n");
-   }
+  //  mostrarAlumnosActivos("alumnos.dat");
+  //  mostrarAlumnosInactivos("alumnos.dat");
+  //  th_mostrar_solo_ocupados(tabla);
+  //  TipoElemento te = th_recuperar(tabla, 195311);
+  //  if (te != NULL)
+  //  {
+  //    int *valor = te->valor;
+  //    printf("Legajo: %d\nPosicion en el archivo: %d\n", te->clave, *valor);
+  //  }
+  //  else
+  //  {
+  //    printf("Elemento no encontrado\n");
+  //  }
 
   //Punto5
   Lista resultadosHash = l_crear();
@@ -604,6 +900,11 @@ int main()
   }
   printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en AVL\n\n", repeticiones, masArb);
   printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en HASH\n\n", repeticiones, masHash);
+
+  // Punto 6
+  ABM_Personas("personas.dat");
+  mostrarPersonas("personas.dat");
+  mostrarPersonasVacunadasEnFecha("personas.dat", (Fecha){0, 0, 0});
 
   return 0;
 }
