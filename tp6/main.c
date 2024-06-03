@@ -281,8 +281,7 @@ TablaHash punto4(char *filename)
 {
   // tamaño 1000 porque no se de cuanto tiene que ser
   TablaHash tabla = th_crear(1000, funcion_hash_alumnos);
-  int *i = malloc(sizeof(int));
-  *i = 1;
+  int i = 1;
 
   FILE *file = fopen(filename, "rb+");
   if (file == NULL)
