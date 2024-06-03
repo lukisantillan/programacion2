@@ -281,7 +281,8 @@ TablaHash punto4(char *filename)
 {
   // tamaño 1000 porque no se de cuanto tiene que ser
   TablaHash tabla = th_crear(1000, funcion_hash_alumnos);
-  int i = 1;
+  int *i = malloc(sizeof(int));
+  *i = 1;
 
   FILE *file = fopen(filename, "rb+");
   if (file == NULL)
@@ -535,27 +536,27 @@ void mostrarArbol(NodoArbol raiz)
 
 int main()
 {
-  // TODO: en el menu hay que preguntar por el nombre del archivo
-  // TODO: en el menu hay que preguntar si quiere hacer cambios en el archivo
-  // abm_alumnos("alumnos.dat");
+   //TODO: en el menu hay que preguntar por el nombre del archivo
+   //TODO: en el menu hay que preguntar si quiere hacer cambios en el archivo
+   abm_alumnos("alumnos.dat");
 
-  // TablaHash tabla = punto4("alumnos.dat");
+   TablaHash tabla = punto4("alumnos.dat");
 
-  // printf("\n");
+   printf("\n");
 
-  // mostrarAlumnosActivos("alumnos.dat");
-  // mostrarAlumnosInactivos("alumnos.dat");
-  // th_mostrar_solo_ocupados(tabla);
-  // TipoElemento te = th_recuperar(tabla, 195311);
-  // if (te != NULL)
-  // {
-  //   int *valor = te->valor;
-  //   printf("Legajo: %d\nPosicion en el archivo: %d\n", te->clave, *valor);
-  // }
-  // else
-  // {
-  //   printf("Elemento no encontrado\n");
-  // }
+   mostrarAlumnosActivos("alumnos.dat");
+   mostrarAlumnosInactivos("alumnos.dat");
+   th_mostrar_solo_ocupados(tabla);
+   TipoElemento te = th_recuperar(tabla, 195311);
+   if (te != NULL)
+   {
+     int *valor = te->valor;
+     printf("Legajo: %d\nPosicion en el archivo: %d\n", te->clave, *valor);
+   }
+   else
+   {
+     printf("Elemento no encontrado\n");
+   }
 
   // Punto5
   Lista resultadosHash = l_crear();
