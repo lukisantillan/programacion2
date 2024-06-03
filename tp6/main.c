@@ -113,6 +113,33 @@ void mostrarAlumnosActivos(char *filename)
   fclose(file);
 }
 
+void mostrarAlumnosInactivos(char *filename)
+{
+  FILE *file = fopen(filename, "rb"); // Abre el archivo en modo de lectura binaria
+  if (file == NULL)
+  {
+    perror("Error al abrir el archivo");
+    return;
+  }
+
+  Alumno alumno;
+  printf("Alumnos Inactivos:\n\n");
+
+  while (fread(&alumno, sizeof(Alumno), 1, file) == 1)
+  {
+    if (alumno.estado != 1)
+    {
+      printf("Legajo: %d\n", alumno.legajo);
+      printf("Nombre: %s\n", alumno.nombre);
+      printf("Apellido: %s\n", alumno.apellido);
+      printf("Domicilio: %s\n", alumno.domicilio);
+      printf("--------------------------\n");
+    }
+  }
+
+  fclose(file);
+}
+
 void modificacion(char *filename, int legajo)
 {
   FILE *file = fopen(filename, "rb+"); // Abre el archivo en modo de lectura/escritura binaria
@@ -254,8 +281,7 @@ TablaHash punto4(char *filename)
 {
   // tamaño 1000 porque no se de cuanto tiene que ser
   TablaHash tabla = th_crear(1000, funcion_hash_alumnos);
-  int *i = malloc(sizeof(int));
-  *i = 1;
+  int i = 1;
 
   FILE *file = fopen(filename, "rb+");
   if (file == NULL)
@@ -269,8 +295,7 @@ TablaHash punto4(char *filename)
   {
     if (alumno.estado == 1)
     {
-      i++;
-      TipoElemento te = te_crear_con_valor(alumno.legajo, i);
+      TipoElemento te = te_crear_con_valor(alumno.legajo, i++);
       bool inserto = th_insertar(tabla, te);
       if (!inserto)
       {
@@ -383,16 +408,16 @@ void AlmacenarTiempos(TablaHash t, ArbolAVL avl, Lista L, Lista resultadoAVL, Li
     TipoElemento eleResu = te_crear_con_valor(ele->clave, tiempo);
     l_agregar(resultadoAVL, eleResu);
     start = clock();
-    eleAux = th_recuperar(t,ele->clave);
+    eleAux = th_recuperar(t, ele->clave);
     end = clock();
     *tiempo = (double)(end - start) / CLOCKS_PER_SEC;
     eleResu = te_crear_con_valor(ele->clave, tiempo);
     l_agregar(resultadoHash, eleResu);
   }
-  
 }
 
-void diferenciaTiempos(Lista tiempoAvl, Lista tiempoHash){
+void diferenciaTiempos(Lista tiempoAvl, Lista tiempoHash)
+{
   TipoElemento ele_avl, ele_hash;
   int longitud = l_longitud(tiempoAvl);
   int menorTiempoAvl = 0;
@@ -411,40 +436,42 @@ void diferenciaTiempos(Lista tiempoAvl, Lista tiempoHash){
     else if ((double *)ele_avl->valor > (double *)ele_hash->valor)
     {
       menorTiempoHash++;
-    } else {igualdad++;}
+    }
+    else
+    {
+      igualdad++;
+    }
   }
-  
+
   printf("En %i de %i elementos, el tiempo de la busqueda fue más rapida en AVL que en Hash\n", menorTiempoAvl, longitud);
   printf("En %i de %i elementos, el tiempo de la busqueda fue más rapida en Hash que en Avl\n", menorTiempoHash, longitud);
   printf("En %i de %i elementos, el tiempo de la busqueda fue igual en AVL y en Hash\n", igualdad, longitud);
-
-
-  
 }
 
 int main()
 {
   // TODO: en el menu hay que preguntar por el nombre del archivo
   // TODO: en el menu hay que preguntar si quiere hacer cambios en el archivo
-  //   abm_alumnos("alumnos.dat");
+  abm_alumnos("alumnos.dat");
 
-  //   TablaHash tabla = punto4("alumnos.dat");
+  TablaHash tabla = punto4("alumnos.dat");
 
-  //   printf("\n");
+  printf("\n");
 
-  //   mostrarAlumnosActivos("alumnos.dat");
-  //   th_mostrar_solo_ocupados(tabla);
-  //   TipoElemento te = th_recuperar(tabla, 195311);
-  //   if (te != NULL)
-  //   {
-  //     printf("Legajo: %d\nPosicion en el archivo: %d", te->clave, te->valor);
-  //   }
-  //   else
-  //   {
-  //     printf("Elemento no encontrado\n");
-  //   }
+  mostrarAlumnosActivos("alumnos.dat");
+  mostrarAlumnosInactivos("alumnos.dat");
+  th_mostrar_solo_ocupados(tabla);
+  TipoElemento te = th_recuperar(tabla, 195311);
+  if (te != NULL)
+  {
+    printf("Legajo: %d\nPosicion en el archivo: %d", te->clave, te->valor);
+  }
+  else
+  {
+    printf("Elemento no encontrado\n");
+  }
 
-  //   return 0;
+  return 0;
 }
 
-  // gcc -o output ../libs/hash/tabla_hash_lista_colisiones.c ../libs/elementos/tipo_elemento.c ../libs/listas/listas_arreglos.c ../libs/nodos/nodo.c ../libs/arboles/arbol-binario.c ../libs/colas/colas_arreglos.c ../libs/arboles/arbol-avl.c ../libs/arboles/arbol-binario-busqueda.c main.c
+// gcc -o output ../libs/hash/tabla_hash_lista_colisiones.c ../libs/elementos/tipo_elemento.c ../libs/listas/listas_arreglos.c ../libs/nodos/nodo.c ../libs/arboles/arbol-binario.c ../libs/colas/colas_arreglos.c ../libs/arboles/arbol-avl.c ../libs/arboles/arbol-binario-busqueda.c main.c
