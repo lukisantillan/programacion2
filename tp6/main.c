@@ -254,7 +254,8 @@ TablaHash punto4(char *filename)
 {
   // tamaño 1000 porque no se de cuanto tiene que ser
   TablaHash tabla = th_crear(1000, funcion_hash_alumnos);
-  int i = 1;
+  int *i = malloc(sizeof(int));
+  *i = 1;
 
   FILE *file = fopen(filename, "rb+");
   if (file == NULL)
@@ -268,7 +269,8 @@ TablaHash punto4(char *filename)
   {
     if (alumno.estado == 1)
     {
-      TipoElemento te = te_crear_con_valor(alumno.legajo, i++);
+      i++;
+      TipoElemento te = te_crear_con_valor(alumno.legajo, i);
       bool inserto = th_insertar(tabla, te);
       if (!inserto)
       {
@@ -284,7 +286,6 @@ TablaHash punto4(char *filename)
 }
 
 // punto5
-
 Lista Generarlistaclaves(int cantidadclavesagenerar, int valorminimo, int valormaximo)
 {
   Lista lista = l_crear();
@@ -364,29 +365,86 @@ TablaHash crearTablaHash(Lista L)
   return resultado;
 }
 
+// La lista L, deberia ser la lista con las claves a buscar.
+// Pasar AVL y HASH ya creados, en el main, no olvidar meter las funciones en el ciclo que dependa de las repeticiones que quieras que se repita.
+void AlmacenarTiempos(TablaHash t, ArbolAVL avl, Lista L, Lista resultadoAVL, Lista resultadoHash)
+{
+  TipoElemento ele, eleAux;
+  Iterador it = iterador(L);
+  clock_t start, end;
+  while (hay_siguiente(it))
+  {
+    ele = siguiente(it);
+    start = clock();
+    eleAux = avl_buscar(avl, ele->clave);
+    end = clock();
+    double *tiempo = malloc(sizeof(double));
+    *tiempo = (double)(end - start) / CLOCKS_PER_SEC;
+    TipoElemento eleResu = te_crear_con_valor(ele->clave, tiempo);
+    l_agregar(resultadoAVL, eleResu);
+    start = clock();
+    eleAux = th_recuperar(t,ele->clave);
+    end = clock();
+    *tiempo = (double)(end - start) / CLOCKS_PER_SEC;
+    eleResu = te_crear_con_valor(ele->clave, tiempo);
+    l_agregar(resultadoHash, eleResu);
+  }
+  
+}
+
+void diferenciaTiempos(Lista tiempoAvl, Lista tiempoHash){
+  TipoElemento ele_avl, ele_hash;
+  int longitud = l_longitud(tiempoAvl);
+  int menorTiempoAvl = 0;
+  int menorTiempoHash = 0;
+  int igualdad = 0;
+  Iterador ite_avl = iterador(tiempoAvl);
+  Iterador ite_has = iterador(tiempoHash);
+  while (hay_siguiente(tiempoAvl) && hay_siguiente(tiempoHash))
+  {
+    ele_avl = siguiente(tiempoAvl);
+    ele_hash = siguiente(tiempoHash);
+    if (ele_avl->valor < ele_hash->valor)
+    {
+      menorTiempoAvl++;
+    }
+    else if (ele_avl > ele_hash->valor)
+    {
+      menorTiempoHash++;
+    } else {igualdad++;}
+  }
+  
+  printf("En %i de %i elementos, el tiempo de la busqueda fue más rapida en AVL que en Hash\n", menorTiempoAvl, longitud);
+  printf("En %i de %i elementos, el tiempo de la busqueda fue más rapida en Hash que en Avl\n", menorTiempoHash, longitud);
+  printf("En %i de %i elementos, el tiempo de la busqueda fue igual en AVL y en Hash\n", igualdad, longitud);
+
+
+  
+}
+
 int main()
 {
   // TODO: en el menu hay que preguntar por el nombre del archivo
   // TODO: en el menu hay que preguntar si quiere hacer cambios en el archivo
-  abm_alumnos("alumnos.dat");
+  //   abm_alumnos("alumnos.dat");
 
-  TablaHash tabla = punto4("alumnos.dat");
+  //   TablaHash tabla = punto4("alumnos.dat");
 
-  printf("\n");
+  //   printf("\n");
 
-  mostrarAlumnosActivos("alumnos.dat");
-  th_mostrar_solo_ocupados(tabla);
-  TipoElemento te = th_recuperar(tabla, 195311);
-  if (te != NULL)
-  {
-    printf("Legajo: %d\nPosicion en el archivo: %d", te->clave, te->valor);
-  }
-  else
-  {
-    printf("Elemento no encontrado\n");
-  }
+  //   mostrarAlumnosActivos("alumnos.dat");
+  //   th_mostrar_solo_ocupados(tabla);
+  //   TipoElemento te = th_recuperar(tabla, 195311);
+  //   if (te != NULL)
+  //   {
+  //     printf("Legajo: %d\nPosicion en el archivo: %d", te->clave, te->valor);
+  //   }
+  //   else
+  //   {
+  //     printf("Elemento no encontrado\n");
+  //   }
 
-  return 0;
+  //   return 0;
 }
 
-// gcc -o output ../libs/hash/tabla_hash_lista_colisiones.c ../libs/elementos/tipo_elemento.c ../libs/listas/listas_arreglos.c ../libs/nodos/nodo.c ../libs/arboles/arbol-binario.c ../libs/colas/colas_arreglos.c ../libs/arboles/arbol-avl.c ../libs/arboles/arbol-binario-busqueda.c main.c
+  // gcc -o output ../libs/hash/tabla_hash_lista_colisiones.c ../libs/elementos/tipo_elemento.c ../libs/listas/listas_arreglos.c ../libs/nodos/nodo.c ../libs/arboles/arbol-binario.c ../libs/colas/colas_arreglos.c ../libs/arboles/arbol-avl.c ../libs/arboles/arbol-binario-busqueda.c main.c
