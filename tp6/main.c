@@ -296,7 +296,7 @@ TablaHash punto4(char *filename)
   {
     if (alumno.estado == 1)
     {
-      *i+= 1;
+      *i += 1;
       TipoElemento te = te_crear_con_valor(alumno.legajo, i);
       bool inserto = th_insertar(tabla, te);
       if (!inserto)
@@ -394,7 +394,7 @@ TablaHash crearTablaHash(Lista L)
 
 // La lista L, deberia ser la lista con las claves a buscar.
 // Pasar AVL y HASH ya creados, en el main, no olvidar meter las funciones en el ciclo que dependa de las repeticiones que quieras que se repita.
-void AlmacenarTiempos(TablaHash t, ArbolAVL avl, Lista L, Lista resultadoAVL, Lista resultadoHash, Lista rell)
+int AlmacenarTiempos(TablaHash t, ArbolAVL avl, Lista L, Lista resultadoAVL, Lista resultadoHash, Lista rell)
 {
   TipoElemento ele, eleAux;
   int longitud = l_longitud(L);
@@ -407,34 +407,45 @@ void AlmacenarTiempos(TablaHash t, ArbolAVL avl, Lista L, Lista resultadoAVL, Li
     if (l_buscar(rell, ele->clave) != NULL)
     {
       // Medir tiempo de búsqueda en AVL
-      start = clock();
-      eleAux = avl_buscar(avl, ele->clave);
-      end = clock();
-      double *tiempoAVL = malloc(sizeof(double));
-      *tiempoAVL = (double)(end - start) / CLOCKS_PER_SEC;
-      TipoElemento eleResuAVL = te_crear_con_valor(ele->clave, tiempoAVL);
+      struct timespec tiempoInicio1, tiempoFin1;
+      clock_gettime(CLOCK_MONOTONIC, &tiempoInicio1);
+
+      TipoElemento elementoBuscadoArbol = avl_buscar(avl, ele->clave);
+
+      clock_gettime(CLOCK_MONOTONIC, &tiempoFin1);
+
+      long *tiempoAvl = malloc(sizeof(long));
+      *tiempoAvl = (tiempoFin1.tv_sec - tiempoInicio1.tv_sec) * 1000000000L + (tiempoFin1.tv_nsec - tiempoInicio1.tv_nsec);
+      TipoElemento eleResuAVL = te_crear_con_valor(ele->clave, tiempoAvl);
       l_agregar(resultadoAVL, eleResuAVL);
 
       // Medir tiempo de búsqueda en Tabla Hash
-      start = clock();
-      eleAux = th_recuperar(t, ele->clave);
-      end = clock();
-      double *tiempoHash = malloc(sizeof(double));
-      *tiempoHash = (double)(end - start) / CLOCKS_PER_SEC;
+      struct timespec tiempoInicio2, tiempoFin2;
+      clock_gettime(CLOCK_MONOTONIC, &tiempoInicio2);
+
+      TipoElemento elementoBuscadoTabla = th_recuperar(t, ele->clave);
+
+      clock_gettime(CLOCK_MONOTONIC, &tiempoFin2);
+
+      long *tiempoHash = malloc(sizeof(long));
+      *tiempoHash = (tiempoFin2.tv_sec - tiempoInicio2.tv_sec) * 1000000000L + (tiempoFin2.tv_nsec - tiempoInicio2.tv_nsec);
       TipoElemento eleResuHash = te_crear_con_valor(ele->clave, tiempoHash);
       l_agregar(resultadoHash, eleResuHash);
       acumulador++;
     }
   }
   printf("Los elementos de busqueda que coincidieron fueron %i, de %i, por lo tanto los resultados se basan en esos \n", acumulador, longitud);
+  return diferenciaTiempos(resultadoAVL, resultadoHash);
 }
 
-void diferenciaTiempos(Lista tiempoAvl, Lista tiempoHash)
+int diferenciaTiempos(Lista tiempoAvl, Lista tiempoHash)
 {
   TipoElemento ele_avl, ele_hash;
   int longitud = l_longitud(tiempoAvl);
-  int menorTiempoAvl = 0;
-  int menorTiempoHash = 0;
+  float menorTiempoAvl = 0;
+  float menorTiempoHash = 0;
+  int acumuladorAvl = 0;
+  int acumuladorHash = 0;
   int igualdad = 0;
   Iterador ite_avl = iterador(tiempoAvl);
   Iterador ite_hash = iterador(tiempoHash);
@@ -442,28 +453,45 @@ void diferenciaTiempos(Lista tiempoAvl, Lista tiempoHash)
   {
     ele_avl = siguiente(ite_avl);
     ele_hash = siguiente(ite_hash);
-    double *valorAvl = malloc(sizeof(double));
+    long *valorAvl = malloc(sizeof(double));
     valorAvl = ele_avl->valor;
-    double *valorHash = malloc(sizeof(double));
+    long *valorHash = malloc(sizeof(double));
     valorHash = ele_hash->valor;
     if (*valorAvl < *valorHash)
     {
-      menorTiempoAvl++;
+      menorTiempoAvl += *valorAvl;
+      acumuladorAvl += 1;
     }
     else if (*valorAvl > *valorHash)
     {
-      menorTiempoHash++;
+      menorTiempoHash += *valorHash;
+      acumuladorHash += 1;
     }
     else if (*valorAvl == *valorHash)
     {
-      igualdad++;
+      menorTiempoHash += *valorHash;
+      acumuladorHash += 1;
+      menorTiempoAvl += *valorAvl;
+      acumuladorAvl += 1;
     }
   }
-  printf("RECORDAR QUE LAS BUSQUEDAS SE BASARON EN LOS VALORES QUE COINCIDIAN\n");
-  printf("\t\t -- La cantidad de elementos que coincidieron en el total de las iteraciones fueron : %i--\n", longitud);
-  printf("El tiempo de busqueda fue menor en %i de %i claves en AVL\n", menorTiempoAvl, longitud);
-  printf("El tiempo de busqueda fue menor en %i de %i claves en Hash\n", menorTiempoHash, longitud);
-  printf("El tiempo de busqueda fue igual en %i de %i\n", igualdad, longitud);
+  float promedioArbol = menorTiempoAvl / acumuladorAvl;
+  float promedioHash = menorTiempoHash / acumuladorHash;
+  printf("\nRECORDAR QUE LAS BUSQUEDAS SE BASARON EN LOS VALORES QUE COINCIDIAN\n");
+  printf("El promedio de tiempo de busqueda en AVL fue : %.1lf nanosegundos\n", promedioArbol);
+  printf("El promedio de tiempo de busqueda en HASH fue : %.1lf nanosegundos\n", promedioHash);
+  if (promedioArbol > promedioHash)
+  {
+    return 1;
+  }
+  else if (promedioArbol < promedioHash)
+  {
+    return 0;
+  }
+  else
+  {
+    return -1;
+  }
 }
 
 void mostrarArbolRec(NodoArbol raiz, char prefijo[], int esIzquierda)
@@ -510,52 +538,53 @@ int main()
 {
   // TODO: en el menu hay que preguntar por el nombre del archivo
   // TODO: en el menu hay que preguntar si quiere hacer cambios en el archivo
-  abm_alumnos("alumnos.dat");
+  // abm_alumnos("alumnos.dat");
 
-  TablaHash tabla = punto4("alumnos.dat");
+  // TablaHash tabla = punto4("alumnos.dat");
 
-  printf("\n");
+  // printf("\n");
 
-  mostrarAlumnosActivos("alumnos.dat");
-  mostrarAlumnosInactivos("alumnos.dat");
-  th_mostrar_solo_ocupados(tabla);
-  TipoElemento te = th_recuperar(tabla, 195311);
-  if (te != NULL)
-  {
-    int *valor = te->valor;
-    printf("Legajo: %d\nPosicion en el archivo: %d\n", te->clave, *valor);
-  }
-  else
-  {
-    printf("Elemento no encontrado\n");
-  }
+  // mostrarAlumnosActivos("alumnos.dat");
+  // mostrarAlumnosInactivos("alumnos.dat");
+  // th_mostrar_solo_ocupados(tabla);
+  // TipoElemento te = th_recuperar(tabla, 195311);
+  // if (te != NULL)
+  // {
+  //   int *valor = te->valor;
+  //   printf("Legajo: %d\nPosicion en el archivo: %d\n", te->clave, *valor);
+  // }
+  // else
+  // {
+  //   printf("Elemento no encontrado\n");
+  // }
 
-  //Punto5
+  // Punto5
   Lista resultadosHash = l_crear();
   Lista resultadosAvl = l_crear();
   int repeticiones;
 
-  //VALIDAR QUE SEA MAYOR A 0;
+  // VALIDAR QUE SEA MAYOR A 0;
   printf("Ingrese la cantidad de veces que quiere repetir el proceso: \n");
   scanf("%i", &repeticiones);
   int minimo;
   int maximo;
-  //VALIDAR QUE LA CANTIDAD DE CLAVES A GENERAR NO SEAN > 5000
+  // VALIDAR QUE LA CANTIDAD DE CLAVES A GENERAR NO SEAN > 5000
   printf("Ingrese la cantidad de claves a generar: \n");
   scanf("%i", &cantidad);
 
-  
   printf("Ingrese el numero menor del rango de las claves a generar: \n");
   scanf("%i", &minimo);
 
-  //VALIDAR QUE SEA MAYOR AL MENOR Y QUE SEA MENOR A 100.000.
+  // VALIDAR QUE SEA MAYOR AL MENOR Y QUE SEA MENOR A 100.000.
   printf("Ingrese el numero mayor del rango de las claves a generar: \n");
   scanf("%i", &maximo);
 
+  int masArb = 0;
+  int masHash = 0;
   for (int i = 0; i < repeticiones; i++)
   {
     int cantidadBus;
-    //VALIDAR QUE NO SEA MAYOR A LA CANTIDAD DE CLAVES GENERADAS
+    // VALIDAR QUE NO SEA MAYOR A LA CANTIDAD DE CLAVES GENERADAS
     printf("Ingrese la cantidad de claves a a generar (Para la busqueda en las estructuras): \n");
     scanf("%i", &cantidadBus);
     srand(time(NULL));
@@ -563,11 +592,19 @@ int main()
     Lista clavesParaBuscar = Generarlistaclaves(cantidadBus, minimo, maximo);
     ArbolAVL arbol = crearAVL(clavesParaRellenar);
     TablaHash hash5 = crearTablaHash(clavesParaRellenar);
-    AlmacenarTiempos(hash5, arbol, clavesParaBuscar, resultadosAvl, resultadosHash, clavesParaRellenar);
+    int resuPar = AlmacenarTiempos(hash5, arbol, clavesParaBuscar, resultadosAvl, resultadosHash, clavesParaRellenar);
+    if (resuPar == 0)
+    {
+      masArb++;
+    }
+    else if (resuPar == 1)
+    {
+      masHash++;
+    }
     printf("------------------------\n");
   }
-
-  diferenciaTiempos(resultadosAvl, resultadosHash);
+  printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en AVL\n\n", repeticiones, masArb);
+  printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en HASH\n\n", repeticiones, masHash);
 
   return 0;
 }

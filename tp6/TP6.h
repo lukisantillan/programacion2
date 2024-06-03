@@ -67,3 +67,5 @@ TablaHash punto4(char *filename);
 Lista Generarlistaclaves(int cantidadclavesagenerar, int valorminimo, int valormaximo);
 
 ArbolAVL crearAVL(Lista L);
+
+int diferenciaTiempos(Lista tiempoAvl, Lista tiempoHash);
