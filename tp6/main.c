@@ -2,6 +2,22 @@
 
 static int cantidad;
 
+// Funciones auxiliares
+void clearScreen()
+{
+    system("clear");
+}
+
+void waitForKey()
+{
+    printf("\nPresione Enter para continuar...");
+    while (getchar() != '\n')
+        ;
+    getchar();
+
+    system("clear");
+}
+
 typedef struct
 {
   int legajo;
@@ -569,19 +585,50 @@ void ingresarPersona(char *filename)
   }
 
   Persona persona;
-
   printf("Ingrese el DNI de la persona: ");
-  scanf("%d", &persona.dni);
-  fflush(stdin);
+  // Validar que el DNI sea un número positivo, mayor a 0, menor a 8 dígitos
+  while (scanf("%d", &persona.dni) != 1 || persona.dni < 1 || persona.dni > 99999999)
+  {
+    printf("Error: Ingrese un DNI válido (mayor a 0 y menor a 99999999): ");
+    fflush(stdin);
+  }
 
+  Persona personaExistente;
+  FILE *fileExistente = fopen(filename, "rb");
+  if (fileExistente != NULL)
+  {
+    while (fread(&personaExistente, sizeof(Persona), 1, fileExistente) == 1)
+    {
+      if (personaExistente.dni == persona.dni)
+      {
+        clearScreen();
+        
+        printf("Error: La persona con DNI %d ya existe en el archivo.\n", persona.dni);
+
+        // Printeo los datos de la persona existente
+        printf("Nombre: %s\n", personaExistente.nombre);
+        printf("Apellido: %s\n", personaExistente.apellido);
+        printf("Fecha de vacunación: %02d/%02d/%04d\n", personaExistente.fecha.dia, personaExistente.fecha.mes, personaExistente.fecha.anio);
+
+        fclose(fileExistente);
+        fclose(file);
+
+        waitForKey();
+        return;
+      }
+    }
+    fclose(fileExistente);
+  }
+
+  fflush(stdin);
   printf("Ingrese el nombre de la persona: ");
   fgets(persona.nombre, sizeof(persona.nombre), stdin);
-  persona.nombre[strcspn(persona.nombre, "\n")] = 0; // Elimina el salto de línea
+  persona.nombre[strcspn(persona.nombre, "\n")] = 0;
   fflush(stdin);
 
   printf("Ingrese el apellido de la persona: ");
   fgets(persona.apellido, sizeof(persona.apellido), stdin);
-  persona.apellido[strcspn(persona.apellido, "\n")] = 0; // Elimina el salto de línea
+  persona.apellido[strcspn(persona.apellido, "\n")] = 0;
   fflush(stdin);
 
   printf("Ingrese el día de la fecha de vacunación: ");
@@ -607,9 +654,8 @@ void ingresarPersona(char *filename)
     fflush(stdin);
   }
   fflush(stdin);
-  
-  fwrite(&persona, sizeof(Persona), 1, file); // Escribe el registro de la persona en el archivo
 
+  fwrite(&persona, sizeof(Persona), 1, file);
   printf("Persona ingresada exitosamente.\n");
 
   fclose(file);
@@ -617,7 +663,7 @@ void ingresarPersona(char *filename)
 
 void eliminarPersona(char *filename, int dni)
 {
-  FILE *file = fopen(filename, "rb+"); // Abre el archivo en modo de lectura/escritura binaria
+  FILE *file = fopen(filename, "rb+");
   if (file == NULL)
   {
     perror("Error al abrir el archivo");
@@ -632,9 +678,11 @@ void eliminarPersona(char *filename, int dni)
     if (persona.dni == dni)
     {
       personaEncontrada = true;
-      fseek(file, -sizeof(Persona), SEEK_CUR);    // Vuelve al inicio del registro actual
-      fwrite(&persona, sizeof(Persona), 1, file); // Sobrescribe el registro
+      fseek(file, -sizeof(Persona), SEEK_CUR);
+      fwrite(&persona, sizeof(Persona), 1, file);
       printf("Persona con DNI %d eliminada.\n", dni);
+
+      waitForKey();
       break;
     }
   }
@@ -642,6 +690,7 @@ void eliminarPersona(char *filename, int dni)
   if (!personaEncontrada)
   {
     printf("Persona con DNI %d no encontrada.\n", dni);
+    waitForKey();
   }
 
   fclose(file);
@@ -701,6 +750,8 @@ void modificarPersona(char *filename, int dni)
       fseek(file, -sizeof(Persona), SEEK_CUR);    // Vuelve al inicio del registro actual
       fwrite(&persona, sizeof(Persona), 1, file); // Sobrescribe el registro
       printf("Persona con DNI %d modificada.\n", dni);
+
+      waitForKey();
       break;
     }
   }
@@ -708,6 +759,8 @@ void modificarPersona(char *filename, int dni)
   if (!personaEncontrada)
   {
     printf("Persona con DNI %d no encontrada.\n", dni);
+
+    waitForKey();
   }
 
   fclose(file);
@@ -730,7 +783,7 @@ void mostrarPersonas(char *filename)
     printf("DNI: %d\n", persona.dni);
     printf("Nombre: %s\n", persona.nombre);
     printf("Apellido: %s\n", persona.apellido);
-    printf("Fecha de vacunación: %02d/%02d/%d\n", persona.fecha.dia, persona.fecha.mes, persona.fecha.anio);
+    printf("Fecha de vacunación: %02d/%02d/%04d\n", persona.fecha.dia, persona.fecha.mes, persona.fecha.anio);
     printf("--------------------------\n");
   }
 
@@ -747,7 +800,7 @@ void mostrarPersonasVacunadasEnFecha(char *filename, Fecha fecha)
   }
 
   Persona persona;
-  printf("Personas vacunadas el %02d/%02d/%d:\n\n", fecha.dia, fecha.mes, fecha.anio);
+  printf("Personas vacunadas el %02d/%02d/%04d:\n\n", fecha.dia, fecha.mes, fecha.anio);
 
   while (fread(&persona, sizeof(Persona), 1, file) == 1)
   {
@@ -843,8 +896,6 @@ void ABM_Personas(char *filename)
       scanf("%d", &dni);
       fflush(stdin);
       eliminarPersona(filename, dni);
-
-      printf("Persona eliminada\n");
       break;
     }
   }
@@ -878,58 +929,85 @@ int main()
   //    printf("Elemento no encontrado\n");
   //  }
 
-  //Punto5
-  Lista resultadosHash = l_crear();
-  Lista resultadosAvl = l_crear();
-  int repeticiones;
+  // //Punto5
+  // Lista resultadosHash = l_crear();
+  // Lista resultadosAvl = l_crear();
+  // int repeticiones;
 
-  // VALIDAR QUE SEA MAYOR A 0;
-  printf("Ingrese la cantidad de veces que quiere repetir el proceso: \n");
-  scanf("%i", &repeticiones);
-  int minimo;
-  int maximo;
-  // VALIDAR QUE LA CANTIDAD DE CLAVES A GENERAR NO SEAN > 5000
-  printf("Ingrese la cantidad de claves a generar: \n");
-  scanf("%i", &cantidad);
+  // // VALIDAR QUE SEA MAYOR A 0;
+  // printf("Ingrese la cantidad de veces que quiere repetir el proceso: \n");
+  // scanf("%i", &repeticiones);
+  // int minimo;
+  // int maximo;
+  // // VALIDAR QUE LA CANTIDAD DE CLAVES A GENERAR NO SEAN > 5000
+  // printf("Ingrese la cantidad de claves a generar: \n");
+  // scanf("%i", &cantidad);
 
-  printf("Ingrese el numero menor del rango de las claves a generar: \n");
-  scanf("%i", &minimo);
+  // printf("Ingrese el numero menor del rango de las claves a generar: \n");
+  // scanf("%i", &minimo);
 
-  // VALIDAR QUE SEA MAYOR AL MENOR Y QUE SEA MENOR A 100.000.
-  printf("Ingrese el numero mayor del rango de las claves a generar: \n");
-  scanf("%i", &maximo);
+  // // VALIDAR QUE SEA MAYOR AL MENOR Y QUE SEA MENOR A 100.000.
+  // printf("Ingrese el numero mayor del rango de las claves a generar: \n");
+  // scanf("%i", &maximo);
 
-  int masArb = 0;
-  int masHash = 0;
-  for (int i = 0; i < repeticiones; i++)
-  {
-    int cantidadBus;
-    // VALIDAR QUE NO SEA MAYOR A LA CANTIDAD DE CLAVES GENERADAS
-    printf("Ingrese la cantidad de claves a a generar (Para la busqueda en las estructuras): \n");
-    scanf("%i", &cantidadBus);
-    srand(time(NULL));
-    Lista clavesParaRellenar = Generarlistaclaves(cantidad, minimo, maximo);
-    Lista clavesParaBuscar = Generarlistaclaves(cantidadBus, minimo, maximo);
-    ArbolAVL arbol = crearAVL(clavesParaRellenar);
-    TablaHash hash5 = crearTablaHash(clavesParaRellenar);
-    int resuPar = AlmacenarTiempos(hash5, arbol, clavesParaBuscar, resultadosAvl, resultadosHash, clavesParaRellenar);
-    if (resuPar == 0)
-    {
-      masArb++;
-    }
-    else if (resuPar == 1)
-    {
-      masHash++;
-    }
-    printf("------------------------\n");
-  }
-  printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en AVL\n\n", repeticiones, masArb);
-  printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en HASH\n\n", repeticiones, masHash);
+  // int masArb = 0;
+  // int masHash = 0;
+  // for (int i = 0; i < repeticiones; i++)
+  // {
+  //   int cantidadBus;
+  //   // VALIDAR QUE NO SEA MAYOR A LA CANTIDAD DE CLAVES GENERADAS
+  //   printf("Ingrese la cantidad de claves a a generar (Para la busqueda en las estructuras): \n");
+  //   scanf("%i", &cantidadBus);
+  //   srand(time(NULL));
+  //   Lista clavesParaRellenar = Generarlistaclaves(cantidad, minimo, maximo);
+  //   Lista clavesParaBuscar = Generarlistaclaves(cantidadBus, minimo, maximo);
+  //   ArbolAVL arbol = crearAVL(clavesParaRellenar);
+  //   TablaHash hash5 = crearTablaHash(clavesParaRellenar);
+  //   int resuPar = AlmacenarTiempos(hash5, arbol, clavesParaBuscar, resultadosAvl, resultadosHash, clavesParaRellenar);
+  //   if (resuPar == 0)
+  //   {
+  //     masArb++;
+  //   }
+  //   else if (resuPar == 1)
+  //   {
+  //     masHash++;
+  //   }
+  //   printf("------------------------\n");
+  // }
+  // printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en AVL\n\n", repeticiones, masArb);
+  // printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en HASH\n\n", repeticiones, masHash);
 
   // Punto 6
   ABM_Personas("personas.dat");
   mostrarPersonas("personas.dat");
-  mostrarPersonasVacunadasEnFecha("personas.dat", (Fecha){0, 0, 0});
+
+  int dia, mes, anio;
+  printf("Ingrese el día de la fecha de vacunación: ");
+  while (scanf("%d", &dia) != 1 || dia < 1 || dia > 31)
+  {
+    printf("Error: Ingrese un día válido (entre 1 y 31): ");
+    fflush(stdin);
+  }
+  fflush(stdin);
+
+  printf("Ingrese el mes de la fecha de vacunación: ");
+  while (scanf("%d", &mes) != 1 || mes < 1 || mes > 12)
+  {
+    printf("Error: Ingrese un mes válido (entre 1 y 12): ");
+    fflush(stdin);
+  }
+  fflush(stdin);
+
+  printf("Ingrese el año de la fecha de vacunación: ");
+  while (scanf("%d", &anio) != 1 || anio < 2020)
+  {
+    printf("Error: Ingrese un año válido (mayor o igual a 2020): ");
+    fflush(stdin);
+  }
+  fflush(stdin);
+
+  Fecha fecha = {dia, mes, anio};
+  mostrarPersonasVacunadasEnFecha("personas.dat", fecha);
 
   return 0;
 }
