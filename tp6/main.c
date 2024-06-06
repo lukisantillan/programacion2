@@ -1044,9 +1044,9 @@ void testPt5()
 
         printf("Ingrese el número menor del rango de las claves a generar: ");
         // Check si es un número y si es mayor a 0, maximmo a 10.000
-        while (scanf("%d", &minimo) != 1 || minimo < 1 || minimo > 10000)
+        while (scanf("%d", &minimo) != 1 || minimo < 1 || minimo > 100000)
         {
-          printf("Error: Ingrese un número válido (mayor a 0 y menor a 10000): ");
+          printf("Error: Ingrese un número válido (mayor a 0 y menor a 100000): ");
           fflush(stdin);
         }
 
@@ -1063,9 +1063,9 @@ void testPt5()
         {
           printf("Error: El rango entre el mínimo y el máximo debe ser mayor a la cantidad de claves a generar: ");
           printf("Ingrese el número menor del rango de las claves a generar: ");
-          while (scanf("%d", &minimo) != 1 || minimo < 1 || minimo > 10000)
+          while (scanf("%d", &minimo) != 1 || minimo < 1 || minimo > 100000)
           {
-            printf("Error: Ingrese un número válido (mayor a 0 y menor a 10000): ");
+            printf("Error: Ingrese un número válido (mayor a 0 y menor a 100000): ");
             fflush(stdin);
           }
 
