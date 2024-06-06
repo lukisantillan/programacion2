@@ -5,17 +5,18 @@ static int cantidad;
 // Funciones auxiliares
 void clearScreen()
 {
-    system("clear");
+  system("clear");
 }
 
 void waitForKey()
 {
-    printf("\nPresione Enter para continuar...");
-    while (getchar() != '\n')
-        ;
-    getchar();
+  fflush(stdin);
+  printf("\nPresione Enter para continuar...");
+  while (getchar() != '\n')
+    ;
+  getchar();
 
-    system("clear");
+  system("clear");
 }
 
 typedef struct
@@ -104,6 +105,8 @@ void bajaLogicaAlumno(char *filename, int legajo)
 
 void mostrarAlumnosActivos(char *filename)
 {
+  clearScreen();
+
   FILE *file = fopen(filename, "rb"); // Abre el archivo en modo de lectura binaria
   if (file == NULL)
   {
@@ -127,10 +130,15 @@ void mostrarAlumnosActivos(char *filename)
   }
 
   fclose(file);
+
+  waitForKey();
 }
 
 void mostrarAlumnosInactivos(char *filename)
 {
+
+  clearScreen();
+
   FILE *file = fopen(filename, "rb"); // Abre el archivo en modo de lectura binaria
   if (file == NULL)
   {
@@ -154,6 +162,8 @@ void mostrarAlumnosInactivos(char *filename)
   }
 
   fclose(file);
+
+  waitForKey();
 }
 
 void modificacion(char *filename, int legajo)
@@ -203,6 +213,8 @@ void modificacion(char *filename, int legajo)
 
 void abm_alumnos(char *filename)
 {
+  clearScreen();
+
   FILE *file = NULL;
   int opcion;
   bool flag_menu = true;
@@ -304,7 +316,6 @@ TablaHash punto4(char *filename)
   if (file == NULL)
   {
     printf("Error al abrir el archivo\n");
-    // TODO: chequear que si la tabla esta vacia no se corra ningun ejercicio en el menu
     return tabla;
   }
 
@@ -602,7 +613,7 @@ void ingresarPersona(char *filename)
       if (personaExistente.dni == persona.dni)
       {
         clearScreen();
-        
+
         printf("Error: La persona con DNI %d ya existe en el archivo.\n", persona.dni);
 
         // Printeo los datos de la persona existente
@@ -905,6 +916,281 @@ void ABM_Personas(char *filename)
   }
 }
 
+void testPt4()
+{
+  clearScreen();
+
+  TablaHash tabla = punto4("alumnos.dat");
+
+  while (1)
+  {
+    printf("\n+------------------------------------------------------------------------------------------+\n");
+    printf("| 1. Alta, baja y modificación de alumnos en un archivo.                                     |\n");
+    printf("| 2. Mostrar alumnos activos. \n");
+    printf("| 3. Mostrar alumnos inactivos. \n");
+    printf("| 4. Recuperar alumno por legajo. \n");
+    printf("| 5. Volver \n");
+    printf("+------------------------------------------------------------------------------------------+\n");
+    printf("\nIngrese una opcion: ");
+    int opcion;
+
+    while (scanf("%d", &opcion) != 1)
+    {
+      printf("Error: Ingrese una opción válida: ");
+      fflush(stdin);
+    }
+
+    fflush(stdin);
+
+    switch (opcion)
+    {
+    case 1:
+      abm_alumnos("alumnos.dat");
+      break;
+    case 2:
+      mostrarAlumnosActivos("alumnos.dat");
+      break;
+    case 3:
+      mostrarAlumnosInactivos("alumnos.dat");
+      break;
+    case 4:
+      clearScreen();
+      printf("\n");
+      th_mostrar_solo_ocupados(tabla);
+
+      printf("\nIngrese el legajo del alumno a buscar: ");
+      int legajo;
+      // Check si es un número y si es mayor a 6
+      while (scanf("%d", &legajo) != 1 || legajo < 6)
+      {
+        printf("Error: Ingrese un legajo válido (mayor a 6): ");
+        fflush(stdin);
+      }
+      fflush(stdin);
+
+      TipoElemento te = th_recuperar(tabla, legajo);
+      if (te != NULL)
+      {
+        int *valor = te->valor;
+        printf("Legajo: %d\nPosicion en el archivo: %d\n", te->clave, *valor);
+      }
+      else
+      {
+        printf("Elemento no encontrado\n");
+      }
+
+      waitForKey();
+      break;
+    case 5:
+      clearScreen();
+      return;
+    default:
+      printf("\nOpcion no valida");
+      break;
+    }
+  }
+}
+
+void testPt5()
+{
+  clearScreen();
+  while (1)
+  {
+    printf("\n+------------------------------------------------------------------------------------------+\n");
+    printf("| 1. Test de tiempo de búsqueda en AVL y Tabla Hash.                                         |\n");
+    printf("| 2. Volver \n");
+    printf("+------------------------------------------------------------------------------------------+\n");
+
+    printf("\nIngrese una opcion: ");
+    int opcion;
+
+    while (scanf("%d", &opcion) != 1)
+    {
+      printf("Error: Ingrese una opción válida: ");
+      fflush(stdin);
+    }
+
+    fflush(stdin);
+
+    switch (opcion)
+    {
+      case 1:
+        clearScreen();
+        Lista resultadosHash = l_crear();
+        Lista resultadosAvl = l_crear();
+
+        int repeticiones;
+        printf("Ingrese la cantidad de veces que quiere repetir el proceso: ");
+        // Check si es un número y si es mayor a 0
+        while (scanf("%d", &repeticiones) != 1 || repeticiones < 1)
+        {
+          printf("Error: Ingrese un número válido (mayor a 0): ");
+          fflush(stdin);
+        }
+
+        printf("Ingrese la cantidad de claves a generar: ");
+        // Check si es un número y no mayor a 3000
+        while (scanf("%d", &cantidad) != 1 || cantidad < 1 || cantidad > 3000)
+        {
+          printf("Error: Ingrese un número válido (mayor a 0 y menor a 3000): ");
+          fflush(stdin);
+        }
+
+        int maximo;
+        int minimo;
+
+        printf("Ingrese el número menor del rango de las claves a generar: ");
+        // Check si es un número y si es mayor a 0, maximmo a 10.000
+        while (scanf("%d", &minimo) != 1 || minimo < 1 || minimo > 10000)
+        {
+          printf("Error: Ingrese un número válido (mayor a 0 y menor a 10000): ");
+          fflush(stdin);
+        }
+
+        printf("Ingrese el número mayor del rango de las claves a generar: ");
+        // Check si es un número y si es mayor a menor
+        while (scanf("%d", &maximo) != 1 || maximo <= minimo)
+        {
+          printf("Error: Ingrese un número válido (mayor al mínimo): ");
+          fflush(stdin);
+        }
+
+        // Check si el rango entre el mínimo y el máximo es mayor a la cantidad de claves a generar
+        while (maximo - minimo < cantidad)
+        {
+          printf("Error: El rango entre el mínimo y el máximo debe ser mayor a la cantidad de claves a generar: ");
+          printf("Ingrese el número menor del rango de las claves a generar: ");
+          while (scanf("%d", &minimo) != 1 || minimo < 1 || minimo > 10000)
+          {
+            printf("Error: Ingrese un número válido (mayor a 0 y menor a 10000): ");
+            fflush(stdin);
+          }
+
+          printf("Ingrese el número mayor del rango de las claves a generar: ");
+          while (scanf("%d", &maximo) != 1 || maximo <= minimo)
+          {
+            printf("Error: Ingrese un número válido (mayor al mínimo): ");
+            fflush(stdin);
+          }
+        }
+
+        int masArb = 0;
+        int masHash = 0;
+        for (int i = 0; i < repeticiones; i++)
+        {
+          int cantidadBus;
+          printf("Ingrese la cantidad de claves a buscar: ");
+          // Check si es un número y si es mayor a 0 y menor a la cantidad de claves generadas
+          while (scanf("%d", &cantidadBus) != 1 || cantidadBus < 1 || cantidadBus > cantidad)
+          {
+            printf("Error: Ingrese un número válido (mayor a 0 y menor a la cantidad de claves generadas): ");
+            fflush(stdin);
+          }
+
+          clearScreen();
+          printf("Generando claves...\n");
+          srand(time(NULL));
+          Lista clavesParaRellenar = Generarlistaclaves(cantidad, minimo, maximo);
+          Lista clavesParaBuscar = Generarlistaclaves(cantidadBus, minimo, maximo);
+          ArbolAVL arbol = crearAVL(clavesParaRellenar);
+          TablaHash hash5 = crearTablaHash(clavesParaRellenar);
+          int resuPar = AlmacenarTiempos(hash5, arbol, clavesParaBuscar, resultadosAvl, resultadosHash, clavesParaRellenar);
+          if (resuPar == 0)
+          {
+            masArb++;
+          }
+          else if (resuPar == 1)
+          {
+            masHash++;
+          }
+          printf("------------------------\n");
+          printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en AVL\n\n", repeticiones, masArb);
+          printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en HASH\n\n", repeticiones, masHash);
+        }
+        break;
+      case 2:
+        clearScreen();
+        return;
+      default:
+        printf("\nOpcion no valida");
+        break;
+    }
+  }
+}
+
+void testPt6()
+{
+  clearScreen();
+
+  while (1)
+  {
+    printf("\n+------------------------------------------------------------------------------------------+\n");
+    printf("| 1. Alta, baja y modificación de personas en un archivo.                                     |\n");
+    printf("| 2. Mostrar personas. \n");
+    printf("| 3. Mostrar personas vacunadas en una fecha. \n");
+    printf("| 4. Volver \n");
+    printf("+------------------------------------------------------------------------------------------+\n");
+    printf("\nIngrese una opcion: ");
+    int opcion;
+
+    while (scanf("%d", &opcion) != 1)
+    {
+      printf("Error: Ingrese una opción válida: ");
+      fflush(stdin);
+    }
+
+    fflush(stdin);
+
+    switch (opcion)
+    {
+    case 1:
+      ABM_Personas("personas.dat");
+      break;
+    case 2:
+      mostrarPersonas("personas.dat");
+      waitForKey();
+      break;
+    case 3:
+      clearScreen();
+      int dia, mes, anio;
+      printf("Ingrese el día de la fecha de vacunación: ");
+      while (scanf("%d", &dia) != 1 || dia < 1 || dia > 31)
+      {
+        printf("Error: Ingrese un día válido (entre 1 y 31): ");
+        fflush(stdin);
+      }
+      fflush(stdin);
+
+      printf("Ingrese el mes de la fecha de vacunación: ");
+      while (scanf("%d", &mes) != 1 || mes < 1 || mes > 12)
+      {
+        printf("Error: Ingrese un mes válido (entre 1 y 12): ");
+        fflush(stdin);
+      }
+      fflush(stdin);
+
+      printf("Ingrese el año de la fecha de vacunación: ");
+      while (scanf("%d", &anio) != 1 || anio < 2020)
+      {
+        printf("Error: Ingrese un año válido (mayor o igual a 2020): ");
+        fflush(stdin);
+      }
+      fflush(stdin);
+
+      Fecha fecha = {dia, mes, anio};
+      mostrarPersonasVacunadasEnFecha("personas.dat", fecha);
+      waitForKey();
+      break;
+    case 4:
+      clearScreen();
+      return;
+    default:
+      printf("\nOpcion no valida");
+      break;
+    }
+  }
+}
+
 int main()
 {
   // TODO: en el menu hay que preguntar por el nombre del archivo
@@ -978,36 +1264,76 @@ int main()
   // printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en HASH\n\n", repeticiones, masHash);
 
   // Punto 6
-  ABM_Personas("personas.dat");
-  mostrarPersonas("personas.dat");
+  // ABM_Personas("personas.dat");
+  // mostrarPersonas("personas.dat");
 
-  int dia, mes, anio;
-  printf("Ingrese el día de la fecha de vacunación: ");
-  while (scanf("%d", &dia) != 1 || dia < 1 || dia > 31)
+  // int dia, mes, anio;
+  // printf("Ingrese el día de la fecha de vacunación: ");
+  // while (scanf("%d", &dia) != 1 || dia < 1 || dia > 31)
+  // {
+  //   printf("Error: Ingrese un día válido (entre 1 y 31): ");
+  //   fflush(stdin);
+  // }
+  // fflush(stdin);
+
+  // printf("Ingrese el mes de la fecha de vacunación: ");
+  // while (scanf("%d", &mes) != 1 || mes < 1 || mes > 12)
+  // {
+  //   printf("Error: Ingrese un mes válido (entre 1 y 12): ");
+  //   fflush(stdin);
+  // }
+  // fflush(stdin);
+
+  // printf("Ingrese el año de la fecha de vacunación: ");
+  // while (scanf("%d", &anio) != 1 || anio < 2020)
+  // {
+  //   printf("Error: Ingrese un año válido (mayor o igual a 2020): ");
+  //   fflush(stdin);
+  // }
+  // fflush(stdin);
+
+  // Fecha fecha = {dia, mes, anio};
+  // mostrarPersonasVacunadasEnFecha("personas.dat", fecha);
+
+  printf("Archivo compilado exitosamente\n");
+  printf("Esto es unicamente para comprobar que la compilacion fue exitosa\n");
+
+  while (1)
   {
-    printf("Error: Ingrese un día válido (entre 1 y 31): ");
-    fflush(stdin);
-  }
-  fflush(stdin);
+    printf("\n+------------------------------------------------------------------------------------------+\n");
+    printf("| 1. Probar funciones del punto 4\n");
+    printf("| 2. Probar funciones del punto 5\n");
+    printf("| 3. Probar funciones del punto 6\n");
+    printf("| 4. Salir\n");
+    printf("+------------------------------------------------------------------------------------------+\n");
+    printf("\nIngrese una opcion: ");
+    int opcion;
 
-  printf("Ingrese el mes de la fecha de vacunación: ");
-  while (scanf("%d", &mes) != 1 || mes < 1 || mes > 12)
-  {
-    printf("Error: Ingrese un mes válido (entre 1 y 12): ");
-    fflush(stdin);
-  }
-  fflush(stdin);
+    while (scanf("%d", &opcion) != 1)
+    {
+      printf("Error: Ingrese una opcion valida: ");
+      fflush(stdin);
+    }
 
-  printf("Ingrese el año de la fecha de vacunación: ");
-  while (scanf("%d", &anio) != 1 || anio < 2020)
-  {
-    printf("Error: Ingrese un año válido (mayor o igual a 2020): ");
-    fflush(stdin);
+    switch (opcion)
+    {
+    case 1:
+      testPt4();
+      break;
+    case 2:
+      testPt5();
+      break;
+    case 3:
+      testPt6();
+      break;
+    case 4:
+      clearScreen();
+      return 0;
+    default:
+      printf("\nOpcion no valida");
+      break;
+    }
   }
-  fflush(stdin);
-
-  Fecha fecha = {dia, mes, anio};
-  mostrarPersonasVacunadasEnFecha("personas.dat", fecha);
 
   return 0;
 }
