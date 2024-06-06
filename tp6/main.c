@@ -44,8 +44,12 @@ void ingresarAlumno(char *filename)
   Alumno alumno;
 
   printf("Ingrese el legajo del alumno: ");
-  scanf("%d", &alumno.legajo);
-  fflush(stdin);
+  // Validar que el legajo sea un número positivo, mayor a 0 y como minimo de 6 digitos
+  while (scanf("%d", &alumno.legajo) != 1 || alumno.legajo < 100000)
+  {
+    printf("Error: Ingrese un legajo válido (mayor a 100000): ");
+    fflush(stdin);
+  }
 
   printf("Ingrese el nombre del alumno: ");
   fgets(alumno.nombre, sizeof(alumno.nombre), stdin);
@@ -960,13 +964,12 @@ void testPt4()
 
       printf("\nIngrese el legajo del alumno a buscar: ");
       int legajo;
-      // Check si es un número y si es mayor a 6
-      while (scanf("%d", &legajo) != 1 || legajo < 6)
+      // Validar que el legajo sea un número positivo, mayor a 0 y como minimo de 6 digitos
+      while (scanf("%d", &legajo) != 1 || legajo < 1 || legajo < 100000)
       {
-        printf("Error: Ingrese un legajo válido (mayor a 6): ");
+        printf("Error: Ingrese un legajo válido (mayor a 0 y de 6 dígitos): ");
         fflush(stdin);
       }
-      fflush(stdin);
 
       TipoElemento te = th_recuperar(tabla, legajo);
       if (te != NULL)
