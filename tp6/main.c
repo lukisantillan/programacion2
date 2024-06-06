@@ -446,7 +446,7 @@ int AlmacenarTiempos(TablaHash t, ArbolAVL avl, Lista L, Lista resultadoAVL, Lis
 
       clock_gettime(CLOCK_MONOTONIC, &tiempoFin1);
 
-      long *tiempoAvl = malloc(sizeof(long));
+      long long *tiempoAvl = malloc(sizeof(long));
       *tiempoAvl = (tiempoFin1.tv_sec - tiempoInicio1.tv_sec) * 1000000000L + (tiempoFin1.tv_nsec - tiempoInicio1.tv_nsec);
       TipoElemento eleResuAVL = te_crear_con_valor(ele->clave, tiempoAvl);
       l_agregar(resultadoAVL, eleResuAVL);
@@ -459,7 +459,7 @@ int AlmacenarTiempos(TablaHash t, ArbolAVL avl, Lista L, Lista resultadoAVL, Lis
 
       clock_gettime(CLOCK_MONOTONIC, &tiempoFin2);
 
-      long *tiempoHash = malloc(sizeof(long));
+      long long *tiempoHash = malloc(sizeof(long));
       *tiempoHash = (tiempoFin2.tv_sec - tiempoInicio2.tv_sec) * 1000000000L + (tiempoFin2.tv_nsec - tiempoInicio2.tv_nsec);
       TipoElemento eleResuHash = te_crear_con_valor(ele->clave, tiempoHash);
       l_agregar(resultadoHash, eleResuHash);
@@ -474,10 +474,10 @@ int diferenciaTiempos(Lista tiempoAvl, Lista tiempoHash)
 {
   TipoElemento ele_avl, ele_hash;
   int longitud = l_longitud(tiempoAvl);
-  float menorTiempoAvl = 0;
-  float menorTiempoHash = 0;
-  int acumuladorAvl = 0;
-  int acumuladorHash = 0;
+  long long menorTiempoAvl = 0;
+  long long menorTiempoHash = 0;
+  float acumuladorAvl = 0;
+  float acumuladorHash = 0;
   int igualdad = 0;
   Iterador ite_avl = iterador(tiempoAvl);
   Iterador ite_hash = iterador(tiempoHash);
@@ -1017,33 +1017,41 @@ void testPt5()
 
     switch (opcion)
     {
-      case 1:
-        clearScreen();
-        Lista resultadosHash = l_crear();
-        Lista resultadosAvl = l_crear();
+    case 1:
+      clearScreen();
 
-        int repeticiones;
-        printf("Ingrese la cantidad de veces que quiere repetir el proceso: ");
-        // Check si es un número y si es mayor a 0
-        while (scanf("%d", &repeticiones) != 1 || repeticiones < 1)
-        {
-          printf("Error: Ingrese un número válido (mayor a 0): ");
-          fflush(stdin);
-        }
+      printf("Ingrese la cantidad de claves a generar: ");
+      // Check si es un número y no mayor a 3000
+      while (scanf("%d", &cantidad) != 1 || cantidad < 1 || cantidad > 3000)
+      {
+        printf("Error: Ingrese un número válido (mayor a 0 y menor a 3000): ");
+        fflush(stdin);
+      }
 
-        printf("Ingrese la cantidad de claves a generar: ");
-        // Check si es un número y no mayor a 3000
-        while (scanf("%d", &cantidad) != 1 || cantidad < 1 || cantidad > 3000)
-        {
-          printf("Error: Ingrese un número válido (mayor a 0 y menor a 3000): ");
-          fflush(stdin);
-        }
+      int maximo;
+      int minimo;
 
-        int maximo;
-        int minimo;
+      printf("Ingrese el número menor del rango de las claves a generar: ");
+      // Check si es un número y si es mayor a 0, maximmo a 10.000
+      while (scanf("%d", &minimo) != 1 || minimo < 1 || minimo > 100000)
+      {
+        printf("Error: Ingrese un número válido (mayor a 0 y menor a 100000): ");
+        fflush(stdin);
+      }
 
+      printf("Ingrese el número mayor del rango de las claves a generar: ");
+      // Check si es un número y si es mayor a menor
+      while (scanf("%d", &maximo) != 1 || maximo <= minimo)
+      {
+        printf("Error: Ingrese un número válido (mayor al mínimo): ");
+        fflush(stdin);
+      }
+
+      // Check si el rango entre el mínimo y el máximo es mayor a la cantidad de claves a generar
+      while (maximo - minimo < cantidad)
+      {
+        printf("Error: El rango entre el mínimo y el máximo debe ser mayor a la cantidad de claves a generar: ");
         printf("Ingrese el número menor del rango de las claves a generar: ");
-        // Check si es un número y si es mayor a 0, maximmo a 10.000
         while (scanf("%d", &minimo) != 1 || minimo < 1 || minimo > 100000)
         {
           printf("Error: Ingrese un número válido (mayor a 0 y menor a 100000): ");
@@ -1051,72 +1059,64 @@ void testPt5()
         }
 
         printf("Ingrese el número mayor del rango de las claves a generar: ");
-        // Check si es un número y si es mayor a menor
         while (scanf("%d", &maximo) != 1 || maximo <= minimo)
         {
           printf("Error: Ingrese un número válido (mayor al mínimo): ");
           fflush(stdin);
         }
+      }
+      int repeticiones;
+      printf("Ingrese la cantidad de veces que quiere repetir el proceso de busqueda: ");
+      // Check si es un número y si es mayor a 0
+      while (scanf("%d", &repeticiones) != 1 || repeticiones < 1)
+      {
+        printf("Error: Ingrese un número válido (mayor a 0): ");
+        fflush(stdin);
+      }
 
-        // Check si el rango entre el mínimo y el máximo es mayor a la cantidad de claves a generar
-        while (maximo - minimo < cantidad)
+      Lista clavesParaRellenar = Generarlistaclaves(cantidad, minimo, maximo);
+      ArbolAVL arbol = crearAVL(clavesParaRellenar);
+      TablaHash hash5 = crearTablaHash(clavesParaRellenar);
+
+      int masArb = 0;
+      int masHash = 0;
+      for (int i = 0; i < repeticiones; i++)
+      {
+        Lista resultadosHash = l_crear();
+        Lista resultadosAvl = l_crear();
+        int cantidadBus;
+        printf("Ingrese la cantidad de claves a buscar: ");
+        // Check si es un número y si es mayor a 0 y menor a la cantidad de claves generadas
+        while (scanf("%d", &cantidadBus) != 1 || cantidadBus < 1 || cantidadBus > cantidad)
         {
-          printf("Error: El rango entre el mínimo y el máximo debe ser mayor a la cantidad de claves a generar: ");
-          printf("Ingrese el número menor del rango de las claves a generar: ");
-          while (scanf("%d", &minimo) != 1 || minimo < 1 || minimo > 100000)
-          {
-            printf("Error: Ingrese un número válido (mayor a 0 y menor a 100000): ");
-            fflush(stdin);
-          }
-
-          printf("Ingrese el número mayor del rango de las claves a generar: ");
-          while (scanf("%d", &maximo) != 1 || maximo <= minimo)
-          {
-            printf("Error: Ingrese un número válido (mayor al mínimo): ");
-            fflush(stdin);
-          }
+          printf("Error: Ingrese un número válido (mayor a 0 y menor a la cantidad de claves generadas): ");
+          fflush(stdin);
         }
+        Lista clavesParaBuscar = Generarlistaclaves(cantidadBus, minimo, maximo);
 
-        int masArb = 0;
-        int masHash = 0;
-        for (int i = 0; i < repeticiones; i++)
-        {
-          int cantidadBus;
-          printf("Ingrese la cantidad de claves a buscar: ");
-          // Check si es un número y si es mayor a 0 y menor a la cantidad de claves generadas
-          while (scanf("%d", &cantidadBus) != 1 || cantidadBus < 1 || cantidadBus > cantidad)
-          {
-            printf("Error: Ingrese un número válido (mayor a 0 y menor a la cantidad de claves generadas): ");
-            fflush(stdin);
-          }
-
-          clearScreen();
-          printf("Generando claves...\n");
-          srand(time(NULL));
-          Lista clavesParaRellenar = Generarlistaclaves(cantidad, minimo, maximo);
-          Lista clavesParaBuscar = Generarlistaclaves(cantidadBus, minimo, maximo);
-          ArbolAVL arbol = crearAVL(clavesParaRellenar);
-          TablaHash hash5 = crearTablaHash(clavesParaRellenar);
-          int resuPar = AlmacenarTiempos(hash5, arbol, clavesParaBuscar, resultadosAvl, resultadosHash, clavesParaRellenar);
-          if (resuPar == 0)
-          {
-            masArb++;
-          }
-          else if (resuPar == 1)
-          {
-            masHash++;
-          }
-          printf("------------------------\n");
-          printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en AVL\n\n", repeticiones, masArb);
-          printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en HASH\n\n", repeticiones, masHash);
-        }
-        break;
-      case 2:
         clearScreen();
-        return;
-      default:
-        printf("\nOpcion no valida");
-        break;
+        printf("Generando claves...\n");
+        srand(time(NULL));
+        int resuPar = AlmacenarTiempos(hash5, arbol, clavesParaBuscar, resultadosAvl, resultadosHash, clavesParaRellenar);
+        if (resuPar == 0)
+        {
+          masArb++;
+        }
+        else if (resuPar == 1)
+        {
+          masHash++;
+        }
+      }
+      printf("------------------------\n");
+      printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en AVL\n\n", repeticiones, masArb);
+      printf("De %i repeticiones del proceso, en %i, la busqueda fue mas rapida en HASH\n\n", repeticiones, masHash);
+      break;
+    case 2:
+      clearScreen();
+      return;
+    default:
+      printf("\nOpcion no valida");
+      break;
     }
   }
 }
