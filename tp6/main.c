@@ -156,7 +156,7 @@ void mostrarAlumnosActivos(char *filename)
   {
     if (alumno.estado == 1)
     {
-      printf("Legajo: %d\n", alumno.legajo);
+      printf("Legajo: %06d\n", alumno.legajo);
       printf("Nombre: %s\n", alumno.nombre);
       printf("Apellido: %s\n", alumno.apellido);
       printf("Domicilio: %s\n", alumno.domicilio);
@@ -188,7 +188,7 @@ void mostrarAlumnosInactivos(char *filename)
   {
     if (alumno.estado != 1)
     {
-      printf("Legajo: %d\n", alumno.legajo);
+      printf("Legajo: %06d\n", alumno.legajo);
       printf("Nombre: %s\n", alumno.nombre);
       printf("Apellido: %s\n", alumno.apellido);
       printf("Domicilio: %s\n", alumno.domicilio);
@@ -233,14 +233,14 @@ void modificacion(char *filename, int legajo)
       alumno.domicilio[strcspn(alumno.domicilio, "\n")] = 0; // Elimina el salto de línea
       fseek(file, -sizeof(Alumno), SEEK_CUR);                // Vuelve al inicio del registro actual
       fwrite(&alumno, sizeof(Alumno), 1, file);              // Sobrescribe el registro
-      printf("Alumno con legajo %d modificado.\n", legajo);
+      printf("Alumno con legajo %06d modificado.\n", legajo);
       break;
     }
   }
 
   if (!alumnoEncontrado)
   {
-    printf("Alumno con legajo %d no encontrado.\n", legajo);
+    printf("Alumno con legajo %06d no encontrado.\n", legajo);
   }
 
   fclose(file);
@@ -1015,7 +1015,7 @@ void testPt4()
       if (te != NULL)
       {
         int *valor = te->valor;
-        printf("Legajo: %d\nPosicion en el archivo: %d\n", te->clave, *valor);
+        printf("Legajo: %06d\nPosicion en el archivo: %d\n", te->clave, *valor);
       }
       else
       {
