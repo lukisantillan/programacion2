@@ -963,8 +963,6 @@ void testPt4()
 {
   clearScreen();
 
-  TablaHash tabla = punto4("alumnos.dat");
-
   while (1)
   {
     printf("\n+------------------------------------------------------------------------------------------+\n");
@@ -999,6 +997,7 @@ void testPt4()
     case 4:
       clearScreen();
       printf("\n");
+      TablaHash tabla = punto4("alumnos.dat");
       th_mostrar_solo_ocupados(tabla);
 
       printf("\nIngrese el legajo del alumno a buscar: ");
