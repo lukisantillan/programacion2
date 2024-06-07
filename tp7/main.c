@@ -163,7 +163,7 @@ bool subconjuntoPropioAux(Conjunto a, Conjunto b){
     return true;
 }
 
-bool subConjuntoPropioCheck(Conjunto a, Conjunto b){
+void subConjuntoPropioCheck(Conjunto a, Conjunto b){
     bool checkConjuntoA = subconjuntoPropioAux(a,b);
     bool checkConjuntoB = subconjuntoPropioAux(b,a);
     if (checkConjuntoA || checkConjuntoB)
@@ -171,14 +171,29 @@ bool subConjuntoPropioCheck(Conjunto a, Conjunto b){
         if (checkConjuntoA)
         {
             printf("EL CONJUNTO A ES SUBCONJUNTO DE B, PERO A <> B\n");
-            return true;
         } else if (checkConjuntoB)
         {
             printf("EL CONJUNTO B ES SUBCONJUNTO DE A, PERO B <> A\n");
-            return true;
         }
     }
     printf("NINGUN CONJUNTO ES SUBCONJUNTO DEL OTRO \n");
-    return false;
-    
+}
+
+//Punto 8
+bool iguales(Conjunto a, Conjunto b){
+    int longitudA = cto_cantidad_elementos(a);
+    int longitudB = cto_cantidad_elementos(b);
+    if (longitudA != longitudB)
+    {
+        return false;
+    }
+    int i = 1;
+    while (i <=longitudA)
+    {
+        if (!cto_pertenece(b,cto_recuperar(a,i)->clave))
+        {
+            return false
+        }
+    }
+    return true;
 }
