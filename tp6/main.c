@@ -44,11 +44,42 @@ void ingresarAlumno(char *filename)
   Alumno alumno;
 
   printf("Ingrese el legajo del alumno: ");
-  // Validar que el legajo sea un número positivo, mayor a 0 y como minimo de 6 digitos
-  while (scanf("%d", &alumno.legajo) != 1 || alumno.legajo < 100000)
+  // Validar que el legajo sea un número positivo, mayor a 0 y como minimo de 6 digitos (ver la length de un int)
+  // length de un int = 6
+  while (scanf("%d", &alumno.legajo) != 1 || alumno.legajo < 1 || alumno.legajo > 999999)
   {
-    printf("Error: Ingrese un legajo válido (mayor a 100000): ");
+    printf("Error: Ingrese un legajo válido (mayor a 0 y menor a 999999): ");
     fflush(stdin);
+  }
+  fflush(stdin);
+
+  // Check si el legajo ya existe
+  Alumno alumnoExistente;
+  FILE *fileExistente = fopen(filename, "rb");
+  if (fileExistente != NULL)
+  {
+    while (fread(&alumnoExistente, sizeof(Alumno), 1, fileExistente) == 1)
+    {
+      if (alumnoExistente.legajo == alumno.legajo)
+      {
+        clearScreen();
+
+        printf("Error: El alumno con legajo %d ya existe en el archivo.\n", alumno.legajo);
+
+        // Printeo los datos del alumno existente
+        printf("Nombre: %s\n", alumnoExistente.nombre);
+        printf("Apellido: %s\n", alumnoExistente.apellido);
+        printf("Domicilio: %s\n", alumnoExistente.domicilio);
+        printf("Estado: %d\n", alumnoExistente.estado);
+
+        fclose(fileExistente);
+        fclose(file);
+
+        waitForKey();
+        return;
+      }
+    }
+    fclose(fileExistente);
   }
 
   printf("Ingrese el nombre del alumno: ");
@@ -282,8 +313,16 @@ void abm_alumnos(char *filename)
 
     case 2:
       printf("Ingrese el legajo del alumno a modificar: ");
-      scanf("%d", &legajo);
+      
+      // Validar que el legajo sea un número positivo, mayor a 0 y como minimo de 6 digitos (ver la length de un int)
+      // length de un int = 6
+      while (scanf("%d", &legajo) != 1 || legajo < 1 || legajo > 999999)
+      {
+        printf("Error: Ingrese un legajo válido (mayor a 0 y menor a 999999): ");
+        fflush(stdin);
+      }
       fflush(stdin);
+
       modificacion(filename, legajo);
       break;
 
@@ -964,10 +1003,11 @@ void testPt4()
 
       printf("\nIngrese el legajo del alumno a buscar: ");
       int legajo;
-      // Validar que el legajo sea un número positivo, mayor a 0 y como minimo de 6 digitos
-      while (scanf("%d", &legajo) != 1 || legajo < 1 || legajo < 100000)
+      // Validar que el legajo sea un número positivo, mayor a 0 y como minimo de 6 digitos (ver la length de un int)
+      // length de un int = 6
+      while (scanf("%d", &legajo) != 1 || legajo < 1 || legajo > 999999)
       {
-        printf("Error: Ingrese un legajo válido (mayor a 0 y de 6 dígitos): ");
+        printf("Error: Ingrese un legajo válido (mayor a 0 y menor a 999999): ");
         fflush(stdin);
       }
 
