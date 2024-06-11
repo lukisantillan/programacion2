@@ -17,6 +17,12 @@ Conjunto rellenarConjuntos()
         int clave;
         printf("Ingrese la clave: \n");
         scanf("%i", &clave);
+        while (cto_pertenece(resu, clave))
+        {
+            printf("Reingrese la clave [RECUERDE QUE NO TRABAJAMOS CON MULTICONJUNTOS, POR LO TANTO LAS CLAVES NO DEBEN REPETIRSE]: \n");
+            scanf("%i", &clave);
+        }
+
         TipoElemento ele = te_crear(clave);
         cto_agregar(resu, ele);
         if (cto_pertenece(resu, ele->clave))
@@ -356,7 +362,7 @@ bool iguales(Conjunto a, Conjunto b)
 int main()
 {
     // // PUNTO 2 A
-    // Conjunto uno = rellenarConjuntos();
+    Conjunto uno = rellenarConjuntos();
     // Conjunto dos = rellenarConjuntos();
     // Conjunto unionUnoDos = cto_union(uno,dos);
     // cto_mostrar(unionUnoDos);
