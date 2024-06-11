@@ -399,11 +399,11 @@ int main()
 
     for (int i = 1; i <= cantidad; i++)
     {
-        Conjunto conj = rellenarConjuntos();
-        TipoElemento ele = te_crear_con_valor(i, &conj);
+        Conjunto *conj = malloc(sizeof(Conjunto));
+        *conj = rellenarConjuntos();
+        TipoElemento ele = te_crear_con_valor(i, conj);
         l_agregar(coleccion, ele);
         printf("Conjunto con direccion : %p, agregado a la coleccion\n\n", ele->valor);
-        (conj*)+=1;
     }
     l_mostrar(coleccion);
     Conjunto resultadoPt3 = unionColeccion(coleccion);
