@@ -391,23 +391,40 @@ int main()
     //     printf("La diferecia se realizo correctamente\n");
     // } else printf("La diferecia fallo\n");
 
-    // // PUNTO 3
-    Lista coleccion = l_crear();
-    int cantidad;
-    printf("Ingrese cuantos conjuntos queres agregar a la coleccion:   \n");
-    scanf("%d", &cantidad);
+    // // PUNTO 3 UNION
+    // Lista coleccion = l_crear();
+    // int cantidad;
+    // printf("Ingrese cuantos conjuntos queres agregar a la coleccion:   \n");
+    // scanf("%d", &cantidad);
 
-    for (int i = 1; i <= cantidad; i++)
-    {
-        Conjunto *conj = malloc(sizeof(Conjunto));
-        *conj = rellenarConjuntos();
-        TipoElemento ele = te_crear_con_valor(i, conj);
-        l_agregar(coleccion, ele);
-        printf("Conjunto con direccion : %p, agregado a la coleccion\n\n", ele->valor);
-    }
-    l_mostrar(coleccion);
-    Conjunto resultadoPt3 = unionColeccion(coleccion);
-    cto_mostrar(resultadoPt3);
+    // for (int i = 1; i <= cantidad; i++)
+    // {
+    //     Conjunto *conj = malloc(sizeof(Conjunto));
+    //     *conj = rellenarConjuntos();
+    //     TipoElemento ele = te_crear_con_valor(i, conj);
+    //     l_agregar(coleccion, ele);
+    //     printf("Conjunto con direccion : %p, agregado a la coleccion\n\n", ele->valor);
+    // }
+    // Conjunto resultadoPt3a = unionColeccion(coleccion);
+    // cto_mostrar(resultadoPt3a);
+
+    // // PUNTO 3 INTERSECCION
+    // Lista coleccion = l_crear();
+    // int cantidad;
+    // printf("Ingrese cuantos conjuntos queres agregar a la coleccion:   \n");
+    // scanf("%d", &cantidad);
+
+    // for (int i = 1; i <= cantidad; i++)
+    // {
+    //     Conjunto *conj = malloc(sizeof(Conjunto));
+    //     *conj = rellenarConjuntos();
+    //     TipoElemento ele = te_crear_con_valor(i, conj);
+    //     l_agregar(coleccion, ele);
+    //     printf("Conjunto con direccion : %p, agregado a la coleccion\n\n", ele->valor);
+    // }
+
+    // Conjunto resultadoPt3b = interseccionColeccion(coleccion);
+    // cto_mostrar(resultadoPt3b);
 
     // // PUNTO 4
     // Conjunto uno = rellenarConjuntos();
