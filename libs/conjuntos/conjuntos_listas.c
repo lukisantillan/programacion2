@@ -33,7 +33,7 @@ int cto_cantidad_elementos(Conjunto conjunto) {
 bool cto_agregar(Conjunto conjunto, TipoElemento elemento) {
     if (l_buscar(conjunto->lista, elemento->clave) == NULL) {
         return l_agregar(conjunto->lista, elemento);
-    }
+    } return false;
 }
 
 
