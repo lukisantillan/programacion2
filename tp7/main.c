@@ -29,7 +29,6 @@ void verComplejidades()
     printf("Implementado con AVL y la complejidad es O(n^2) si se utiliza listas con punteros o cursores ya que la función recupera del TAD, utiliza l_agregar\n");
     printf("Implementado con AVL y la complejidad es O(n) si se utiliza listas con arreglos ya que la función recupera del TAD, utiliza l_agregar\n");
     printf("------------------------------------------\n");
-
 }
 
 void clearScreen()
@@ -165,6 +164,22 @@ bool verificarDiferencia(Conjunto c1, Conjunto c2, Conjunto conjDif)
     return true;
 }
 
+bool verificarPertenencia(Conjunto c1, Conjunto c2)
+{
+    TipoElemento eleAux;
+    int tamano = cto_cantidad_elementos(c1);
+    int i = 1;
+    while (i <= tamano)
+    {
+        eleAux = cto_recuperar(c1, i);
+        if (!cto_pertenece(c2, eleAux->clave))
+        {
+            return false;
+        }
+        i++;
+    }
+    return true;
+}
 // Punto 3
 Conjunto interseccionColeccion(Lista coleccion)
 {
@@ -430,7 +445,8 @@ void testPt2()
         printf("| 1. Unir y verificar unión de dos conjuntos\n");
         printf("| 2. Intersectar y verificar intersección de dos conjuntos\n");
         printf("| 3. Diferenciar y verificar diferencia de dos conjuntos\n");
-        printf("| 4. Volver al menu principal\n");
+        printf("| 4. Verificar pertenencia de un conjunto a otro\n");
+        printf("| 5. Volver al menu principal\n");
         printf("+------------------------------------------------------------------------------------------+\n");
         printf("\nIngrese una opcion: ");
         int opcion;
@@ -490,6 +506,21 @@ void testPt2()
             break;
         }
         case 4:
+        {
+            bool resultadopt2PertenenciaA = verificarPertenencia(uno, dos);
+            bool resultadopt2PertenenciaB  = verificarPertenencia(dos,uno);
+            if (resultadopt2PertenenciaA)
+            {
+                printf("El conjunto 1 pertenece al conjunto 2\n");
+            } else if (resultadopt2PertenenciaB)
+            {
+                printf("El conjunto 2 pertenece al conjunto 1\n");
+            } else
+                printf("Ningun conjunto pertenece al otro\n");
+            waitForKey();
+            break;
+        }
+        case 5:
         {
             return;
         }
