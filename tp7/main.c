@@ -7,6 +7,30 @@
 #include "../libs/listas/listas.h"
 
 // Funciones auxiliares
+void verComplejidades()
+{
+    printf(" Complejidad de los ejercicios dados\n");
+    printf("------------------------------------------\n");
+    printf("Complejidad ejercicio 6 (Ver si un conjunto es subconjunto del otro):\n");
+    printf("Implementado con listas y utilizando lista con arreglos la complejidad es O(n)\n");
+    printf("Implementado con listas y utilizando lista con punteros o cursores la complejidad es O(n^2)\n");
+    printf("Implementado con AVL y la complejidad es O(n^2) si se utiliza listas con punteros o cursores ya que la función recupera del TAD, utiliza l_agregar\n");
+    printf("Implementado con AVL y la complejidad es O(n) si se utiliza listas con arreglos ya que la función recupera del TAD, utiliza l_agregar\n");
+    printf("------------------------------------------\n");
+    printf("Complejidad ejercicio 7 (Ver si un conjunto es subconjunto total o parcial):\n");
+    printf("Implementado con listas y utilizando lista con arreglos la complejidad es O(n)\n");
+    printf("Implementado con listas y utilizando lista con punteros o cursores la complejidad es O(n^2)\n");
+    printf("Implementado con AVL y la complejidad es O(n^2) si se utiliza listas con punteros o cursores ya que la función recupera del TAD, utiliza l_agregar\n");
+    printf("Implementado con AVL y la complejidad es O(n) si se utiliza listas con arreglos ya que la función recupera del TAD, utiliza l_agregar\n");
+    printf("------------------------------------------\n");
+    printf("Complejidad ejercicio 8 (Ver si un conjunto es igual al otro sin importar la posicion):\n");
+    printf("Implementado con listas y utilizando lista con arreglos la complejidad es O(n)\n");
+    printf("Implementado con listas y utilizando lista con punteros o cursores la complejidad es O(n^2)\n");
+    printf("Implementado con AVL y la complejidad es O(n^2) si se utiliza listas con punteros o cursores ya que la función recupera del TAD, utiliza l_agregar\n");
+    printf("Implementado con AVL y la complejidad es O(n) si se utiliza listas con arreglos ya que la función recupera del TAD, utiliza l_agregar\n");
+    printf("------------------------------------------\n");
+
+}
 
 void clearScreen()
 {
@@ -178,9 +202,6 @@ Conjunto unionColeccion(Lista coleccion)
         ele = siguiente(ite);
         Conjunto conj = *(Conjunto *)ele->valor;
         Conjunto temp = cto_union(resultado, conj);
-        printf("\t\t-----\n");
-        cto_mostrar(temp);
-        printf("\t\t-----\n");
         resultado = temp;
     }
     return resultado;
@@ -518,7 +539,6 @@ void testPt3()
                 *conj = rellenarConjuntos();
                 TipoElemento ele = te_crear_con_valor(i, conj);
                 l_agregar(coleccion, ele);
-                printf("Conjunto con direccion : %p, agregado a la coleccion\n\n", ele->valor);
             }
 
             Conjunto resultadoPt3a = unionColeccion(coleccion);
@@ -643,12 +663,13 @@ int main()
         printf("\n+------------------------------------------------------------------------------------------+\n");
         printf("| 1. Probar funciones del punto 2\n");
         printf("| 2. Probar funciones del punto 3\n");
-        printf("| 3. Probar funciones del punto 4\n");
-        printf("| 4. Probar funciones del punto 5\n");
-        printf("| 5. Probar funciones del punto 6\n");
-        printf("| 6. Probar funciones del punto 7\n");
-        printf("| 7. Probar funciones del punto 8\n");
-        printf("| 8. Salir\n");
+        printf("| 3. Probar funciones del punto 4 ( Transitividad )\n");
+        printf("| 4. Probar funciones del punto 5 ( Diferencia simetrica )\n");
+        printf("| 5. Probar funciones del punto 6 ( Determinar subconjunto )\n");
+        printf("| 6. Probar funciones del punto 7 ( Determinar subconjunto total - parcial )\n");
+        printf("| 7. Probar funciones del punto 8 ( Determinar si son iguales )\n");
+        printf("| 8. Ver complejidades\n");
+        printf("| 9. Salir\n");
         printf("+------------------------------------------------------------------------------------------+\n");
         printf("\nIngrese una opcion: ");
         int opcion;
@@ -684,6 +705,9 @@ int main()
             testPt8();
             break;
         case 8:
+            verComplejidades();
+            break;
+        case 9:
             clearScreen();
             return 0;
         default:
