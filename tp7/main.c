@@ -451,7 +451,7 @@ void testPt2()
         printf("\nIngrese una opcion: ");
         int opcion;
 
-        while (scanf("%d", &opcion) != 1 || opcion < 1 || opcion > 4)
+        while (scanf("%d", &opcion) != 1 || opcion < 1 || opcion > 5)
         {
             printf("Ingrese una opcion valida: ");
             while (getchar() != '\n')
