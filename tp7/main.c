@@ -6,21 +6,54 @@
 #include "../libs/conjuntos/conjuntos.h"
 #include "../libs/listas/listas.h"
 
+// Funciones auxiliares
+
+void clearScreen()
+{
+    system("clear");
+}
+
+void waitForKey()
+{
+    printf("\nPresione Enter para continuar...");
+    while (getchar() != '\n')
+        ;
+    getchar();
+
+    system("clear");
+}
+
 Conjunto rellenarConjuntos()
 {
+    clearScreen();
     Conjunto resu = cto_crear();
     int cantidad;
-    printf("Ingrese cuantos elementos queres agregar al conjunto:   \n");
-    scanf("%i", &cantidad);
+    printf("Ingrese cuantos elementos queres agregar al conjunto: ");
+    while (scanf("%d", &cantidad) != 1 || cantidad <= 0)
+    {
+        printf("Ingrese un numero valido: ");
+        while (getchar() != '\n')
+            ;
+    }
     for (int i = 0; i < cantidad; i++)
     {
         int clave;
-        printf("Ingrese la clave: \n");
-        scanf("%i", &clave);
+        printf("Ingrese la clave: ");
+        while (scanf("%d", &clave) != 1)
+        {
+            printf("Ingrese un numero valido: ");
+            while (getchar() != '\n')
+                ;
+        }
         while (cto_pertenece(resu, clave))
         {
-            printf("Reingrese la clave [RECUERDE QUE NO TRABAJAMOS CON MULTICONJUNTOS, POR LO TANTO LAS CLAVES NO DEBEN REPETIRSE]: \n");
-            scanf("%i", &clave);
+            printf("Reingrese la clave [RECUERDE QUE NO TRABAJAMOS CON MULTICONJUNTOS, POR LO TANTO LAS CLAVES NO DEBEN REPETIRSE]: ");
+            while (scanf("%d", &clave) != 1)
+            {
+                printf("Ingrese un numero valido: ");
+                while (getchar() != '\n')
+                    ;
+            }
         }
 
         TipoElemento ele = te_crear(clave);
@@ -40,11 +73,11 @@ Conjunto rellenarConjuntos()
 // Punto2
 bool verificarUnion(Conjunto c1, Conjunto c2, Conjunto conjUnion)
 {
-    int tamañoC1 = cto_cantidad_elementos(c1);
-    int tamañoC2 = cto_cantidad_elementos(c2);
+    int tamanoC1 = cto_cantidad_elementos(c1);
+    int tamanoC2 = cto_cantidad_elementos(c2);
     int i = 1;
     TipoElemento ele;
-    while (i <= tamañoC1)
+    while (i <= tamanoC1)
     {
         ele = cto_recuperar(c1, i);
         if (!cto_pertenece(conjUnion, ele->clave))
@@ -56,7 +89,7 @@ bool verificarUnion(Conjunto c1, Conjunto c2, Conjunto conjUnion)
 
     i = 1;
 
-    while (i <= tamañoC2)
+    while (i <= tamanoC2)
     {
         ele = cto_recuperar(c2, i);
         if (!cto_pertenece(conjUnion, ele->clave))
@@ -71,10 +104,10 @@ bool verificarUnion(Conjunto c1, Conjunto c2, Conjunto conjUnion)
 
 bool verificarInterseccion(Conjunto c1, Conjunto c2, Conjunto conjInter)
 {
-    int tamañoC1 = cto_cantidad_elementos(c1);
+    int tamanoC1 = cto_cantidad_elementos(c1);
     int i = 1;
     TipoElemento ele;
-    while (i <= tamañoC1)
+    while (i <= tamanoC1)
     {
         ele = cto_recuperar(c1, i);
         if (cto_pertenece(c2, ele->clave) && !cto_pertenece(conjInter, ele->clave))
@@ -93,10 +126,10 @@ bool verificarInterseccion(Conjunto c1, Conjunto c2, Conjunto conjInter)
 
 bool verificarDiferencia(Conjunto c1, Conjunto c2, Conjunto conjDif)
 {
-    int tamañoC1 = cto_cantidad_elementos(c1);
+    int tamanoC1 = cto_cantidad_elementos(c1);
     int i = 1;
     TipoElemento ele;
-    while (i <= tamañoC1)
+    while (i <= tamanoC1)
     {
         ele = cto_recuperar(c1, i);
         if (cto_pertenece(c2, ele->clave) && cto_pertenece(conjDif, ele->clave))
@@ -116,7 +149,7 @@ Conjunto interseccionColeccion(Lista coleccion)
     if (ele == NULL)
     {
         Conjunto vacio = cto_crear();
-        return vacio; // Devuelve un conjunto vacío si la colección está vacía
+        return vacio;
     }
     Conjunto resultado = *(Conjunto *)ele->valor;
 
@@ -359,43 +392,341 @@ bool iguales(Conjunto a, Conjunto b)
     return true;
 }
 
+void testPt2()
+{
+    clearScreen();
+    Conjunto uno = rellenarConjuntos();
+    Conjunto dos = rellenarConjuntos();
+
+    printf("Conjunto 1: \n");
+    cto_mostrar(uno);
+    printf("Conjunto 2: \n");
+    cto_mostrar(dos);
+
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Unir y verificar unión de dos conjuntos\n");
+        printf("| 2. Intersectar y verificar intersección de dos conjuntos\n");
+        printf("| 3. Diferenciar y verificar diferencia de dos conjuntos\n");
+        printf("| 4. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1 || opcion < 1 || opcion > 4)
+        {
+            printf("Ingrese una opcion valida: ");
+            while (getchar() != '\n')
+                ;
+        }
+
+        switch (opcion)
+        {
+        case 1:
+        {
+            Conjunto unionUnoDos = cto_union(uno, dos);
+            cto_mostrar(unionUnoDos);
+            bool resultadopt2Union = verificarUnion(uno, dos, unionUnoDos);
+            if (resultadopt2Union)
+            {
+                printf("La union se realizo correctamente\n");
+            }
+            else
+                printf("La union fallo\n");
+
+            waitForKey();
+            break;
+        }
+        case 2:
+        {
+            Conjunto interseccionUnoDos = cto_interseccion(uno, dos);
+            cto_mostrar(interseccionUnoDos);
+            bool resultadopt2Interseccion = verificarInterseccion(uno, dos, interseccionUnoDos);
+            if (resultadopt2Interseccion)
+            {
+                printf("La interseccion se realizo correctamente\n");
+            }
+            else
+                printf("La interseccion fallo\n");
+
+            waitForKey();
+            break;
+        }
+        case 3:
+        {
+            Conjunto difereciaUnoDos = cto_diferencia(uno, dos);
+            cto_mostrar(difereciaUnoDos);
+            bool resultadopt2Diferencia = verificarDiferencia(uno, dos, difereciaUnoDos);
+            if (resultadopt2Diferencia)
+            {
+                printf("La diferecia se realizo correctamente\n");
+            }
+            else
+                printf("La diferecia fallo\n");
+
+            waitForKey();
+            break;
+        }
+        case 4:
+        {
+            return;
+        }
+        default:
+            break;
+        }
+    }
+}
+
+void testPt3()
+{
+    clearScreen();
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Unir y verificar unión de una colección de conjuntos\n");
+        printf("| 2. Intersectar y verificar intersección de una colección de conjuntos\n");
+        printf("| 3. Volver al menu principal\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
+
+        while (scanf("%d", &opcion) != 1 || opcion < 1 || opcion > 3)
+        {
+            printf("Ingrese una opcion valida: ");
+            while (getchar() != '\n')
+                ;
+        }
+
+        switch (opcion)
+        {
+        case 1:
+        {
+            Lista coleccion = l_crear();
+            int cantidad;
+            printf("Ingrese cuantos conjuntos queres agregar a la coleccion:   \n");
+            while (scanf("%d", &cantidad) != 1 || cantidad <= 0)
+            {
+                printf("Ingrese un numero valido: ");
+                while (getchar() != '\n')
+                    ;
+            }
+
+            for (int i = 1; i <= cantidad; i++)
+            {
+                Conjunto *conj = malloc(sizeof(Conjunto));
+                *conj = rellenarConjuntos();
+                TipoElemento ele = te_crear_con_valor(i, conj);
+                l_agregar(coleccion, ele);
+                printf("Conjunto con direccion : %p, agregado a la coleccion\n\n", ele->valor);
+            }
+
+            Conjunto resultadoPt3a = unionColeccion(coleccion);
+            cto_mostrar(resultadoPt3a);
+
+            waitForKey();
+            break;
+        }
+        case 2:
+        {
+            Lista coleccion = l_crear();
+            int cantidad;
+            printf("Ingrese cuantos conjuntos queres agregar a la coleccion:   \n");
+            while (scanf("%d", &cantidad) != 1 || cantidad <= 0)
+            {
+                printf("Ingrese un numero valido: ");
+                while (getchar() != '\n')
+                    ;
+            }
+
+            for (int i = 1; i <= cantidad; i++)
+            {
+                Conjunto *conj = malloc(sizeof(Conjunto));
+                *conj = rellenarConjuntos();
+                TipoElemento ele = te_crear_con_valor(i, conj);
+                l_agregar(coleccion, ele);
+                printf("Conjunto con direccion : %p, agregado a la coleccion\n\n", ele->valor);
+            }
+
+            Conjunto resultadoPt3b = interseccionColeccion(coleccion);
+            cto_mostrar(resultadoPt3b);
+
+            waitForKey();
+            break;
+        }
+        case 3:
+            return;
+        default:
+            break;
+        }
+    }
+}
+
+void testPt4()
+{
+    clearScreen();
+    Conjunto uno = rellenarConjuntos();
+    Conjunto dos = rellenarConjuntos();
+    Conjunto tres = rellenarConjuntos();
+
+    bool resultadopt4 = transitividad(uno, dos, tres);
+    if (resultadopt4)
+    {
+        printf("Se cumple la propiedad de transitividad\n");
+    }
+    else
+        printf("No hay transitividad\n");
+
+    waitForKey();
+}
+
+void testPt5()
+{
+    clearScreen();
+    Conjunto uno = rellenarConjuntos();
+    Conjunto dos = rellenarConjuntos();
+
+    Conjunto resultadopt5 = diferenciaSimetrica(uno, dos);
+    cto_mostrar(resultadopt5);
+
+    waitForKey();
+}
+
+void testPt6()
+{
+    clearScreen();
+    Conjunto uno = rellenarConjuntos();
+    Conjunto dos = rellenarConjuntos();
+    subConjuntoPropioCheck(uno, dos);
+
+    waitForKey();
+}
+
+void testPt7()
+{
+    clearScreen();
+    Conjunto uno = rellenarConjuntos();
+    Conjunto dos = rellenarConjuntos();
+    Conjunto tres = rellenarConjuntos();
+    determinar_subconjuntos(uno, dos, tres);
+
+    waitForKey();
+}
+
+void testPt8()
+{
+    clearScreen();
+    Conjunto uno = rellenarConjuntos();
+    Conjunto dos = rellenarConjuntos();
+
+    bool resultadopt8 = iguales(uno, dos);
+    if (resultadopt8)
+    {
+        printf("Los Conjuntos son iguales sin importar la posicion\n");
+    }
+    else
+    {
+        printf("Los conjuntos son diferentes\n");
+    }
+
+    waitForKey();
+}
+
 int main()
 {
-    // // PUNTO 2 A
-    Conjunto uno = rellenarConjuntos();
-    // Conjunto dos = rellenarConjuntos();
-    // Conjunto unionUnoDos = cto_union(uno,dos);
-    // cto_mostrar(unionUnoDos);
+    // clearScreen();
+    printf("Archivo compilado exitosamente\n");
+    printf("Esto es unicamente para comprobar que la compilacion fue exitosa\n");
 
-    // bool resultadopt2Union = verificarUnion(uno,dos,unionUnoDos);
-    // if (resultadopt2Union)
-    // {
-    //     printf("La union se realizo correctamente\n");
-    // } else printf("La union fallo\n");
+    while (1)
+    {
+        printf("\n+------------------------------------------------------------------------------------------+\n");
+        printf("| 1. Probar funciones del punto 2\n");
+        printf("| 2. Probar funciones del punto 3\n");
+        printf("| 3. Probar funciones del punto 4\n");
+        printf("| 4. Probar funciones del punto 5\n");
+        printf("| 5. Probar funciones del punto 6\n");
+        printf("| 6. Probar funciones del punto 7\n");
+        printf("| 7. Probar funciones del punto 8\n");
+        printf("| 8. Salir\n");
+        printf("+------------------------------------------------------------------------------------------+\n");
+        printf("\nIngrese una opcion: ");
+        int opcion;
 
-    // // PUNTO 2 B
+        while (scanf("%d", &opcion) != 1)
+        {
+            printf("\nError: Ingresa un número válido para la opción: ");
+            while (getchar() != '\n')
+                ;
+        }
+
+        switch (opcion)
+        {
+        case 1:
+            testPt2();
+            break;
+        case 2:
+            testPt3();
+            break;
+        case 3:
+            testPt4();
+            break;
+        case 4:
+            testPt5();
+            break;
+        case 5:
+            testPt6();
+            break;
+        case 6:
+            testPt7();
+            break;
+        case 7:
+            testPt8();
+            break;
+        case 8:
+            clearScreen();
+            return 0;
+        default:
+            printf("\nOpcion no valida");
+            break;
+        }
+    }
+
+    // // // PUNTO 2 A
     // Conjunto uno = rellenarConjuntos();
-    // Conjunto dos = rellenarConjuntos();
-    // Conjunto interseccionUnoDos = cto_interseccion(uno,dos);
-    // cto_mostrar(interseccionUnoDos);
+    // // Conjunto dos = rellenarConjuntos();
+    // // Conjunto unionUnoDos = cto_union(uno,dos);
+    // // cto_mostrar(unionUnoDos);
 
-    // bool resultadopt2Interseccion = verificarInterseccion(uno,dos,interseccionUnoDos);
-    // if (resultadopt2Interseccion)
-    // {
-    //     printf("La interseccion se realizo correctamente\n");
-    // } else printf("La interseccion fallo\n");
+    // // bool resultadopt2Union = verificarUnion(uno,dos,unionUnoDos);
+    // // if (resultadopt2Union)
+    // // {
+    // //     printf("La union se realizo correctamente\n");
+    // // } else printf("La union fallo\n");
 
-    // // PUNTO 2 C
-    // Conjunto uno = rellenarConjuntos();
-    // Conjunto dos = rellenarConjuntos();
-    // Conjunto difereciaUnoDos = cto_diferencia(uno,dos);
-    // cto_mostrar(difereciaUnoDos);
+    // // // PUNTO 2 B
+    // // Conjunto uno = rellenarConjuntos();
+    // // Conjunto dos = rellenarConjuntos();
+    // // Conjunto interseccionUnoDos = cto_interseccion(uno,dos);
+    // // cto_mostrar(interseccionUnoDos);
 
-    // bool resultadopt2Diferencia = verificarDiferencia(uno,dos,difereciaUnoDos);
-    // if (resultadopt2Diferencia)
-    // {
-    //     printf("La diferecia se realizo correctamente\n");
-    // } else printf("La diferecia fallo\n");
+    // // bool resultadopt2Interseccion = verificarInterseccion(uno,dos,interseccionUnoDos);
+    // // if (resultadopt2Interseccion)
+    // // {
+    // //     printf("La interseccion se realizo correctamente\n");
+    // // } else printf("La interseccion fallo\n");
+
+    // // // PUNTO 2 C
+    // // Conjunto uno = rellenarConjuntos();
+    // // Conjunto dos = rellenarConjuntos();
+    // // Conjunto difereciaUnoDos = cto_diferencia(uno,dos);
+    // // cto_mostrar(difereciaUnoDos);
+
+    // // bool resultadopt2Diferencia = verificarDiferencia(uno,dos,difereciaUnoDos);
+    // // if (resultadopt2Diferencia)
+    // // {
+    // //     printf("La diferecia se realizo correctamente\n");
+    // // } else printf("La diferecia fallo\n");
 
     // // PUNTO 3 UNION
     // Lista coleccion = l_crear();
@@ -414,23 +745,23 @@ int main()
     // Conjunto resultadoPt3a = unionColeccion(coleccion);
     // cto_mostrar(resultadoPt3a);
 
-    // // PUNTO 3 INTERSECCION
-    // Lista coleccion = l_crear();
-    // int cantidad;
-    // printf("Ingrese cuantos conjuntos queres agregar a la coleccion:   \n");
-    // scanf("%d", &cantidad);
+    // // // PUNTO 3 INTERSECCION
+    // // Lista coleccion = l_crear();
+    // // int cantidad;
+    // // printf("Ingrese cuantos conjuntos queres agregar a la coleccion:   \n");
+    // // scanf("%d", &cantidad);
 
-    // for (int i = 1; i <= cantidad; i++)
-    // {
-    //     Conjunto *conj = malloc(sizeof(Conjunto));
-    //     *conj = rellenarConjuntos();
-    //     TipoElemento ele = te_crear_con_valor(i, conj);
-    //     l_agregar(coleccion, ele);
-    //     printf("Conjunto con direccion : %p, agregado a la coleccion\n\n", ele->valor);
-    // }
+    // // for (int i = 1; i <= cantidad; i++)
+    // // {
+    // //     Conjunto *conj = malloc(sizeof(Conjunto));
+    // //     *conj = rellenarConjuntos();
+    // //     TipoElemento ele = te_crear_con_valor(i, conj);
+    // //     l_agregar(coleccion, ele);
+    // //     printf("Conjunto con direccion : %p, agregado a la coleccion\n\n", ele->valor);
+    // // }
 
-    // Conjunto resultadoPt3b = interseccionColeccion(coleccion);
-    // cto_mostrar(resultadoPt3b);
+    // // Conjunto resultadoPt3b = interseccionColeccion(coleccion);
+    // // cto_mostrar(resultadoPt3b);
 
     // // PUNTO 4
     // Conjunto uno = rellenarConjuntos();
